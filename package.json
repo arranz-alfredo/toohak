@@ -1,8 +1,8 @@
 {
   "name": "toohak",
+  "homepage": "https://arranz-alfredo.github.io/toohak/",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/lab": "^4.0.0-alpha.58",
@@ -25,6 +25,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",    
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -52,6 +54,7 @@
     "eslint": "^7.11.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-react": "^7.21.5",
-    "eslint-plugin-react-hooks": "^1.7.0"
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "gh-pages": "^3.1.0"
   }
 }

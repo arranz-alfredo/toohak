@@ -79,7 +79,6 @@ export const ProjectForm: React.FC<ProjectFormProps> = (props: ProjectFormProps)
             <Grid item xs={12}>
                 <TextField
                     inputRef={inputName}
-                    id='newProjectNameInput'
                     label='Nombre'
                     fullWidth
                     value={formState.name}
@@ -89,7 +88,6 @@ export const ProjectForm: React.FC<ProjectFormProps> = (props: ProjectFormProps)
             <Grid item xs={12}>
                 <TextField
                     inputRef={inputDescription}
-                    id='newProjectNameInput'
                     label='Descripción'
                     fullWidth
                     value={formState.description}

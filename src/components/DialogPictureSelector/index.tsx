@@ -73,16 +73,6 @@ export const DialogPictureForm: React.FC<DialogPictureFormProps> = (props: Dialo
                             onInput={handleUrlChange} 
                         />
                     </Grid>
-                    {/* <Grid item xs={12}>
-                        <TextField
-                            inputRef={inputDescription}
-                            id='newProjectNameInput'
-                            label='Descripción'
-                            fullWidth
-                            value={formState.description}
-                            onInput={handleDescriptionChange}
-                        />
-                    </Grid> */}
                     <Grid item xs={12}>
                         <Grid container justify='flex-end' spacing={1}>
                             <Grid item>

@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { ProjectContextProvider } from './context/ProjectContext';
 import {
-    BrowserRouter as Router,
+    HashRouter as Router,
     Switch,
     Route
 } from "react-router-dom";
