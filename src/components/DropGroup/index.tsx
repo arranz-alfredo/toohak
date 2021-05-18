@@ -1,12 +1,13 @@
-import React, { useRef, useState } from 'react';
-import { Card, Chip, Divider, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
+import React, { useEffect, useRef, useState } from 'react';
+import { Card, Chip, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import { ComponentMode } from '../../enums/ComponentMode';
+import { useDrop } from 'react-dnd';
+import { DragableItem } from '../DragableItem';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         height: '100%',
         width: '100%',
-        // border: 'solid 1px'
     },
     fullWidth: {
         width: '100%'
@@ -21,32 +22,81 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.contrastText
     },
     itemsContainer: {
-        padding: '5px'
+        padding: '5px',
+        height: '100%'
     }
 }));
 
 interface GroupState {
     title: string,
-    items: string[]
+    validItems: string[],
+    droppedItems: string[]
 }
 
 interface DropGroupProps {
     mode: ComponentMode,
     title: string,
-    items: string[],
+    validItems: string[],
+    showResults: boolean,
     fontSize?: number,
     onTitleChange?: (newTitle: string) => void,
-    onItemsChange?: (newTitle: string[]) => void
+    onItemsChange?: (newTitle: string[]) => void,
+    acceptTypes?: string[],
+    droppedItems?: string[]
+    onDrop?: (item: unknown) => void
 }
 
 export const DropGroup: React.FC<DropGroupProps> = (props: DropGroupProps) => {
-    const { mode, title, items, fontSize, onTitleChange, onItemsChange } = props;
+    const {
+        mode,
+        title,
+        validItems,
+        showResults,
+        fontSize,
+        onTitleChange,
+        onItemsChange,
+        acceptTypes,
+        droppedItems,
+        onDrop
+    } = props;
 
-    const [groupState, setGroupState] = useState<GroupState>({ title: title || '', items: items || [] });
+    const handleDrop = (item: unknown) => {
+        console.log('Drop!');
+        console.log(item);
+        if(onDrop) {
+            onDrop(item);
+        }
+    };
+
+    const [{ isOver, canDrop }, drop] = useDrop({
+        accept: acceptTypes || '',
+        drop: handleDrop,
+        collect: (monitor: { isOver: () => boolean, canDrop: () => boolean }) => ({
+            isOver: monitor.isOver(),
+            canDrop: monitor.canDrop(),
+        })
+    });
+
+    const [groupState, setGroupState] = useState<GroupState>({
+        title: title || '',
+        validItems: validItems || [],
+        droppedItems: droppedItems || []
+    });
+
     const inputTitle = useRef({} as HTMLInputElement);
     const inputItem = useRef({} as HTMLInputElement);
 
     const classes = useStyles();
+
+    useEffect(() => {
+        if (droppedItems != null) {
+            setGroupState({
+                ...groupState,
+                droppedItems: [...droppedItems]
+            });
+        }
+    }, [droppedItems]);
+
 
     const handleTitleChange = () => {
         const newState = {
@@ -59,17 +109,17 @@ export const DropGroup: React.FC<DropGroupProps> = (props: DropGroupProps) => {
         }
     };
 
-    const handleItemKeyPress = (evt: React.KeyboardEvent<HTMLDivElement>) => {
+    const handleValidItemKeyPress = (evt: React.KeyboardEvent<HTMLDivElement>) => {
         if (evt.code === 'Enter' && inputItem.current.value !== '') {
-            addItem();
+            addValidItem();
         }
     };
 
-    const addItem = () => {
-        const updatedItems = [...(groupState.items), inputItem.current.value];
-        const newState = {
+    const addValidItem = () => {
+        const updatedItems = [...(groupState.validItems), inputItem.current.value];
+        const newState: GroupState = {
             ...groupState,
-            items: updatedItems
+            validItems: updatedItems
         };
         setGroupState(newState);
         if (onItemsChange) {
@@ -78,11 +128,11 @@ export const DropGroup: React.FC<DropGroupProps> = (props: DropGroupProps) => {
         inputItem.current.value = '';
     };
 
-    const handleRemoveItem = (itemIdx: number) => {
-        const updatedItems = groupState.items.filter((anItem: string, idx: number) => itemIdx !== idx);
-        const newState = {
+    const handleRemoveValidItem = (itemIdx: number) => {
+        const updatedItems = groupState.validItems.filter((anItem: string, idx: number) => itemIdx !== idx);
+        const newState: GroupState = {
             ...groupState,
-            items: updatedItems
+            validItems: updatedItems
         };
         setGroupState(newState);
         if (onItemsChange) {
@@ -90,27 +140,45 @@ export const DropGroup: React.FC<DropGroupProps> = (props: DropGroupProps) => {
         }
     };
 
+    const getDragableItemStyle = (item: string) => showResults ? (
+        validItems.indexOf(item) >= 0 ? {
+            fontSize: `${fontSize}px`,
+            backgroundColor: '#4caf50'
+        } : {
+            fontSize: `${fontSize}px`,
+            backgroundColor: '#f44336'
+        }
+    ) : {fontSize: `${fontSize}px`};
+
     return (
-        <Card elevation={4} className={classes.root}>
-            <Grid container direction="column" className={classes.fullHeight}>
+        <Card
+            elevation={4}
+            className={classes.root}
+            style={{
+                backgroundColor: (isOver && canDrop) ? '#efefef' : '#ffffff'
+            }}
+        >
+            <Grid container direction="column" className={`${classes.fullHeight} ${classes.fullWidth}`}>
                 <Grid item className={classes.titleContainer}>
                     {
                         mode === ComponentMode.Play ? (
-                            <Typography style={{fontSize}}>
-                                { title }
+                            <Typography style={{ fontSize }}>
+                                { title}
                             </Typography>
-                        ): (
+                        ) : (
                             <TextField
-                                inputRef={ inputTitle }
-                                value={ groupState.title }
+                                inputRef={inputTitle}
+                                value={groupState.title}
+                                style={{
+                                    width: '100%'
+                                }}
                                 inputProps={
                                     {
                                         style: {
-                                            width: '100%',
                                             fontSize,
                                             textAlign: 'center',
                                             color: '#ffffff'
-                                            
+
                                         }
                                     }
                                 }
@@ -119,18 +187,18 @@ export const DropGroup: React.FC<DropGroupProps> = (props: DropGroupProps) => {
                         )
                     }
                 </Grid>
-                <Divider />
-                <Grid item>
+                <Grid item xs>
                     <Grid container direction="column" alignItems="center" className={classes.itemsContainer} spacing={2}>
                         {
-                            groupState.items.map((anItem: string, itemIdx: number) => (
+                            mode === ComponentMode.Design
+                            && groupState.validItems.map((anItem: string, itemIdx: number) => (
                                 <Grid item key={`item_${itemIdx}`}>
                                     <Chip
                                         label={anItem}
                                         color="secondary"
                                         size="medium"
                                         style={{ fontSize, color: '#ffffff' }}
-                                        onDelete={() => handleRemoveItem(itemIdx)}
+                                        onDelete={() => handleRemoveValidItem(itemIdx)}
                                     />
                                 </Grid>
                             ))
@@ -139,7 +207,7 @@ export const DropGroup: React.FC<DropGroupProps> = (props: DropGroupProps) => {
                             mode === ComponentMode.Design && (
                                 <Grid item key="newItem">
                                     <TextField
-                                        inputRef={ inputItem }
+                                        inputRef={inputItem}
                                         variant="outlined"
                                         InputProps={
                                             {
@@ -150,8 +218,36 @@ export const DropGroup: React.FC<DropGroupProps> = (props: DropGroupProps) => {
                                             }
                                         }
                                         label="Nuevo elemento"
-                                        onKeyPress={handleItemKeyPress}
+                                        onKeyPress={handleValidItemKeyPress}
                                     />
+                                </Grid>
+                            )
+                        }
+                        {
+                            mode === ComponentMode.Play && (
+                                <Grid item key="dropItem" xs className={`${classes.fullWidth} ${classes.fullHeight}`}>
+                                    <div
+                                        ref={drop}
+                                        className={`${classes.fullWidth} ${classes.fullHeight}`}
+                                    >
+                                        <Grid container direction="column" alignItems="center" spacing={1} className={classes.fullHeight}>
+                                            {
+                                                groupState.droppedItems.map((aDroppedItem: string) => (
+                                                    <Grid
+                                                        item
+                                                        key={`gridItem_${aDroppedItem}`}
+                                                    >
+                                                        <DragableItem
+                                                            key={aDroppedItem}
+                                                            name={aDroppedItem}
+                                                            type="classifyElement"
+                                                            style={getDragableItemStyle(aDroppedItem)}
+                                                        />
+                                                    </Grid>
+                                                ))
+                                            }
+                                        </Grid>
+                                    </div>
                                 </Grid>
                             )
                         }

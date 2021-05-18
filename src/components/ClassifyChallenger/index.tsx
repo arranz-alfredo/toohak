@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Fab, Grid, Icon, makeStyles } from '@material-ui/core';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import useSound from 'use-sound';
 import { ChallengeQuestion } from '../ChallengeQuestion';
 import { ClassifyChallenge, ClassifyChallengeGroup } from '../../types/ClassifyChallenge';
@@ -9,6 +11,7 @@ import { Countdown } from '../Countdown';
 import correct from '../../assets/sounds/correct.wav';
 import incorrect from '../../assets/sounds/incorrect.wav';
 import { DropGroup } from '../DropGroup';
+import { DragableItem } from '../DragableItem';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     titleContainer: {
         height: '20%'
     },
-    pictureContainer: {
+    classifyContainer: {
         height: '80%'
     },
     centerAll: {
@@ -31,18 +34,27 @@ const useStyles = makeStyles((theme) => ({
     },
     optionsContainer: {
         height: '20%',
-        border: 'solid 1px'
-    },
-    item: {
-        padding: '5px 10px',
-        backgroundColor: theme.palette.secondary.main,
-        color: theme.palette.primary.contrastText,
-        borderRadius: '20px'
+        border: 'solid 1px gray',
+        backgroundColor: '#ffffff'
     },
     groupsContainer: {
         height: '80%'
     },
 }));
+
+interface dropState {
+    groupName: string,
+    items: string[]
+}
+
+const initialClassifyState = (challenge: ClassifyChallenge): dropState[] => {
+    return challenge.groups.map((aGroup: ClassifyChallengeGroup) => (
+        {
+            groupName: aGroup.name,
+            items: []
+        }
+    ));
+};
 
 interface ClassifyChallengerProps {
     mode: ComponentMode
@@ -55,8 +67,9 @@ interface ClassifyChallengerProps {
 export const ClassifyChallenger: React.FC<ClassifyChallengerProps> = (props: ClassifyChallengerProps) => {
     const { mode, challenge, onChallengeChange, onSuccess, onError } = props;
 
+    const [classifyState, setClassifyState] =useState<dropState[]>(initialClassifyState(challenge));
+
     const [stopTimer, setStopTimer] = useState<boolean>(false);
-    const [selectedAnswers /* , setSelectedAnswers */] = useState<number[]>([]);
     const [highlightResults, setHighlightResults] = useState<boolean>(false);
 
     const [playCorrect] = useSound(correct);
@@ -108,66 +121,28 @@ export const ClassifyChallenger: React.FC<ClassifyChallengerProps> = (props: Cla
         }
     };
 
-    // const handleAnswerChange = (position: number, updatedAnswer: ClassifyChallengeAnswer) => {
-    //     const updatedAnswers = challenge.answers.map((anAnswer: ClassifyChallengeAnswer, idx: number) => {
-    //         if (idx !== position) {
-    //             if (!challenge.config.multiselect) {
-    //                 return {
-    //                     ...anAnswer,
-    //                     valid: false
-    //                 };
-    //             }
-    //             return { ...anAnswer };
-    //         }
-    //         return { ...updatedAnswer };
-    //     });
-
-    //     if (onChallengeChange) {
-    //         onChallengeChange({
-    //             ...challenge,
-    //             answers: updatedAnswers
-    //         });
-    //     }
-    // };
-
     const handlerTimeUp = () => {
         showResult(false);
     };
 
-    // const handlerOptionClick = (answerIdx: number) => {
-    //     if (mode === ComponentMode.Play) {
-    //         if (challenge.config.multiselect) {
-    //             const theIndex = selectedAnswers.findIndex((anAnswerIdx: number) => anAnswerIdx === answerIdx);
-    //             if (theIndex === -1) {
-    //                 setSelectedAnswers([...selectedAnswers, answerIdx]);
-    //             } else {
-    //                 setSelectedAnswers(selectedAnswers.filter((anAnswerIdx: number) => anAnswerIdx !== answerIdx));
-    //             }
-    //         } else {
-    //             if (challenge.answers[answerIdx].valid) {
-    //                 showResult(true);
-    //             } else {
-    //                 showResult(false);
-    //             }
-    //         }
-    //     }
-    // };
-
     const handleCheckClick = () => {
-    //     const wrongsSelected = selectedAnswers
-    //         .map((anAnswerIdx: number) => challenge.answers[anAnswerIdx])
-    //         .filter((anAnswer: SelectAnswerChallengeAnswer) => !anAnswer.valid);
-    //     if (wrongsSelected.length === 0) {
-    //         const validsNotSelected = challenge.answers
-    //             .filter((anAnswer: SelectAnswerChallengeAnswer, answerIdx: number) =>
-    //                 anAnswer.valid && selectedAnswers.indexOf(answerIdx) === -1
-    //             );
-    //         if (validsNotSelected.length === 0) {
-    //             showResult(true);
-    //             return;
-    //         }
-    //     }
-    //     showResult(false);
+        const correct = challenge.groups.reduce(
+            (accGroups: boolean, currentGroup: ClassifyChallengeGroup) => {
+                const correctItems = currentGroup.items.reduce(
+                    (accItems: boolean, currentItem: string) => {
+                        const theGroup = classifyState.find((aGroup: dropState) => aGroup.groupName === currentGroup.name);
+                        if (theGroup != null) {
+                            return accItems && theGroup.items.indexOf(currentItem) >= 0;
+                        }
+                        return false;
+                    },
+                    true
+                );
+                return accGroups && correctItems;
+            },
+            true
+        );
+        showResult(correct);
     };
 
     const showResult = (success: boolean) => {
@@ -193,6 +168,48 @@ export const ClassifyChallenger: React.FC<ClassifyChallengerProps> = (props: Cla
         }, 2000);
     };
 
+    
+    const isDropped = (itemName: string) => classifyState.reduce(
+        (acc: boolean, current: dropState) => acc || current.items.indexOf(itemName) >= 0,
+        false
+    );
+
+    const completed = () => {
+        const optionCount = challenge.groups.reduce(
+            (acc: number, current: ClassifyChallengeGroup) => acc + current.items.length,
+            0
+        );
+        const dropCount = classifyState.reduce(
+            (acc: number, current: dropState) => acc + current.items.length,
+            0
+        );
+        return optionCount === dropCount;
+    };
+
+    const handleDrop = (groupName: string, droppedItem: any) => {
+        const newDroppedItems: dropState[] = classifyState.map((aGroup: { groupName: string, items: string[]}) => {
+            if (aGroup.groupName !== groupName) {
+                return {
+                    ...aGroup,
+                    items: aGroup.items.filter((anItem: string) => anItem !== droppedItem.name)
+                };
+            }
+            
+            const idxItem = aGroup.items.findIndex((anItem: string) => anItem === droppedItem.name);
+            if (idxItem >= 0) {
+                return {...aGroup};
+            }
+            return {
+                ...aGroup,
+                items: [
+                    ...aGroup.items,
+                    droppedItem.name
+                ]
+            };
+        });
+        setClassifyState(newDroppedItems);
+    };
+
     return (
         <Card variant='outlined' className={classes.root}>
             <div className={classes.titleContainer}>
@@ -203,7 +220,7 @@ export const ClassifyChallenger: React.FC<ClassifyChallengerProps> = (props: Cla
                     onChange={handleTitleChange}
                 />
             </div>
-            <div className={classes.pictureContainer}>
+            <div className={classes.classifyContainer}>
                 <Grid container justify='center' className={classes.fullHeight}>
                     <Grid item xs={2} className={classes.fullHeight}>
                         <Countdown
@@ -214,54 +231,60 @@ export const ClassifyChallenger: React.FC<ClassifyChallengerProps> = (props: Cla
                         />
                     </Grid>
                     <Grid item xs={8} className={classes.fullHeight}>
-                        <Grid container spacing={2} className={classes.fullHeight}>
-                            <Grid item xs={12} className={classes.optionsContainer}>
-                                <Grid container spacing={2} justify="space-evenly" alignItems="center">
-                                    {
-                                        challenge.groups.map((aGroup: ClassifyChallengeGroup) => (
-                                            aGroup.items.map((anItem: string) => (
-                                                <Grid item className={classes.fullHeight}>
-                                                    {/* <Chip
-                                                        label={anItem}
-                                                        color="secondary"
-                                                        style={{ fontSize: challenge.config.itemsFontSize, color: '#ffffff' }}
-                                                        disabled
-                                                    /> */}
-                                                    <div
-                                                        className={classes.item}
-                                                        draggable={mode === ComponentMode.Play}
-                                                    >
-                                                        {anItem}
-                                                    </div>
+                        <DndProvider backend={HTML5Backend}>
+                            <Grid container spacing={2} className={classes.fullHeight}>
+                                <Grid item xs={12} className={classes.optionsContainer}>
+                                    <Grid container spacing={2} justify="space-around" alignItems="center">
+                                        {
+                                            challenge.groups.map((aGroup: ClassifyChallengeGroup) => (
+                                                aGroup.items.map((anItem: string, idx: number) => (
+                                                    !isDropped(anItem) && (
+                                                        <Grid item key={`gridItem_${idx}`}>
+                                                            <DragableItem
+                                                                name={anItem}
+                                                                type="classifyElement"
+                                                                key={`dragable_${idx}`}
+                                                                style={{fontSize: challenge.config.itemsFontSize}}
+                                                            />
+                                                        </Grid>
+                                                    )
+                                                ))
+                                            ))
+                                        }
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12} className={classes.groupsContainer}>
+                                    <Grid container justify="space-evenly" spacing={2} style={{ height: '100%' }}>
+                                        {
+                                            challenge.groups.map((aGroup: ClassifyChallengeGroup, idx: number) => (
+                                                <Grid
+                                                    item
+                                                    xs={4}
+                                                    key={`group_${idx}`}
+                                                >
+                                                    <DropGroup
+                                                        mode={mode}
+                                                        title={aGroup.name}
+                                                        validItems={aGroup.items}
+                                                        showResults={highlightResults}
+                                                        fontSize={challenge.config.itemsFontSize}
+                                                        onTitleChange={(newName: string) => handleNameChange(idx, newName)}
+                                                        onItemsChange={(newItems: string[]) => handleItemsChange(idx, newItems)}
+                                                        acceptTypes={['classifyElement']}
+                                                        droppedItems={
+                                                            classifyState
+                                                                .find((auxGroup: dropState) => auxGroup.groupName === aGroup.name)
+                                                                ?.items
+                                                        }
+                                                        onDrop={(droppedItem: unknown) => handleDrop(aGroup.name, droppedItem)}
+                                                    />
                                                 </Grid>
                                             ))
-                                        ))
-                                    }
+                                        }
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={12} className={classes.groupsContainer}>
-                                <Grid container justify="space-evenly" spacing={2} style={{ height: '100%' }}>
-                                    {
-                                        challenge.groups.map((aGroup: ClassifyChallengeGroup, idx: number) => (
-                                            <Grid
-                                                item
-                                                xs={4}
-                                                key={`group_${idx}`}
-                                            >
-                                                <DropGroup
-                                                    mode={mode}
-                                                    title={aGroup.name}
-                                                    items={aGroup.items}
-                                                    fontSize={challenge.config.itemsFontSize}
-                                                    onTitleChange={(newName: string) => handleNameChange(idx, newName)}
-                                                    onItemsChange={(newItems: string[]) => handleItemsChange(idx, newItems)}
-                                                />
-                                            </Grid>
-                                        ))
-                                    }                                    
-                                </Grid>
-                            </Grid>
-                        </Grid>
+                        </DndProvider>
                     </Grid>
                     <Grid item xs={2} style={{ height: '100%' }} className={classes.centerAll}>
                         {
@@ -269,7 +292,7 @@ export const ClassifyChallenger: React.FC<ClassifyChallengerProps> = (props: Cla
                                 variant="extended"
                                 size="large"
                                 color="primary"
-                                disabled={mode === ComponentMode.Design || selectedAnswers.length === 0}
+                                disabled={mode === ComponentMode.Design || !completed()}
                                 onClick={() => { handleCheckClick(); }}
                             >
                                 <Icon>check</Icon>&nbsp;Corregir

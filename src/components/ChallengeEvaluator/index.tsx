@@ -7,6 +7,8 @@ import { SelectAnswerChallenge } from '../../types/SelectAnswerChallenge';
 import { ComponentMode } from '../../enums/ComponentMode';
 import { TrueOrFalseChallenge } from '../../types/TrueOrFalseChallenge';
 import { TrueOrFalseChallenger } from '../TrueOrFalseChallenger';
+import { ClassifyChallenger } from '../ClassifyChallenger';
+import { ClassifyChallenge } from '../../types/ClassifyChallenge';
 
 const useStyles = makeStyles((theme) => ({
     fullHeight: {
@@ -62,6 +64,17 @@ export const ChallengeEvaluator: React.FC<ChallengeEvaluatorProps> = (props: Cha
                         />
                     )
                 }
+                {
+                    challenge?.type === ChallengeType.Classify
+                    && (
+                        <ClassifyChallenger
+                            mode={ComponentMode.Play}
+                            challenge={challenge as ClassifyChallenge}
+                            onSuccess={handlerSucessChallenge}
+                            onError={handlerErrorChallenge}
+                        />
+                    )
+                }                
             </Grid>
         </Grid>
     );
