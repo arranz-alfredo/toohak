@@ -10,6 +10,8 @@ import { ClassifyChallengeDesigner } from '../ClassifyChallengeDesigner';
 import { ClassifyChallenge } from '../../types/ClassifyChallenge';
 import { SortChallenge } from '../../types/SortChallenge';
 import { SortChallengeDesigner } from '../SortChallengeDesigner';
+import { FillTableChallengeDesigner } from '../FillTableChallengeDesigner';
+import { FillTableChallenge } from '../../types/FillTableChallenge';
 
 const useStyles = makeStyles(() => ({
     fullHeight: {
@@ -71,6 +73,15 @@ export const ChallengeDesigner: React.FC<ChallengeDesignerProps> = (props: Chall
                     && (
                         <ClassifyChallengeDesigner
                             challenge={challenge as ClassifyChallenge}
+                            onChallengeChange={handleChallengeChange}
+                        />
+                    )
+                }
+                {
+                    challenge?.type === ChallengeType.FillTable
+                    && (
+                        <FillTableChallengeDesigner
+                            challenge={challenge as FillTableChallenge}
                             onChallengeChange={handleChallengeChange}
                         />
                     )

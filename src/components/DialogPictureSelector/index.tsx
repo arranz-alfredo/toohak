@@ -70,7 +70,7 @@ export const DialogPictureForm: React.FC<DialogPictureFormProps> = (props: Dialo
                             label='URL de la imagen'
                             fullWidth
                             value={formState.data}
-                            onInput={handleUrlChange} 
+                            onInput={handleUrlChange}
                         />
                     </Grid>
                     <Grid item xs={12}>

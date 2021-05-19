@@ -168,7 +168,6 @@ export const ClassifyChallenger: React.FC<ClassifyChallengerProps> = (props: Cla
         }, 2000);
     };
 
-    
     const isDropped = (itemName: string) => classifyState.reduce(
         (acc: boolean, current: dropState) => acc || current.items.indexOf(itemName) >= 0,
         false
@@ -194,7 +193,7 @@ export const ClassifyChallenger: React.FC<ClassifyChallengerProps> = (props: Cla
                     items: aGroup.items.filter((anItem: string) => anItem !== droppedItem.name)
                 };
             }
-            
+
             const idxItem = aGroup.items.findIndex((anItem: string) => anItem === droppedItem.name);
             if (idxItem >= 0) {
                 return {...aGroup};

@@ -71,7 +71,7 @@ export const TestResult: React.FC<TestResultProps> = (props: TestResultProps) =>
                                     {
                                         challengeIdx < test.challenges.length - 1 && (
                                             <TimelineConnector />
-                                        )                                        
+                                        )
                                     }
                                 </TimelineSeparator>
                                 <TimelineContent className={classes.timelineContentContainer}>

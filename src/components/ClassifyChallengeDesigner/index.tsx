@@ -32,7 +32,7 @@ export const ClassifyChallengeDesigner: React.FC<ClassifyChallengeDesignerProps>
         } else if (groupCount < groups.length) {
             groups = groups.slice(0, groupCount);
         }
-        return groups;        
+        return groups;
     };
 
     const handlerChallengeChange = (updatedChallenge: ClassifyChallenge) => {

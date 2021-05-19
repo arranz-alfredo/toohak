@@ -36,7 +36,7 @@ export const fontSize = {
 
 export const theme = createMuiTheme({
     palette: {
-        primary: {            
+        primary: {
             main: colors.primary.main,
             contrastText: colors.font.mainContrast,
             light: colors.primary.light

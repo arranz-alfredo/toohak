@@ -97,7 +97,7 @@ export const TestForm: React.FC<TestFormProps> = (props: TestFormProps) => {
                     label='Nombre'
                     fullWidth
                     value={formState.name}
-                    onInput={handleNameChange} 
+                    onInput={handleNameChange}
                 />
             </Grid>
             <Grid item xs={12}>
@@ -113,14 +113,14 @@ export const TestForm: React.FC<TestFormProps> = (props: TestFormProps) => {
             <Grid item xs={12}>
                 <InputLabel shrink id="label-language">
                     Idioma
-                </InputLabel>                    
+                </InputLabel>
                 <Select
                     labelId="label-language"
                     id='newTestLanguageInput'
                     label='Idioma'
                     fullWidth
                     value={formState.language.toString()}
-                    onChange={handleLanguageChange}                    
+                    onChange={handleLanguageChange}
                 >
                     <MenuItem value={Language.Es.toString()}>Español</MenuItem>
                     <MenuItem value={Language.En.toString()}>Inglés</MenuItem>

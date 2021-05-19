@@ -12,7 +12,7 @@ const initialState = (project?: Project): FormState => {
     if (project != null) {
         return {
             name: project.name,
-            description: project.description || '' 
+            description: project.description || ''
         };
     }
     return {
@@ -82,7 +82,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = (props: ProjectFormProps)
                     label='Nombre'
                     fullWidth
                     value={formState.name}
-                    onInput={handleNameChange} 
+                    onInput={handleNameChange}
                 />
             </Grid>
             <Grid item xs={12}>

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
     fullWidth: {
         width: '100%'
-    },    
+    },
     listContainer: {
         paddingRight: '10px',
         height: '100%',
@@ -227,7 +227,7 @@ export const TestDesigner: React.FC<TestDesignerProps> = (props: TestDesignerPro
                                                 <ToggleButton value={true}>
                                                     <Icon>reorder</Icon>
                                                 </ToggleButton>
-                                            </ToggleButtonGroup>                                            
+                                            </ToggleButtonGroup>
                                         </Grid>
                                         <Grid item>
                                             <IconButton onClick={handleClickNewChallengeMenu}>
@@ -282,7 +282,9 @@ export const TestDesigner: React.FC<TestDesignerProps> = (props: TestDesignerPro
                                                         {getChallengeTypeDescription(ChallengeType.Classify)}
                                                     </Typography>
                                                 </MenuItem>
-                                                <MenuItem disabled onClick={handleCloseNewChallengeMenu}>
+                                                <MenuItem onClick={() => {
+                                                    handleNewChallengeOptionClick(ChallengeType.FillTable);
+                                                }}>
                                                     <ListItemIcon>{getChallengeTypeIcon(ChallengeType.FillTable, 'large')}</ListItemIcon>
                                                     <Typography variant='button'>
                                                         {getChallengeTypeDescription(ChallengeType.FillTable)}
@@ -309,7 +311,7 @@ export const TestDesigner: React.FC<TestDesignerProps> = (props: TestDesignerPro
                                 onDelete={handleDeleteChallenge}
                             />
                         </Grid>
-                    </Grid>                        
+                    </Grid>
                 </Grid>
                 <Grid item xs={10}>
                     {

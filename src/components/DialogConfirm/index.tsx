@@ -25,7 +25,7 @@ export const DialogConfirm: React.FC<DialogConfirmProps> = (props: DialogConfirm
                     <Grid item>
                         <Typography variant='button'>{text}</Typography>
                     </Grid>
-                </Grid>                
+                </Grid>
             </DialogContent>
             <DialogActions>
                 <Button autoFocus onClick={onConfirm} color='primary' variant='contained'>

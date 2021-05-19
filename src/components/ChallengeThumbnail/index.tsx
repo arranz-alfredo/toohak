@@ -173,7 +173,7 @@ export const ChallengeThumbnail: React.FC<ChallengeThumbnailProps> = (props: Cha
                                         }
                                         <IconButton onClick={handleDeleteClick}>
                                             <Icon>delete</Icon>
-                                        </IconButton>                                        
+                                        </IconButton>
                                     </Grid>
                                 }
                             />

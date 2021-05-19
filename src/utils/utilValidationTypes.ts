@@ -2,6 +2,7 @@ import { ChallengeType } from '../enums/ChallengeType';
 import { PictureType } from '../enums/PictureType';
 import { Challenge, ChallengeConfig, ChallengePicture } from '../types/Challenge';
 import { ClassifyChallenge, ClassifyChallengeGroup } from '../types/ClassifyChallenge';
+import { FillTableChallenge, FillTableChallengeCell } from '../types/FillTableChallenge';
 import { Project } from '../types/Project';
 import { SelectAnswerChallenge, SelectAnswerChallengeAnswer, SelectAnswerChallengeConfig } from '../types/SelectAnswerChallenge';
 import { SortChallenge } from '../types/SortChallenge';
@@ -100,8 +101,34 @@ export const isValidChallenge = (challenge: Challenge): Validation => {
             }
             break;
         }
-        case ChallengeType.FillTable:
+        case ChallengeType.FillTable: {
+            const customChallenge = challenge as FillTableChallenge;
+            if(!customChallenge.items.reduce(
+                (accRow: boolean, currentRow: FillTableChallengeCell[], rowIdx: number) => (
+                    accRow
+                    && currentRow.reduce(
+                        (accColumn: boolean, currentColumn: FillTableChallengeCell, columnIdx: number) => (
+                            accColumn
+                            && (
+                                (
+                                    customChallenge.config.firstRowFixed
+                                    && rowIdx === 0
+                                    && customChallenge.config.firstColumnFixed
+                                    && columnIdx === 0
+                                )
+                                || currentColumn.text !== ''
+                            )
+                        ),
+                        true
+                    )
+                ),
+                true
+            )) {
+                errorMessage.push('Todas las celdas deben estar rellenas');
+            }
             break;
+            break;
+        }
         case ChallengeType.Crossword:
             break;
     }

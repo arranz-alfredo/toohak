@@ -10,6 +10,7 @@ import { SelectAnswerChallenge, SelectAnswerChallengeConfig } from '../types/Sel
 import { TrueOrFalseChallenge, TrueOrFalseChallengeConfig } from '../types/TrueOrFalseChallenge';
 import { ClassifyChallenge, ClassifyChallengeConfig } from '../types/ClassifyChallenge';
 import { SortChallenge, SortChallengeConfig } from '../types/SortChallenge';
+import { FillTableChallenge, FillTableChallengeConfig } from '../types/FillTableChallenge';
 
 export const getChallengeTypeDescription = (type: ChallengeType, language: Language = Language.Es): string => {
     switch (type) {
@@ -88,6 +89,15 @@ const getDefaultChallengeConfig = (type: ChallengeType): ChallengeConfig => {
                 itemsFontSize: 18,
                 groupCount: 3
             } as ClassifyChallengeConfig;
+        case ChallengeType.FillTable:
+            return {
+                ...defaultChallengeConfig,
+                itemsFontSize: 18,
+                rowCount: 3,
+                columnCount: 3,
+                firstRowFixed: false,
+                firstColumnFixed: false
+            } as FillTableChallengeConfig;
         default:
             return defaultChallengeConfig;
     }
@@ -143,6 +153,15 @@ export const getDefaultChallenge = (type: ChallengeType): Challenge => {
                     { name: '', items: ([] as string[]) }
                 ]
             } as ClassifyChallenge;
+        case ChallengeType.FillTable:
+            return {
+                ...defaultChallenge,
+                items: [
+                    [{ text: '', hidden: false },{ text: '', hidden: false },{ text: '', hidden: false }],
+                    [{ text: '', hidden: false },{ text: '', hidden: false },{ text: '', hidden: false }],
+                    [{ text: '', hidden: false },{ text: '', hidden: false },{ text: '', hidden: false }]
+                ]
+            } as FillTableChallenge;
         default:
             return defaultChallenge;
     }

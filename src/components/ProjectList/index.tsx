@@ -150,7 +150,7 @@ export const ProjectList: React.FC<ProjectListProps> = (props: ProjectListProps)
                     ...aProject,
                     tests: [...updatedTests]
                 };
-            } 
+            }
             return {
                 ...aProject,
                 tests: [...aProject.tests, test]

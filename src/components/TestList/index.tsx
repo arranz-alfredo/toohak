@@ -113,7 +113,7 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                         Editar preguntas
                     </Typography>
                 </MenuItem>
-            </Menu>            
+            </Menu>
             <Dialog
                 open={openTestForm}
                 fullWidth
@@ -134,7 +134,7 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                 width='xs'
                 onConfirm={handleConfirmRemoveTest}
                 onRefuse={handleRefuseRemoveTest}
-            />            
+            />
             <Grid container>
                 <Grid item xs={12}>
                     {
@@ -174,7 +174,7 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                                                 <Grid item xs={2}>
                                                     <ListItemText
                                                         secondary={`${aTest.challenges.length} pregunta${aTest.challenges.length !== 1 ? 's' : ''}`}
-                                                    />                                        
+                                                    />
                                                 </Grid>
                                             </Grid>
                                             <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
@@ -209,7 +209,7 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                                                         </IconButton>
                                                     </Grid>
                                                 </Grid>
-                                            </ListItemSecondaryAction>                                        
+                                            </ListItemSecondaryAction>
                                         </ListItem>
                                         <Divider variant='inset' component='li' />
                                     </Fragment>
