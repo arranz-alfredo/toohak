@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/toohak/static/css/main.c04c75c9.chunk.css",
-    "main.js": "/toohak/static/js/main.48858236.chunk.js",
-    "main.js.map": "/toohak/static/js/main.48858236.chunk.js.map",
+    "main.js": "/toohak/static/js/main.8ff0065e.chunk.js",
+    "main.js.map": "/toohak/static/js/main.8ff0065e.chunk.js.map",
     "runtime-main.js": "/toohak/static/js/runtime-main.9b07a560.js",
     "runtime-main.js.map": "/toohak/static/js/runtime-main.9b07a560.js.map",
     "static/js/2.9ba6e2f9.chunk.js": "/toohak/static/js/2.9ba6e2f9.chunk.js",
@@ -22,6 +22,6 @@
     "static/js/runtime-main.9b07a560.js",
     "static/js/2.9ba6e2f9.chunk.js",
     "static/css/main.c04c75c9.chunk.css",
-    "static/js/main.48858236.chunk.js"
+    "static/js/main.8ff0065e.chunk.js"
   ]
 }
