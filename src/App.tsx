@@ -7,7 +7,7 @@ import {
     Route
 } from "react-router-dom";
 import { theme } from "./theme";
-import { MainHeader } from "./components/MainHeader";
+import { MainHeader } from "./components/common/MainHeader";
 import { Home } from "./views/Home";
 import { Designer } from "./views/Designer";
 import { Evaluator } from "./views/Evaluator";

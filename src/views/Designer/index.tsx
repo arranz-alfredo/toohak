@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from "react-router";
 import { Grid, makeStyles } from '@material-ui/core';
-import { TestDesigner } from '../../components/TestDesigner';
+import { TestDesigner } from '../../components/Designer/TestDesigner';
 
 const useStyles = makeStyles((theme) => ({
     fullHeight: {

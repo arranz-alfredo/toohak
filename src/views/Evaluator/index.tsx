@@ -4,9 +4,9 @@ import { Grid, makeStyles } from '@material-ui/core';
 import { Test } from '../../types/Test';
 import { useProjects } from '../../hooks/useProjects';
 import { Project } from '../../types/Project';
-import { ChallengeEvaluator } from '../../components/ChallengeEvaluator';
-import { ChallengeLauncher } from '../../components/ChallengeLauncher';
-import { TestResult } from '../../components/TestResult';
+import { ChallengeEvaluator } from '../../components/Evaluator/ChallengeEvaluator';
+import { ChallengeLauncher } from '../../components/Evaluator/ChallengeLauncher';
+import { TestResult } from '../../components/Evaluator/TestResult';
 
 const useStyles = makeStyles((theme) => ({
     fullHeight: {
