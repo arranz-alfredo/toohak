@@ -2,6 +2,7 @@ import { ChallengeType } from '../enums/ChallengeType';
 import { PictureType } from '../enums/PictureType';
 import { Challenge, ChallengeConfig, ChallengePicture } from '../types/Challenge';
 import { ClassifyChallenge, ClassifyChallengeGroup } from '../types/ClassifyChallenge';
+import { FillGapsChallenge, FillGapsChallengeSentence } from '../types/FillGapsChallenge';
 import { FillTableChallenge, FillTableChallengeCell } from '../types/FillTableChallenge';
 import { Project } from '../types/Project';
 import { SelectAnswerChallenge, SelectAnswerChallengeAnswer, SelectAnswerChallengeConfig } from '../types/SelectAnswerChallenge';
@@ -77,8 +78,29 @@ export const isValidChallenge = (challenge: Challenge): Validation => {
         }
         case ChallengeType.TrueOrFalse:
             break;
-        case ChallengeType.FillGaps:
+        case ChallengeType.FillGaps:{
+            const customChallenge = challenge as FillGapsChallenge;
+            if(!customChallenge.sentences.reduce(
+                (acc: boolean, current: FillGapsChallengeSentence) => acc && current != null && current.text !== '',
+                true
+            )) {
+                errorMessage.push('Hay elementos sin texto');
+            }
+            if (customChallenge.sentences.length === 0) {
+                errorMessage.push('Debe haber al menos una frase');
+            }
+            if(!customChallenge.sentences.reduce(
+                (acc: boolean, current: FillGapsChallengeSentence) => (
+                    acc
+                    && current != null
+                    && current.hiddenExpressions.length > 0
+                ),
+                true
+            )) {
+                errorMessage.push('Hay frases sin palabras ocultas');
+            }
             break;
+        }
         case ChallengeType.Match:
             break;
         case ChallengeType.Sort: {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
 import { Challenge } from '../../types/Challenge';
 import { ChallengeType } from '../../enums/ChallengeType';
@@ -12,6 +12,8 @@ import { SortChallenge } from '../../types/SortChallenge';
 import { SortChallengeDesigner } from '../SortChallengeDesigner';
 import { FillTableChallengeDesigner } from '../FillTableChallengeDesigner';
 import { FillTableChallenge } from '../../types/FillTableChallenge';
+import { FillGapsChallengeDesigner } from '../FillGapsChallengeDesigner';
+import { FillGapsChallenge } from '../../types/FillGapsChallenge';
 
 const useStyles = makeStyles(() => ({
     fullHeight: {
@@ -28,11 +30,6 @@ export const ChallengeDesigner: React.FC<ChallengeDesignerProps> = (props: Chall
     const { challenge, onChallengeChange } = props;
 
     const classes = useStyles();
-
-    useEffect(() => {
-        console.log('ChallengeDesigner.useEffect');
-        console.log(challenge);
-    }, [challenge]);
 
     const handleChallengeChange = (updatedChallenge: Challenge) => {
         onChallengeChange(updatedChallenge);
@@ -55,6 +52,15 @@ export const ChallengeDesigner: React.FC<ChallengeDesignerProps> = (props: Chall
                     && (
                         <TrueOrFalseChallengeDesigner
                             challenge={challenge as TrueOrFalseChallenge}
+                            onChallengeChange={handleChallengeChange}
+                        />
+                    )
+                }
+                {
+                    challenge?.type === ChallengeType.FillGaps
+                    && (
+                        <FillGapsChallengeDesigner
+                            challenge={challenge as FillGapsChallenge}
                             onChallengeChange={handleChallengeChange}
                         />
                     )

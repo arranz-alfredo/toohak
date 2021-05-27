@@ -241,7 +241,6 @@ export const ClassifyChallenger: React.FC<ClassifyChallengerProps> = (props: Cla
                                                         <Grid item key={`gridItem_${idx}`}>
                                                             <DragableItem
                                                                 name={anItem}
-                                                                type="classifyElement"
                                                                 key={`dragable_${idx}`}
                                                                 style={{fontSize: challenge.config.itemsFontSize}}
                                                             />
@@ -269,7 +268,6 @@ export const ClassifyChallenger: React.FC<ClassifyChallengerProps> = (props: Cla
                                                         fontSize={challenge.config.itemsFontSize}
                                                         onTitleChange={(newName: string) => handleNameChange(idx, newName)}
                                                         onItemsChange={(newItems: string[]) => handleItemsChange(idx, newItems)}
-                                                        acceptTypes={['classifyElement']}
                                                         droppedItems={
                                                             classifyState
                                                                 .find((auxGroup: dropState) => auxGroup.groupName === aGroup.name)

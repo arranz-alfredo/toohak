@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import { useProjects } from '../../hooks/useProjects';
 import { ProjectList } from '../../components/ProjectList';
 
-export const Home = () => {
+export const Home: React.FC = () => {
     const { projects, setProjects } = useProjects();
 
     return (

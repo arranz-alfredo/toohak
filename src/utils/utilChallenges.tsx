@@ -11,6 +11,8 @@ import { TrueOrFalseChallenge, TrueOrFalseChallengeConfig } from '../types/TrueO
 import { ClassifyChallenge, ClassifyChallengeConfig } from '../types/ClassifyChallenge';
 import { SortChallenge, SortChallengeConfig } from '../types/SortChallenge';
 import { FillTableChallenge, FillTableChallengeConfig } from '../types/FillTableChallenge';
+import { FillGapsChallenge, FillGapsChallengeConfig, FillGapsChallengeSentence } from '../types/FillGapsChallenge';
+import { FillMethod } from '../enums/FillMethod';
 
 export const getChallengeTypeDescription = (type: ChallengeType, language: Language = Language.Es): string => {
     switch (type) {
@@ -76,7 +78,11 @@ const getDefaultChallengeConfig = (type: ChallengeType): ChallengeConfig => {
         case ChallengeType.Match:
             return defaultChallengeConfig;
         case ChallengeType.FillGaps:
-            return defaultChallengeConfig;
+            return {
+                ...defaultChallengeConfig,
+                textFontSize: 18,
+                fillMethod: FillMethod.Writing
+            } as FillGapsChallengeConfig;
         case ChallengeType.Sort:
             return {
                 ...defaultChallengeConfig,
@@ -138,7 +144,10 @@ export const getDefaultChallenge = (type: ChallengeType): Challenge => {
         case ChallengeType.Match:
             return defaultChallenge;
         case ChallengeType.FillGaps:
-            return defaultChallenge;
+            return {
+                ...defaultChallenge,
+                sentences: [] as FillGapsChallengeSentence[]
+            } as FillGapsChallenge;
         case ChallengeType.Sort:
             return {
                 ...defaultChallenge,

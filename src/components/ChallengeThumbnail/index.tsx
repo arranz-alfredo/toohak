@@ -78,8 +78,14 @@ export const ChallengeThumbnail: React.FC<ChallengeThumbnailProps> = (props: Cha
                                                     <Tooltip arrow title={
                                                         <>
                                                             {
-                                                                validation.errorMessage.map((aMessage: string) => (
-                                                                    <li className={classes.tooltipRow}>
+                                                                validation.errorMessage.map((
+                                                                    aMessage: string,
+                                                                    messageIdx: number
+                                                                ) => (
+                                                                    <li
+                                                                        key={`li_${messageIdx}`}
+                                                                        className={classes.tooltipRow}
+                                                                    >
                                                                         {aMessage}
                                                                     </li>
                                                                 ))
@@ -114,8 +120,10 @@ export const ChallengeThumbnail: React.FC<ChallengeThumbnailProps> = (props: Cha
                                             <Tooltip arrow title={
                                                 <>
                                                     {
-                                                        validation.errorMessage.map((aMessage: string) => (
-                                                            <li className={classes.tooltipRow}>
+                                                        validation.errorMessage.map((aMessage: string, messageIdx) => (
+                                                            <li
+                                                                key={`li_${messageIdx}`}
+                                                                className={classes.tooltipRow}>
                                                                 {aMessage}
                                                             </li>
                                                         ))
@@ -134,53 +142,6 @@ export const ChallengeThumbnail: React.FC<ChallengeThumbnailProps> = (props: Cha
                     }
                 </Card>
             }
-            {/* {
-                compact && (
-                    <Card variant={selected ? 'elevation' : 'outlined'} elevation={10} className={classes.fullWidth}>
-                        <CardActionArea onClick={handleClick}>
-                            <CardHeader
-                                subheader={
-                                    <Grid container alignItems="center" spacing={1}>
-                                        <Grid item>
-                                            { getChallengeTypeIcon(challenge.type) }
-                                        </Grid>
-                                        <Grid item>
-                                            <Typography variant='subtitle2' color={selected ? 'secondary' : 'textPrimary'} className={classes.description}>
-                                                { challenge.question }
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                }
-                                action={
-                                    <Grid container alignItems="center">
-                                        {
-                                            validation.valid ? <Icon color="primary" fontSize="small">check</Icon>
-                                                : (
-                                                    <Tooltip arrow title={
-                                                        <>
-                                                            {
-                                                                validation.errorMessage.map((aMessage: string) => (
-                                                                    <li className={classes.tooltipRow}>
-                                                                        {aMessage}
-                                                                    </li>
-                                                                ))
-                                                            }
-                                                        </>
-                                                    }>
-                                                        <Icon color="secondary" fontSize="small">priority_high</Icon>
-                                                    </Tooltip>
-                                                )
-                                        }
-                                        <IconButton onClick={handleDeleteClick}>
-                                            <Icon>delete</Icon>
-                                        </IconButton>
-                                    </Grid>
-                                }
-                            />
-                        </CardActionArea>
-                    </Card>
-                )
-            } */}
         </Fragment>
     );
 };

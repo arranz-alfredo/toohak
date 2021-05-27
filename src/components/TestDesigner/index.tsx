@@ -136,8 +136,6 @@ export const TestDesigner: React.FC<TestDesignerProps> = (props: TestDesignerPro
     };
 
     const handleChallengeChange = (updatedChallenge: Challenge) => {
-        console.log('handleChallengeChange');
-        console.log({ ...updatedChallenge });
         const updatedProjects = projects.map((aProject: Project) => {
             if (aProject.id !== projectId) {
                 return aProject;
@@ -256,7 +254,9 @@ export const TestDesigner: React.FC<TestDesignerProps> = (props: TestDesignerPro
                                                         {getChallengeTypeDescription(ChallengeType.TrueOrFalse)}
                                                     </Typography>
                                                 </MenuItem>
-                                                <MenuItem disabled onClick={handleCloseNewChallengeMenu}>
+                                                <MenuItem onClick={() => {
+                                                    handleNewChallengeOptionClick(ChallengeType.FillGaps);
+                                                }}>
                                                     <ListItemIcon>{getChallengeTypeIcon(ChallengeType.FillGaps, 'large')}</ListItemIcon>
                                                     <Typography variant='button'>
                                                         {getChallengeTypeDescription(ChallengeType.FillGaps)}

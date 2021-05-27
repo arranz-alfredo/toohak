@@ -41,7 +41,6 @@ interface DropGroupProps {
     fontSize?: number,
     onTitleChange?: (newTitle: string) => void,
     onItemsChange?: (newTitle: string[]) => void,
-    acceptTypes?: string[],
     droppedItems?: string[]
     onDrop?: (item: unknown) => void
 }
@@ -55,21 +54,18 @@ export const DropGroup: React.FC<DropGroupProps> = (props: DropGroupProps) => {
         fontSize,
         onTitleChange,
         onItemsChange,
-        acceptTypes,
         droppedItems,
         onDrop
     } = props;
 
     const handleDrop = (item: unknown) => {
-        console.log('Drop!');
-        console.log(item);
         if(onDrop) {
             onDrop(item);
         }
     };
 
     const [{ isOver, canDrop }, drop] = useDrop({
-        accept: acceptTypes || '',
+        accept: 'dnd',
         drop: handleDrop,
         collect: (monitor: { isOver: () => boolean, canDrop: () => boolean }) => ({
             isOver: monitor.isOver(),
@@ -240,7 +236,6 @@ export const DropGroup: React.FC<DropGroupProps> = (props: DropGroupProps) => {
                                                         <DragableItem
                                                             key={aDroppedItem}
                                                             name={aDroppedItem}
-                                                            type="classifyElement"
                                                             style={getDragableItemStyle(aDroppedItem)}
                                                         />
                                                     </Grid>

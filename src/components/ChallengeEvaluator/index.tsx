@@ -11,6 +11,8 @@ import { ClassifyChallenger } from '../ClassifyChallenger';
 import { ClassifyChallenge } from '../../types/ClassifyChallenge';
 import { FillTableChallenger } from '../FillTableChallenger';
 import { FillTableChallenge } from '../../types/FillTableChallenge';
+import { FillGapsChallenger } from '../FillGapsChallenger';
+import { FillGapsChallenge } from '../../types/FillGapsChallenge';
 
 const useStyles = makeStyles((theme) => ({
     fullHeight: {
@@ -61,6 +63,17 @@ export const ChallengeEvaluator: React.FC<ChallengeEvaluatorProps> = (props: Cha
                         <TrueOrFalseChallenger
                             mode={ComponentMode.Play}
                             challenge={challenge as TrueOrFalseChallenge}
+                            onSuccess={handlerSucessChallenge}
+                            onError={handlerErrorChallenge}
+                        />
+                    )
+                }
+                {
+                    challenge?.type === ChallengeType.FillGaps
+                    && (
+                        <FillGapsChallenger
+                            mode={ComponentMode.Play}
+                            challenge={challenge as FillGapsChallenge}
                             onSuccess={handlerSucessChallenge}
                             onError={handlerErrorChallenge}
                         />

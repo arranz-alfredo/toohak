@@ -5,7 +5,7 @@ import { useDrag } from 'react-dnd';
 const useStyles = makeStyles((theme) => ({
     item: {
         borderRadius: '10em',
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: theme.palette.primary.main,
         color: theme.palette.primary.contrastText,
         padding: '0.5rem 1rem',
         cursor: 'move',
@@ -14,24 +14,24 @@ const useStyles = makeStyles((theme) => ({
 
 interface DragableItemProps {
     name: string
-    type: string
     style?: CSSProperties
+    iconButton?: React.ReactNode
 }
 
 export const DragableItem: React.FC<DragableItemProps> = (props: DragableItemProps) => {
-    const  { name, type, style } = props;
+    const  { name, style, iconButton } = props;
 
     const classes = useStyles();
 
     const [{ opacity }, drag] = useDrag(
         () => ({
-            type,
+            type: 'dnd',
             item: { name },
             collect: (monitor) => ({
                 opacity: monitor.isDragging() ? 0.4 : 1,
             }),
         }),
-        [name, type],
+        [name],
     );
 
     return (
@@ -41,8 +41,12 @@ export const DragableItem: React.FC<DragableItemProps> = (props: DragableItemPro
             style={{
                 opacity,
                 ...style
-            }}>
+            }}
+        >
             {name}
+            {
+                iconButton
+            }
         </div>
     );
 };

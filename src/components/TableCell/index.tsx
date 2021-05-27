@@ -34,8 +34,6 @@ interface TableCellProps {
 export const TableCell: React.FC<TableCellProps> = (props: TableCellProps) => {
     const { mode, cell, fixed, fontSize, showResults, success, onCellChange } = props;
 
-    console.log(cell.text, showResults, success);
-
     const [formData, setFormData] = useState<FillTableChallengeCell>(cell);
     const inputText = useRef({} as HTMLInputElement);
 
