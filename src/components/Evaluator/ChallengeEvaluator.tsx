@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
 import { ComponentMode } from '../../enums/ComponentMode';
-import { Challenge } from '../../types/Challenge';
+import { Challenge, ChallengeOptions } from '../../types/Challenge';
 import { ChallengeType } from '../../enums/ChallengeType';
 import { SelectAnswerChallenger } from '../SelectAnswerChallenge/SelectAnswerChallenger';
 import { SelectAnswerChallenge } from '../../types/SelectAnswerChallenge';
@@ -21,13 +21,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface ChallengeEvaluatorProps {
-    challenge: Challenge;
+    challenge: Challenge
+    options: ChallengeOptions
     onSuccess?: () => void
     onError?: () => void
 }
 
 export const ChallengeEvaluator: React.FC<ChallengeEvaluatorProps> = (props: ChallengeEvaluatorProps) => {
-    const { challenge, onSuccess, onError } = props;
+    const { challenge, options, onSuccess, onError } = props;
 
     const classes = useStyles();
 
@@ -52,6 +53,7 @@ export const ChallengeEvaluator: React.FC<ChallengeEvaluatorProps> = (props: Cha
                         <SelectAnswerChallenger
                             mode={ComponentMode.Play}
                             challenge={challenge as SelectAnswerChallenge}
+                            options={options}
                             onSuccess={handlerSucessChallenge}
                             onError={handlerErrorChallenge}
                         />

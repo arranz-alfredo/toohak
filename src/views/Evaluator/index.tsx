@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router";
-import { Grid, makeStyles } from '@material-ui/core';
-import { Test } from '../../types/Test';
+import { Fab, Grid, Icon, makeStyles } from '@material-ui/core';
+import { Test, TestOptions } from '../../types/Test';
 import { useProjects } from '../../hooks/useProjects';
 import { Project } from '../../types/Project';
 import { ChallengeEvaluator } from '../../components/Evaluator/ChallengeEvaluator';
 import { ChallengeLauncher } from '../../components/Evaluator/ChallengeLauncher';
 import { TestResult } from '../../components/Evaluator/TestResult';
+import { useLocation } from 'react-router-dom';
+import { parseQueryString } from '../../utils/utilStrings';
 
 const useStyles = makeStyles((theme) => ({
     fullHeight: {
         height: '100%'
+    },
+    centerAll: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 }));
 
@@ -26,8 +33,10 @@ interface ChallengeState {
 
 export const Evaluator: React.FC = () => {
     const { projectId, testId } = useParams() as IParams;
+    const loc = useLocation();
 
     const { projects } = useProjects();
+    const [testOptions] = useState<TestOptions>(parseQueryString(loc.search));
     const [test, setTest] = useState<Test>();
     const [currentChallengeState, setCurrentChallengeState] = useState<ChallengeState>({idx: -1, launching: false});
     const [results, setResults] = useState<boolean[]>([]);
@@ -74,7 +83,9 @@ export const Evaluator: React.FC = () => {
 
     const handleResponse = (success: boolean) => {
         setResults([...results, success]);
-        next();
+        if (testOptions.autoNext) {
+            next();
+        }
     };
 
     return (
@@ -98,6 +109,9 @@ export const Evaluator: React.FC = () => {
                     test != null && !currentChallengeState.launching && currentChallengeState.idx >= 0 && (
                         <ChallengeEvaluator
                             challenge={test.challenges[currentChallengeState.idx]}
+                            options={{
+                                ignoreTimeLimit: testOptions.ignoreTimeLimit
+                            }}
                             onSuccess={() => { handleResponse(true); }}
                             onError={() => { handleResponse(false); }}
                         />
@@ -109,7 +123,22 @@ export const Evaluator: React.FC = () => {
                     )
                 }
             </Grid>
-            <Grid item xs={2}></Grid>
+            <Grid item xs={2} className={`${classes.fullHeight} ${classes.centerAll}`}>
+                {
+                    !testOptions.autoNext
+                    && currentChallengeState.idx === results.length - 1
+                    && (
+                        <Fab
+                            variant="extended"
+                            size="large"
+                            color="primary"
+                            onClick={next}
+                        >
+                            Siguiente&nbsp;<Icon>navigate_next</Icon>
+                        </Fab>
+                    )
+                }
+            </Grid>
         </Grid>
     );
 };

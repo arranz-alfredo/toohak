@@ -30,6 +30,8 @@ export const getChallengeTypeDescription = (type: ChallengeType, language: Langu
             return language === Language.Es ? "Clasifica los elementos" : "Classify the elements";
         case ChallengeType.FillTable:
             return language === Language.Es ? "Completa la tabla" : "Complete the table";
+        case ChallengeType.TheOddOne:
+            return language === Language.Es ? "Busca el que sobra" : "Find the odd one";
         case ChallengeType.Crossword:
             return language === Language.Es ? "Crucigrama" : "Crossword";
         default:
@@ -48,7 +50,8 @@ export const getChallengeTypeIcon = (type: ChallengeType, size: 'large' | 'defau
                                 : type === ChallengeType.Sort ? 'swap_vert'
                                     : type === ChallengeType.Classify ? 'category'
                                         : type === ChallengeType.FillTable ? 'grid_on'
-                                            : type === ChallengeType.Crossword ? 'font_download' : ''
+                                            : type === ChallengeType.TheOddOne ? 'touch_app'
+                                                : type === ChallengeType.Crossword ? 'font_download' : ''
             }
         </Icon>
     );

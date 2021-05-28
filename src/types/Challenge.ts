@@ -11,6 +11,10 @@ export interface ChallengePicture {
     data: string
 }
 
+export interface ChallengeOptions {
+    ignoreTimeLimit: boolean
+}
+
 export interface Challenge {
     id: string,
     type: ChallengeType,

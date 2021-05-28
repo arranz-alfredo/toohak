@@ -1,12 +1,13 @@
 import React, { Fragment, useState } from 'react';
 import { Box, Button, Dialog, DialogTitle, Divider, Grid, Icon, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles, Menu, MenuItem, Typography } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import { Test } from '../../types/Test';
+import { Link, useHistory } from 'react-router-dom';
+import { Test, TestOptions } from '../../types/Test';
 import { colors } from '../../theme';
 import { Project } from '../../types/Project';
 import { isValidTest } from '../../utils/utilValidationTypes';
 import { TestForm } from './TestForm';
 import { DialogConfirm } from '../common/DialogConfirm';
+import { DialogTestOptions } from './DialogTestOptions';
 
 const useStyles = makeStyles((theme) => ({
     inline: {
@@ -31,6 +32,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+interface PlayOptionsState {
+    projectId?: string,
+    testId?: string,
+    openOptions: boolean
+}
 interface TestListProps {
     project: Project,
     onCreateTest: (projectId: string, test: Test) => void
@@ -40,10 +46,13 @@ interface TestListProps {
 export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
     const { project, onCreateTest, onDeleteTest } = props;
 
+    const history = useHistory();
+
     const [selectedTest, setSelectedTest] = React.useState<Test | undefined>();
     const [anchorElEdit, setAnchorElEdit] = React.useState<Element | null>(null);
     const [openTestForm, setOpenTestForm] = useState<boolean>(false);
     const [openRemoveTestConfirm, setOpenRemoveTestConfirm] = useState<boolean>(false);
+    const [playOptionsState, setPlayOptionsState] = useState<PlayOptionsState>();
 
     const classes = useStyles();
 
@@ -92,6 +101,27 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
     const handleRefuseRemoveTest = () => {
         setSelectedTest(undefined);
         setOpenRemoveTestConfirm(false);
+    };
+
+    const handlePlayClick = (projectId: string, testId: string) => {
+        setPlayOptionsState({
+            projectId,
+            testId,
+            openOptions: true
+        });
+    };
+
+    const handleAcceptPlayOptions = (testOptions: TestOptions) => {
+        history.push(`/play/${playOptionsState?.projectId}/${playOptionsState?.testId}?ignoreTimeLimit=${testOptions.ignoreTimeLimit}&autoNext=${testOptions.autoNext}`, playOptionsState);
+        setPlayOptionsState({
+            openOptions: false
+        });
+    };
+
+    const handleCancelPlayOptions = () => {
+        setPlayOptionsState({
+            openOptions: false
+        });
     };
 
     return (
@@ -182,7 +212,7 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                                                     <Grid item>
                                                         {
                                                             isValidTest(aTest) ? (
-                                                                <IconButton title='Jugar!' component={Link} to={`/play/${project.id}/${aTest.id}`}>
+                                                                <IconButton title='Jugar!' onClick={() => { handlePlayClick(project.id, aTest.id); }}>
                                                                     <Icon className={classes.play}>play_circle_filled</Icon>
                                                                 </IconButton>
                                                             ) : (
@@ -230,6 +260,15 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                     </Grid>
                 </Grid>
             </Grid>
+            {
+                playOptionsState && (
+                    <DialogTestOptions
+                        open={playOptionsState.openOptions}
+                        onAccept={handleAcceptPlayOptions}
+                        onCancel={handleCancelPlayOptions}
+                    />
+                )
+            }
         </Fragment>
     );
 };

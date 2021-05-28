@@ -6,5 +6,6 @@ export enum ChallengeType {
     Sort = 'SO',
     Classify = 'CL',
     FillTable = 'FT',
+    TheOddOne = 'OO',
     Crossword = 'CW'
 }

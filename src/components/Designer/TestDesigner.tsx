@@ -291,6 +291,12 @@ export const TestDesigner: React.FC<TestDesignerProps> = (props: TestDesignerPro
                                                     </Typography>
                                                 </MenuItem>
                                                 <MenuItem disabled onClick={handleCloseNewChallengeMenu}>
+                                                    <ListItemIcon>{getChallengeTypeIcon(ChallengeType.TheOddOne, 'large')}</ListItemIcon>
+                                                    <Typography variant='button'>
+                                                        {getChallengeTypeDescription(ChallengeType.TheOddOne)}
+                                                    </Typography>
+                                                </MenuItem>
+                                                <MenuItem disabled onClick={handleCloseNewChallengeMenu}>
                                                     <ListItemIcon>{getChallengeTypeIcon(ChallengeType.Crossword, 'large')}</ListItemIcon>
                                                     <Typography variant='button'>
                                                         {getChallengeTypeDescription(ChallengeType.Crossword)}
