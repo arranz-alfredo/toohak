@@ -14,6 +14,7 @@ import { FillGapsSentence, FillGapsSentenceAnswer } from './FillGapsSentence';
 import { DragableItem } from '../common/DragableItem';
 import { joinSentence, splitSentence } from '../../utils/utilStrings';
 import { DialogFillGapsCandidates } from './DialogFillGapsCandidates';
+import { ChallengeOptions } from '../../types/Challenge';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -73,6 +74,7 @@ const reorderItems = (sentences: FillGapsChallengeSentence[], mode: ComponentMod
 interface FillGapsChallengerProps {
     mode: ComponentMode
     challenge: FillGapsChallenge
+    options?: ChallengeOptions
     onChallengeChange?: (updatedChallenge: FillGapsChallenge) => void
     onSuccess?: () => void
     onError?: () => void
@@ -86,7 +88,7 @@ interface Item {
 }
 
 export const FillGapsChallenger: React.FC<FillGapsChallengerProps> = (props: FillGapsChallengerProps) => {
-    const { mode, challenge, onChallengeChange, onSuccess, onError } = props;
+    const { mode, challenge, options, onChallengeChange, onSuccess, onError } = props;
 
     const [stopTimer, setStopTimer] = useState<boolean>(false);
     const [highlightResults, setHighlightResults] = useState<boolean>(false);
@@ -304,12 +306,16 @@ export const FillGapsChallenger: React.FC<FillGapsChallengerProps> = (props: Fil
             <div className={classes.answerContainer}>
                 <Grid container justify='center' className={classes.fullHeight}>
                     <Grid item xs={2} className={classes.fullHeight}>
-                        <Countdown
-                            mode={mode}
-                            time={challenge.config.timeLimit}
-                            stopTimer={stopTimer}
-                            onTimeUp={handlerTimeUp}
-                        />
+                        {
+                            options != null && !options.ignoreTimeLimit && (
+                                <Countdown
+                                    mode={mode}
+                                    time={challenge.config.timeLimit}
+                                    stopTimer={stopTimer}
+                                    onTimeUp={handlerTimeUp}
+                                />
+                            )
+                        }
                     </Grid>
                     <Grid item xs={8} className={classes.fullHeight}>
                         {

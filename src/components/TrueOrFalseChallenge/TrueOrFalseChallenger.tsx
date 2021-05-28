@@ -10,7 +10,7 @@ import { Countdown } from '../common/Countdown';
 
 import correct from '../../assets/sounds/correct.wav';
 import incorrect from '../../assets/sounds/incorrect.wav';
-import { ChallengePicture } from '../../types/Challenge';
+import { ChallengeOptions, ChallengePicture } from '../../types/Challenge';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,13 +40,14 @@ const useStyles = makeStyles((theme) => ({
 interface TrueOrFalseChallengerProps {
     mode: ComponentMode
     challenge: TrueOrFalseChallenge
+    options?: ChallengeOptions
     onChallengeChange?: (updatedChallenge: TrueOrFalseChallenge) => void
     onSuccess?: () => void
     onError?: () => void
 }
 
 export const TrueOrFalseChallenger: React.FC<TrueOrFalseChallengerProps> = (props: TrueOrFalseChallengerProps) => {
-    const { mode, challenge, onChallengeChange, onSuccess, onError } = props;
+    const { mode, challenge, options, onChallengeChange, onSuccess, onError } = props;
 
     const [stopTimer, setStopTimer] = useState<boolean>(false);
     const [highlightResults, setHighlightResults] = useState<boolean>(false);
@@ -133,12 +134,16 @@ export const TrueOrFalseChallenger: React.FC<TrueOrFalseChallengerProps> = (prop
             <div className={classes.pictureContainer}>
                 <Grid container justify='center' style={{ height: '100%' }}>
                     <Grid item xs={2} style={{ height: '100%' }}>
-                        <Countdown
-                            mode={mode}
-                            time={challenge.config.timeLimit}
-                            stopTimer={stopTimer}
-                            onTimeUp={handlerTimeUp}
-                        />
+                        {
+                            options != null && !options.ignoreTimeLimit && (
+                                <Countdown
+                                    mode={mode}
+                                    time={challenge.config.timeLimit}
+                                    stopTimer={stopTimer}
+                                    onTimeUp={handlerTimeUp}
+                                />
+                            )
+                        }
                     </Grid>
                     <Grid item xs={8} style={{ height: '100%' }}>
                         <PictureGrid

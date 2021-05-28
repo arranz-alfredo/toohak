@@ -9,6 +9,7 @@ import { Countdown } from '../common/Countdown';
 import correct from '../../assets/sounds/correct.wav';
 import incorrect from '../../assets/sounds/incorrect.wav';
 import { TableCell } from './TableCell';
+import { ChallengeOptions } from '../../types/Challenge';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,13 +48,14 @@ const initialFillTableState = (challenge: FillTableChallenge): FillTableChalleng
 interface FillTableChallengerProps {
     mode: ComponentMode
     challenge: FillTableChallenge
+    options?: ChallengeOptions
     onChallengeChange?: (updatedChallenge: FillTableChallenge) => void
     onSuccess?: () => void
     onError?: () => void
 }
 
 export const FillTableChallenger: React.FC<FillTableChallengerProps> = (props: FillTableChallengerProps) => {
-    const { mode, challenge, onChallengeChange, onSuccess, onError } = props;
+    const { mode, challenge, options, onChallengeChange, onSuccess, onError } = props;
 
     const [fillTableState, setFillTableState] =useState<FillTableChallengeCell[][]>(initialFillTableState(challenge));
 
@@ -185,12 +187,16 @@ export const FillTableChallenger: React.FC<FillTableChallengerProps> = (props: F
             <div className={classes.answerContainer}>
                 <Grid container justify='center' style={{ height: '100%' }}>
                     <Grid item xs={2} style={{ height: '100%' }}>
-                        <Countdown
-                            mode={mode}
-                            time={challenge.config.timeLimit}
-                            stopTimer={stopTimer}
-                            onTimeUp={handlerTimeUp}
-                        />
+                        {
+                            options != null && !options.ignoreTimeLimit && (
+                                <Countdown
+                                    mode={mode}
+                                    time={challenge.config.timeLimit}
+                                    stopTimer={stopTimer}
+                                    onTimeUp={handlerTimeUp}
+                                />
+                            )
+                        }
                     </Grid>
                     <Grid item xs={8} style={{ height: '100%' }}>
                         <Grid container alignItems="center" style={{ height: '100%' }}>

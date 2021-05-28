@@ -12,6 +12,7 @@ import correct from '../../assets/sounds/correct.wav';
 import incorrect from '../../assets/sounds/incorrect.wav';
 import { DropGroup } from './DropGroup';
 import { DragableItem } from '../common/DragableItem';
+import { ChallengeOptions } from '../../types/Challenge';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -59,13 +60,14 @@ const initialClassifyState = (challenge: ClassifyChallenge): dropState[] => {
 interface ClassifyChallengerProps {
     mode: ComponentMode
     challenge: ClassifyChallenge
+    options?: ChallengeOptions
     onChallengeChange?: (updatedChallenge: ClassifyChallenge) => void
     onSuccess?: () => void
     onError?: () => void
 }
 
 export const ClassifyChallenger: React.FC<ClassifyChallengerProps> = (props: ClassifyChallengerProps) => {
-    const { mode, challenge, onChallengeChange, onSuccess, onError } = props;
+    const { mode, challenge, options, onChallengeChange, onSuccess, onError } = props;
 
     const [classifyState, setClassifyState] =useState<dropState[]>(initialClassifyState(challenge));
 
@@ -222,12 +224,16 @@ export const ClassifyChallenger: React.FC<ClassifyChallengerProps> = (props: Cla
             <div className={classes.classifyContainer}>
                 <Grid container justify='center' className={classes.fullHeight}>
                     <Grid item xs={2} className={classes.fullHeight}>
-                        <Countdown
-                            mode={mode}
-                            time={challenge.config.timeLimit}
-                            stopTimer={stopTimer}
-                            onTimeUp={handlerTimeUp}
-                        />
+                        {
+                            options != null && !options.ignoreTimeLimit && (
+                                <Countdown
+                                    mode={mode}
+                                    time={challenge.config.timeLimit}
+                                    stopTimer={stopTimer}
+                                    onTimeUp={handlerTimeUp}
+                                />
+                            )
+                        }
                     </Grid>
                     <Grid item xs={8} className={classes.fullHeight}>
                         <DndProvider backend={HTML5Backend}>

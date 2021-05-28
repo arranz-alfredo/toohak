@@ -65,6 +65,7 @@ export const ChallengeEvaluator: React.FC<ChallengeEvaluatorProps> = (props: Cha
                         <TrueOrFalseChallenger
                             mode={ComponentMode.Play}
                             challenge={challenge as TrueOrFalseChallenge}
+                            options={options}
                             onSuccess={handlerSucessChallenge}
                             onError={handlerErrorChallenge}
                         />
@@ -76,6 +77,7 @@ export const ChallengeEvaluator: React.FC<ChallengeEvaluatorProps> = (props: Cha
                         <FillGapsChallenger
                             mode={ComponentMode.Play}
                             challenge={challenge as FillGapsChallenge}
+                            options={options}
                             onSuccess={handlerSucessChallenge}
                             onError={handlerErrorChallenge}
                         />
@@ -87,6 +89,7 @@ export const ChallengeEvaluator: React.FC<ChallengeEvaluatorProps> = (props: Cha
                         <ClassifyChallenger
                             mode={ComponentMode.Play}
                             challenge={challenge as ClassifyChallenge}
+                            options={options}
                             onSuccess={handlerSucessChallenge}
                             onError={handlerErrorChallenge}
                         />
@@ -98,6 +101,7 @@ export const ChallengeEvaluator: React.FC<ChallengeEvaluatorProps> = (props: Cha
                         <FillTableChallenger
                             mode={ComponentMode.Play}
                             challenge={challenge as FillTableChallenge}
+                            options={options}
                             onSuccess={handlerSucessChallenge}
                             onError={handlerErrorChallenge}
                         />
