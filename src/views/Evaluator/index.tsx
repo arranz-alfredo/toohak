@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { Fab, Grid, Icon, makeStyles } from '@material-ui/core';
 import { Test, TestOptions } from '../../types/Test';
 import { useProjects } from '../../hooks/useProjects';
@@ -7,8 +7,8 @@ import { Project } from '../../types/Project';
 import { ChallengeEvaluator } from '../../components/Evaluator/ChallengeEvaluator';
 import { ChallengeLauncher } from '../../components/Evaluator/ChallengeLauncher';
 import { TestResult } from '../../components/Evaluator/TestResult';
-import { useLocation } from 'react-router-dom';
 import { parseQueryString } from '../../utils/utilStrings';
+import { Language } from '../../enums/Language';
 
 const useStyles = makeStyles((theme) => ({
     fullHeight: {
@@ -33,10 +33,10 @@ interface ChallengeState {
 
 export const Evaluator: React.FC = () => {
     const { projectId, testId } = useParams() as IParams;
-    const loc = useLocation();
+    const history = useHistory();
 
     const { projects } = useProjects();
-    const [testOptions] = useState<TestOptions>(parseQueryString(loc.search));
+    const [testOptions] = useState<TestOptions>(parseQueryString(history.location.search));
     const [test, setTest] = useState<Test>();
     const [currentChallengeState, setCurrentChallengeState] = useState<ChallengeState>({idx: -1, launching: false});
     const [results, setResults] = useState<boolean[]>([]);
@@ -88,6 +88,16 @@ export const Evaluator: React.FC = () => {
         }
     };
 
+    const handleBackHome = () => {
+        history.push('/');
+    };
+
+    const handleRepeatTest = () => {
+        setCurrentChallengeState({idx: 0, launching: true});
+        setResults([]);
+        setShowResult(false);
+    };
+
     return (
         <Grid
             container
@@ -100,6 +110,8 @@ export const Evaluator: React.FC = () => {
                     test != null && currentChallengeState.launching && currentChallengeState.idx >= 0 && (
                         <ChallengeLauncher
                             challengeType={test.challenges[currentChallengeState.idx].type}
+                            challengeNumber={currentChallengeState.idx + 1}
+                            challengeTotalCount={test.challenges.length}
                             language={test.language}
                             delay={3}
                             onEnd={next}
@@ -121,7 +133,12 @@ export const Evaluator: React.FC = () => {
                 }
                 {
                     test != null && showResult && (
-                        <TestResult test={test} results={results} />
+                        <TestResult
+                            test={test}
+                            results={results}
+                            onBackHome={handleBackHome}
+                            onRepeatTest={handleRepeatTest}
+                        />
                     )
                 }
             </Grid>
@@ -136,7 +153,7 @@ export const Evaluator: React.FC = () => {
                             color="primary"
                             onClick={next}
                         >
-                            Siguiente&nbsp;<Icon>navigate_next</Icon>
+                            {test?.language === Language.En ? 'Next' : 'Siguiente'}&nbsp;<Icon>navigate_next</Icon>
                         </Fab>
                     )
                 }

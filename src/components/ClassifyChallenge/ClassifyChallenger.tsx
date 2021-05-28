@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Fab, Grid, Icon, makeStyles } from '@material-ui/core';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -58,6 +58,14 @@ const initialClassifyState = (challenge: ClassifyChallenge): dropState[] => {
     ));
 };
 
+const reorderItems = (groups: ClassifyChallengeGroup[], mode: ComponentMode): string[] => {
+    let list: string[] = groups.reduce((acc: string[], current: ClassifyChallengeGroup) => [...acc, ...current.items], []);
+    if (mode === ComponentMode.Play) {
+        list = list.sort(() => Math.random() - 0.5);
+    }
+    return list;
+};
+
 interface ClassifyChallengerProps {
     mode: ComponentMode
     challenge: ClassifyChallenge
@@ -75,10 +83,16 @@ export const ClassifyChallenger: React.FC<ClassifyChallengerProps> = (props: Cla
     const [stopTimer, setStopTimer] = useState<boolean>(false);
     const [highlightResults, setHighlightResults] = useState<boolean>(false);
 
+    const [draggableItems, setDragabbleItems] = useState<string[]>(reorderItems(challenge.groups, mode));
+
     const [playCorrect] = useSound(correct);
     const [playIncorrect] = useSound(incorrect);
 
     const classes = useStyles();
+
+    useEffect(() => {
+        setDragabbleItems(reorderItems(challenge.groups, mode));
+    }, [challenge.groups]);
 
     const handleTitleChange = (newTitle: string) => {
         if (onChallengeChange) {
@@ -242,18 +256,16 @@ export const ClassifyChallenger: React.FC<ClassifyChallengerProps> = (props: Cla
                                 <Grid item xs={12} className={classes.optionsContainer}>
                                     <Grid container spacing={2} justify="space-around" alignItems="center">
                                         {
-                                            challenge.groups.map((aGroup: ClassifyChallengeGroup) => (
-                                                aGroup.items.map((anItem: string, idx: number) => (
-                                                    !isDropped(anItem) && (
-                                                        <Grid item key={`gridItem_${idx}`}>
-                                                            <DragableItem
-                                                                name={anItem}
-                                                                key={`dragable_${idx}`}
-                                                                style={{fontSize: challenge.config.itemsFontSize}}
-                                                            />
-                                                        </Grid>
-                                                    )
-                                                ))
+                                            draggableItems.map((anItem: string, idx: number) => !isDropped(anItem) && (
+                                                !isDropped(anItem) && (
+                                                    <Grid item key={`gridItem_${idx}`}>
+                                                        <DragableItem
+                                                            name={anItem}
+                                                            key={`dragable_${idx}`}
+                                                            style={{fontSize: challenge.config.itemsFontSize}}
+                                                        />
+                                                    </Grid>
+                                                )
                                             ))
                                         }
                                     </Grid>

@@ -1,9 +1,7 @@
 import React from 'react';
-import { Grid, Icon, makeStyles, Typography } from '@material-ui/core';
+import { Button, Grid, Icon, makeStyles, Typography } from '@material-ui/core';
 import { Test } from '../../types/Test';
-import { Timeline, TimelineConnector, TimelineContent, TimelineItem, TimelineSeparator } from '@material-ui/lab';
-import { Challenge } from '../../types/Challenge';
-import { getChallengeTypeIcon } from '../../utils/utilChallenges';
+import { Language } from '../../enums/Language';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,11 +26,13 @@ const useStyles = makeStyles((theme) => ({
 
 interface TestResultProps {
     test: Test,
-    results: boolean[]
+    results: boolean[],
+    onBackHome: () => void,
+    onRepeatTest: () => void
 }
 
 export const TestResult: React.FC<TestResultProps> = (props: TestResultProps) => {
-    const { test, results } = props;
+    const { test, results, onBackHome, onRepeatTest } = props;
 
     const classes = useStyles();
 
@@ -57,32 +57,25 @@ export const TestResult: React.FC<TestResultProps> = (props: TestResultProps) =>
             <Grid item>
                 <Typography variant="h4">
                     {
-                        `Aciertos: ${results.filter((aResult: boolean) => aResult).length}/${results.length}`
+                        `${test.language === Language.En ? 'Correct answers' : 'Respuestas correctas'}: ${results.filter((aResult: boolean) => aResult).length}/${results.length}`
                     }
                 </Typography>
             </Grid>
-            <Grid item>
-                <Timeline className={classes.timeline}>
-                    {
-                        test.challenges.map((aChallenge: Challenge, challengeIdx: number) => (
-                            <TimelineItem>
-                                <TimelineSeparator>
-                                    {getChallengeTypeIcon(aChallenge.type, 'large', {transform: 'rotate(90deg)'})}
-                                    {
-                                        challengeIdx < test.challenges.length - 1 && (
-                                            <TimelineConnector />
-                                        )
-                                    }
-                                </TimelineSeparator>
-                                <TimelineContent className={classes.timelineContentContainer}>
-                                    <Icon className={classes.timelineContent} fontSize="large" color={results[challengeIdx] ? 'primary' : 'error'}>
-                                        { results[challengeIdx] ? 'check_circle' : 'cancel' }
-                                    </Icon>
-                                </TimelineContent>
-                            </TimelineItem>
-                        ))
-                    }
-                </Timeline>
+            <Grid item container justify="center" alignItems="center" spacing={4}>
+                <Grid item>
+                    <Button variant="contained" color="primary" onClick={onBackHome}>
+                        <Icon>navigate_before</Icon>
+                        &nbsp;
+                        { test.language === Language.En ? 'Go back to home' : 'Volver a la pantalla principal' }
+                    </Button>
+                </Grid>
+                <Grid item>
+                    <Button variant="contained" color="primary" onClick={onRepeatTest}>
+                        <Icon>replay</Icon>
+                        &nbsp;
+                        { test.language === Language.En ? 'repeat test' : 'Repetir cuestionario' }
+                    </Button>
+                </Grid>
             </Grid>
         </Grid>
     );

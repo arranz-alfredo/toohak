@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { Divider, Grid, LinearProgress, makeStyles, Typography } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { ChallengeType } from '../../enums/ChallengeType';
 import { Language } from '../../enums/Language';
@@ -9,23 +9,21 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         height: '100%',
         border: 'solid 1px',
-        backgroundColor: '#81d4fa',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: '32px'
+        backgroundColor: theme.palette.primary.light,
     }
 }));
 
 interface ChallengeLauncherProps {
     challengeType: ChallengeType,
+    challengeNumber: number,
+    challengeTotalCount: number,
     language: Language,
     delay: number,
     onEnd: () => void
 }
 
 export const ChallengeLauncher: React.FC<ChallengeLauncherProps> = (props: ChallengeLauncherProps) => {
-    const { challengeType, language, delay, onEnd } = props;
+    const { challengeType, challengeNumber, challengeTotalCount, language, delay, onEnd } = props;
 
     const classes = useStyles();
 
@@ -34,10 +32,28 @@ export const ChallengeLauncher: React.FC<ChallengeLauncherProps> = (props: Chall
     }, []);
 
     return (
-        <div className={classes.root}>
-            {
-                getChallengeTypeDescription(challengeType, language)
-            }
-        </div>
+        <Grid container direction="column" justify="center" alignItems="center" spacing={2} className={classes.root}>
+            <Grid item>
+                <Typography variant="h2">
+                    {
+                        getChallengeTypeDescription(challengeType, language)
+                    }
+                </Typography>
+            </Grid>
+            <Grid item style={{width: '100%'}}>
+                <LinearProgress color="secondary" />
+            </Grid>
+            <Grid item>
+                <Typography variant="h4">
+                    {
+                        language === Language.En ? (
+                            `Question ${challengeNumber.toString()} of ${challengeTotalCount.toString()}`
+                        ) : (
+                            `Pregunta ${challengeNumber.toString()} de ${challengeTotalCount.toString()}`
+                        )
+                    }
+                </Typography>
+            </Grid>
+        </Grid>
     );
 };
