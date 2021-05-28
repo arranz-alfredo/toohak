@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { ChallengeType } from '../../enums/ChallengeType';
+import { Language } from '../../enums/Language';
 import { getChallengeTypeDescription } from '../../utils/utilChallenges';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,12 +19,13 @@ const useStyles = makeStyles((theme) => ({
 
 interface ChallengeLauncherProps {
     challengeType: ChallengeType,
+    language: Language,
     delay: number,
     onEnd: () => void
 }
 
 export const ChallengeLauncher: React.FC<ChallengeLauncherProps> = (props: ChallengeLauncherProps) => {
-    const { challengeType, delay, onEnd } = props;
+    const { challengeType, language, delay, onEnd } = props;
 
     const classes = useStyles();
 
@@ -34,7 +36,7 @@ export const ChallengeLauncher: React.FC<ChallengeLauncherProps> = (props: Chall
     return (
         <div className={classes.root}>
             {
-                getChallengeTypeDescription(challengeType)
+                getChallengeTypeDescription(challengeType, language)
             }
         </div>
     );

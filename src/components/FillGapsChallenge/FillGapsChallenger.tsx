@@ -15,6 +15,7 @@ import { DragableItem } from '../common/DragableItem';
 import { joinSentence, splitSentence } from '../../utils/utilStrings';
 import { DialogFillGapsCandidates } from './DialogFillGapsCandidates';
 import { ChallengeOptions } from '../../types/Challenge';
+import { Language } from '../../enums/Language';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -454,7 +455,7 @@ export const FillGapsChallenger: React.FC<FillGapsChallengerProps> = (props: Fil
                                 disabled={mode === ComponentMode.Design || !completed()}
                                 onClick={() => { handleCheckClick(); }}
                             >
-                                <Icon>check</Icon>&nbsp;Corregir
+                                <Icon>check</Icon>&nbsp;{options?.language === Language.En ? 'Check' : 'Corregir'}
                             </Fab>
                         }
                     </Grid>

@@ -11,6 +11,7 @@ import { Countdown } from '../common/Countdown';
 import correct from '../../assets/sounds/correct.wav';
 import incorrect from '../../assets/sounds/incorrect.wav';
 import { ChallengeOptions, ChallengePicture } from '../../types/Challenge';
+import { Language } from '../../enums/Language';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -160,7 +161,7 @@ export const TrueOrFalseChallenger: React.FC<TrueOrFalseChallengerProps> = (prop
                     <Grid item xs={5} className={classes.optionContainer}>
                         <SelectableOption
                             mode={mode}
-                            text="Verdadero"
+                            text={options?.language === Language.En ? 'True' : 'Verdadero'}
                             icon="wb_sunny"
                             valid={challenge.answer}
                             color='#4caf50'
@@ -175,7 +176,7 @@ export const TrueOrFalseChallenger: React.FC<TrueOrFalseChallengerProps> = (prop
                     <Grid item xs={5} className={classes.optionContainer}>
                         <SelectableOption
                             mode={mode}
-                            text="Falso"
+                            text={options?.language === Language.En ? 'False' : 'Falso'}
                             icon="brightness_2"
                             valid={!challenge.answer}
                             color='#f44336'

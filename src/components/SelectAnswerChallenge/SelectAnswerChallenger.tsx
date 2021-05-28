@@ -11,6 +11,7 @@ import { Countdown } from '../common/Countdown';
 import correct from '../../assets/sounds/correct.wav';
 import incorrect from '../../assets/sounds/incorrect.wav';
 import { ChallengeOptions, ChallengePicture } from '../../types/Challenge';
+import { Language } from '../../enums/Language';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -202,7 +203,7 @@ export const SelectAnswerChallenger: React.FC<SelectAnswerChallengerProps> = (pr
                                     disabled={mode === ComponentMode.Design || selectedAnswers.length === 0}
                                     onClick={() => { handleCheckClick(); }}
                                 >
-                                    <Icon>check</Icon>&nbsp;Corregir
+                                    <Icon>check</Icon>&nbsp;{options?.language === Language.En ? 'Check' : 'Corregir'}
                                 </Fab>
                             )
                         }

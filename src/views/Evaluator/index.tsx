@@ -100,6 +100,7 @@ export const Evaluator: React.FC = () => {
                     test != null && currentChallengeState.launching && currentChallengeState.idx >= 0 && (
                         <ChallengeLauncher
                             challengeType={test.challenges[currentChallengeState.idx].type}
+                            language={test.language}
                             delay={3}
                             onEnd={next}
                         />
@@ -110,6 +111,7 @@ export const Evaluator: React.FC = () => {
                         <ChallengeEvaluator
                             challenge={test.challenges[currentChallengeState.idx]}
                             options={{
+                                language: test.language,
                                 ignoreTimeLimit: testOptions.ignoreTimeLimit
                             }}
                             onSuccess={() => { handleResponse(true); }}

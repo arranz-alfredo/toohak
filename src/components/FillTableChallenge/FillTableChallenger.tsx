@@ -10,6 +10,7 @@ import correct from '../../assets/sounds/correct.wav';
 import incorrect from '../../assets/sounds/incorrect.wav';
 import { TableCell } from './TableCell';
 import { ChallengeOptions } from '../../types/Challenge';
+import { Language } from '../../enums/Language';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -270,7 +271,7 @@ export const FillTableChallenger: React.FC<FillTableChallengerProps> = (props: F
                                 disabled={mode === ComponentMode.Design || !completed()}
                                 onClick={() => { handleCheckClick(); }}
                             >
-                                <Icon>check</Icon>&nbsp;Corregir
+                                <Icon>check</Icon>&nbsp;{options?.language === Language.En ? 'Check' : 'Corregir'}
                             </Fab>
                         }
                     </Grid>

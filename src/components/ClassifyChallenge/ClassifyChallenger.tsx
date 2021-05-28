@@ -13,6 +13,7 @@ import incorrect from '../../assets/sounds/incorrect.wav';
 import { DropGroup } from './DropGroup';
 import { DragableItem } from '../common/DragableItem';
 import { ChallengeOptions } from '../../types/Challenge';
+import { Language } from '../../enums/Language';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -298,7 +299,7 @@ export const ClassifyChallenger: React.FC<ClassifyChallengerProps> = (props: Cla
                                 disabled={mode === ComponentMode.Design || !completed()}
                                 onClick={() => { handleCheckClick(); }}
                             >
-                                <Icon>check</Icon>&nbsp;Corregir
+                                <Icon>check</Icon>&nbsp;{options?.language === Language.En ? 'Check' : 'Corregir'}
                             </Fab>
                         }
                     </Grid>

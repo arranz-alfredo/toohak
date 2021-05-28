@@ -1,4 +1,5 @@
 import { ChallengeType } from "../enums/ChallengeType";
+import { Language } from "../enums/Language";
 import { PictureType } from "../enums/PictureType";
 
 export interface ChallengeConfig {
@@ -12,6 +13,7 @@ export interface ChallengePicture {
 }
 
 export interface ChallengeOptions {
+    language: Language,
     ignoreTimeLimit: boolean
 }
 
