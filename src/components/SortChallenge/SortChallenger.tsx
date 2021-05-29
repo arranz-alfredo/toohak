@@ -44,10 +44,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface SortChallengerProps {
-    mode: ComponentMode
-    challenge: SortChallenge
-    onChallengeChange?: (updatedChallenge: SortChallenge) => void
-    onSuccess?: () => void
+    mode: ComponentMode,
+    challenge: SortChallenge,
+    onChallengeChange?: (updatedChallenge: SortChallenge) => void,
+    onSuccess?: () => void,
     onError?: () => void
 }
 

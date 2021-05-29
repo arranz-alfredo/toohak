@@ -11,7 +11,7 @@ interface DialogFillGapsCandidatesProps {
     open: boolean,
     text: string,
     candidates: string[],
-    onAccept: (alternatives: string[]) => void
+    onAccept: (alternatives: string[]) => void,
     onCancel: () => void
 }
 

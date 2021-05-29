@@ -6,7 +6,7 @@ import { Test } from '../../types/Test';
 
 interface TestState {
     name: string,
-    description: string
+    description: string,
     language: Language
 }
 
@@ -53,7 +53,7 @@ export const TestForm: React.FC<TestFormProps> = (props: TestFormProps) => {
         });
     };
 
-    const handleLanguageChange = (evt: React.ChangeEvent<{ name?: string | undefined; value: unknown; }>) => {
+    const handleLanguageChange = (evt: React.ChangeEvent<{ name?: string | undefined, value: unknown}>) => {
         const updatedLanguage = evt.target.value === Language.Es.toString() ? Language.Es : Language.En;
         setFormState({
             ...formState,

@@ -5,7 +5,7 @@ import { colors } from '../../theme';
 
 interface DropGapProps {
     value: string,
-    style?: CSSProperties
+    style?: CSSProperties,
     fontSize: number,
     onDrop: (text: string) => void
 }

@@ -39,11 +39,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface TrueOrFalseChallengerProps {
-    mode: ComponentMode
-    challenge: TrueOrFalseChallenge
-    options?: ChallengeOptions
-    onChallengeChange?: (updatedChallenge: TrueOrFalseChallenge) => void
-    onSuccess?: () => void
+    mode: ComponentMode,
+    challenge: TrueOrFalseChallenge,
+    options?: ChallengeOptions,
+    onChallengeChange?: (updatedChallenge: TrueOrFalseChallenge) => void,
+    onSuccess?: () => void,
     onError?: () => void
 }
 

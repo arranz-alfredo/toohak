@@ -39,7 +39,7 @@ interface PlayOptionsState {
 }
 interface TestListProps {
     project: Project,
-    onCreateTest: (projectId: string, test: Test) => void
+    onCreateTest: (projectId: string, test: Test) => void,
     onDeleteTest: (projectId: string, test: Test) => void
 }
 

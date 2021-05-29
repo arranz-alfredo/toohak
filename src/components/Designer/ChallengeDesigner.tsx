@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface ChallengeDesignerProps {
-    challenge: Challenge;
+    challenge: Challenge,
     onChallengeChange: (challenge: Challenge) => void
 }
 

@@ -6,7 +6,7 @@ interface DialogConfirmProps {
     text: string,
     acceptButtonText?: string,
     cancelButtonText?: string,
-    width?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+    width?: 'xs' | 'sm' | 'md' | 'lg' | 'xl',
     onConfirm: () => void,
     onRefuse: () => void
 }

@@ -27,7 +27,7 @@ interface TableCellProps {
     fixed?: boolean,
     fontSize?: number,
     showResults?: boolean,
-    success?: boolean
+    success?: boolean,
     onCellChange: (newCell: FillTableChallengeCell) => void
 }
 

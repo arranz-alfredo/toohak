@@ -47,11 +47,11 @@ const initialFillTableState = (challenge: FillTableChallenge): FillTableChalleng
 };
 
 interface FillTableChallengerProps {
-    mode: ComponentMode
-    challenge: FillTableChallenge
-    options?: ChallengeOptions
-    onChallengeChange?: (updatedChallenge: FillTableChallenge) => void
-    onSuccess?: () => void
+    mode: ComponentMode,
+    challenge: FillTableChallenge,
+    options?: ChallengeOptions,
+    onChallengeChange?: (updatedChallenge: FillTableChallenge) => void,
+    onSuccess?: () => void,
     onError?: () => void
 }
 

@@ -23,9 +23,9 @@ const useStyles = makeStyles({
 });
 
 interface ChallengeQuestionProps {
-    mode: ComponentMode
-    question: string
-    fontSize?: number
+    mode: ComponentMode,
+    question: string,
+    fontSize?: number,
     onChange?: (newTitle: string) => void
 }
 

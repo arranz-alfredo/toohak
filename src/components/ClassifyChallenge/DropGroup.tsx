@@ -41,7 +41,7 @@ interface DropGroupProps {
     fontSize?: number,
     onTitleChange?: (newTitle: string) => void,
     onItemsChange?: (newTitle: string[]) => void,
-    droppedItems?: string[]
+    droppedItems?: string[],
     onDrop?: (item: unknown) => void
 }
 

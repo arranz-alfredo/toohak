@@ -2,12 +2,12 @@ import { FillMethod } from "../enums/FillMethod";
 import { Challenge, ChallengeConfig } from "./Challenge";
 
 export interface FillGapsChallengeConfig extends ChallengeConfig {
-    textFontSize: number
+    textFontSize: number,
     fillMethod: FillMethod
 }
 
 export interface FillGapsChallengeExpression {
-    initPosition: number
+    initPosition: number,
     wordCount: number,
     alternatives: string[]
 }

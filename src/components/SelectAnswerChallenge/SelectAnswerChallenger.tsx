@@ -39,11 +39,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface SelectAnswerChallengerProps {
-    mode: ComponentMode
-    challenge: SelectAnswerChallenge
-    options?: ChallengeOptions
-    onChallengeChange?: (updatedChallenge: SelectAnswerChallenge) => void
-    onSuccess?: () => void
+    mode: ComponentMode,
+    challenge: SelectAnswerChallenge,
+    options?: ChallengeOptions,
+    onChallengeChange?: (updatedChallenge: SelectAnswerChallenge) => void,
+    onSuccess?: () => void,
     onError?: () => void
 }
 

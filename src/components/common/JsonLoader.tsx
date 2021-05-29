@@ -9,11 +9,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface HTMLInputEvent extends Event {
-    target: HTMLInputElement & EventTarget;
+    target: HTMLInputElement & EventTarget
 }
 
 interface JsonLoaderProps {
-    onDataLoaded: (data: unknown) => void
+    onDataLoaded: (data: unknown) => void,
     onError?: () => void
 }
 

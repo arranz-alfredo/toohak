@@ -3,7 +3,7 @@ import { Box, CircularProgress, Grid, Typography } from '@material-ui/core';
 import { ComponentMode } from '../../enums/ComponentMode';
 
 interface CountdownProps {
-    mode: ComponentMode
+    mode: ComponentMode,
     time: number,
     stopTimer?: boolean,
     onTimeUp?: () => void

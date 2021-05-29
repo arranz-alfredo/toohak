@@ -75,8 +75,8 @@ interface FillGapsSentenceProps {
     fillMethod: FillMethod,
     showResults: boolean,
     fontSize: number,
-    onSentenceChange: (newSentence: FillGapsChallengeSentence) => void
-    onSentenceRemove: () => void
+    onSentenceChange: (newSentence: FillGapsChallengeSentence) => void,
+    onSentenceRemove: () => void,
     onAnswersChange: (answers: FillGapsSentenceAnswer[]) => void
 }
 

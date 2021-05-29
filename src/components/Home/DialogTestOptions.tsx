@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
 
 interface DialogTestOptionsProps {
     open: boolean,
-    onAccept: (options: TestOptions) => void
+    onAccept: (options: TestOptions) => void,
     onCancel: () => void
 }
 

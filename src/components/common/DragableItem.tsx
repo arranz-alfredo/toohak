@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface DragableItemProps {
-    name: string
-    style?: CSSProperties
+    name: string,
+    style?: CSSProperties,
     iconButton?: React.ReactNode
 }
 

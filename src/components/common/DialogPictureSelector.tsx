@@ -11,8 +11,8 @@ const useStyles = makeStyles(() => ({
 
 interface DialogPictureFormProps {
     open: boolean,
-    picture: ChallengePicture
-    onAccept: (picture: ChallengePicture) => void
+    picture: ChallengePicture,
+    onAccept: (picture: ChallengePicture) => void,
     onCancel: () => void
 }
 

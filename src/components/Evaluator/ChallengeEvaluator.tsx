@@ -21,9 +21,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface ChallengeEvaluatorProps {
-    challenge: Challenge
-    options: ChallengeOptions
-    onSuccess?: () => void
+    challenge: Challenge,
+    options: ChallengeOptions,
+    onSuccess?: () => void,
     onError?: () => void
 }
 

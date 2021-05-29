@@ -73,11 +73,11 @@ const reorderItems = (sentences: FillGapsChallengeSentence[], mode: ComponentMod
 };
 
 interface FillGapsChallengerProps {
-    mode: ComponentMode
-    challenge: FillGapsChallenge
-    options?: ChallengeOptions
-    onChallengeChange?: (updatedChallenge: FillGapsChallenge) => void
-    onSuccess?: () => void
+    mode: ComponentMode,
+    challenge: FillGapsChallenge,
+    options?: ChallengeOptions,
+    onChallengeChange?: (updatedChallenge: FillGapsChallenge) => void,
+    onSuccess?: () => void,
     onError?: () => void
 }
 

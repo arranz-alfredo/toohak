@@ -67,11 +67,11 @@ const reorderItems = (groups: ClassifyChallengeGroup[], mode: ComponentMode): st
 };
 
 interface ClassifyChallengerProps {
-    mode: ComponentMode
-    challenge: ClassifyChallenge
-    options?: ChallengeOptions
-    onChallengeChange?: (updatedChallenge: ClassifyChallenge) => void
-    onSuccess?: () => void
+    mode: ComponentMode,
+    challenge: ClassifyChallenge,
+    options?: ChallengeOptions,
+    onChallengeChange?: (updatedChallenge: ClassifyChallenge) => void,
+    onSuccess?: () => void,
     onError?: () => void
 }
 

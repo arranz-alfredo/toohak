@@ -50,17 +50,17 @@ interface OptionState {
 }
 
 interface SelectableOptionProps {
-    mode: ComponentMode
+    mode: ComponentMode,
     text: string,
     icon: string,
     valid?: boolean,
     selected?: boolean,
     color?: string,
     fontSize?: number,
-    multiselect?: boolean
-    showResults?: boolean
-    onClick?: () => void
-    onTextChange?: (newText: string) => void
+    multiselect?: boolean,
+    showResults?: boolean,
+    onClick?: () => void,
+    onTextChange?: (newText: string) => void,
     onValidChange?(newValid: boolean): void
 }
 
