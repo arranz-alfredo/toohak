@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
 import { Challenge } from '../../types/Challenge';
 import { ChallengeThumbnail } from './ChallengeThumbnail';
@@ -27,6 +27,10 @@ export const ChallengeSelector: React.FC<ChallengeSelectorProps> = (props: Chall
     const [selectedChallenge, setSelectedChallenge] = useState<Challenge | undefined>(selected || undefined);
 
     const classes = useStyles();
+
+    useEffect(() => {
+        setSelectedChallenge(selected);
+    }, [selected]);
 
     const handleThumbnailClick = (challenge: Challenge) => {
         setSelectedChallenge(challenge);

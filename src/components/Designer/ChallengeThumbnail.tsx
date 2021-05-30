@@ -8,8 +8,23 @@ const useStyles = makeStyles({
     fullWidth: {
         width: '100%',
     },
-    description: {
+    fullHeight: {
+        height: '100%',
+    },
+    headerContainer: {
+        //width: 'calc(100% - 32px)'
+        overflow: "hidden"
+    },
+    contentContainer: {
+        overflow: "hidden"
+    },
+    actionContainer: {
+        marginTop: '8px'
+    },
+    descriptionContainer: {
         width: '100%',
+    },
+    description: {
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis'
@@ -61,6 +76,10 @@ export const ChallengeThumbnail: React.FC<ChallengeThumbnailProps> = (props: Cha
                 <Card variant={selected ? 'elevation' : 'outlined'} elevation={10} className={classes.fullWidth}>
                     <CardActionArea className={classes.fullWidth} onClick={handleClick}>
                         <CardHeader
+                            classes={{
+                                root: classes.headerContainer,
+                                content: classes.contentContainer,
+                            }}
                             avatar={
                                 compact ? getChallengeTypeIcon(challenge.type, 'small') : undefined
                             }
@@ -71,7 +90,7 @@ export const ChallengeThumbnail: React.FC<ChallengeThumbnailProps> = (props: Cha
                             }
                             action={
                                 compact ? (
-                                    <Grid container alignItems="center">
+                                    <Grid container alignItems="center" className={classes.actionContainer}>
                                         {
                                             validation.valid ? <Icon color="primary" fontSize="small">check</Icon>
                                                 : (
@@ -96,9 +115,6 @@ export const ChallengeThumbnail: React.FC<ChallengeThumbnailProps> = (props: Cha
                                                     </Tooltip>
                                                 )
                                         }
-                                        {/* <IconButton onClick={handleDeleteClick}>
-                                            <Icon>delete</Icon>
-                                        </IconButton> */}
                                     </Grid>
                                 ) : undefined
                             }

@@ -173,6 +173,11 @@ export const TestDesigner: React.FC<TestDesignerProps> = (props: TestDesignerPro
                 if (aTest.id !== testId) {
                     return aTest;
                 }
+                if (deletedChallenge?.id === selectedChallenge?.id) {
+                    setSelectedChallenge(aTest.challenges.find(
+                        (aChallenge: Challenge) => aChallenge.id !== deletedChallenge?.id
+                    ));
+                }
                 const updatedChallenges = aTest.challenges.filter((
                     aChallenge: Challenge
                 ) => aChallenge.id !== deletedChallenge?.id);
