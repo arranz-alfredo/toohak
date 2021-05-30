@@ -79,11 +79,13 @@ export const TableCell: React.FC<TableCellProps> = (props: TableCellProps) => {
                             inputRef={inputText}
                             value={formData.text}
                             color='secondary'
+                            style={{ marginLeft: '10px', width: 'calc(100% - 20px)' }}
                             inputProps = {{
                                 style: {
                                     textAlign: 'center',
                                     fontSize: `${fontSize != null ? fontSize : 28}px`,
-                                    color: fixed || showResults ? '#ffffff': '#000000'
+                                    color: fixed || showResults ? '#ffffff': '#000000',
+                                    width: '100%'
                                 }
                             }}
                             onInput={handleTextChange}
