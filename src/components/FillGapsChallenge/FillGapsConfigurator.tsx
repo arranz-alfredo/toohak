@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FormControl, Grid, InputLabel, makeStyles, MenuItem, Select, TextField, Typography } from '@material-ui/core';
+import { FormControl, FormControlLabel, Grid, InputLabel, makeStyles, MenuItem, Select, Switch, TextField, Typography } from '@material-ui/core';
 import { FillGapsChallengeConfig } from '../../types/FillGapsChallenge';
 import { FillMethod } from '../../enums/FillMethod';
 
@@ -23,6 +23,8 @@ export const FillGapsConfigurator: React.FC<FillGapsConfiguratorProps> = (props:
     const inputQuestionFontSize = useRef({} as HTMLInputElement);
     const inputTextFontSize = useRef({} as HTMLInputElement);
     const inputFillMethod = useRef({} as HTMLSelectElement);
+    const checkCapitalLetters = useRef({} as HTMLInputElement);
+    const checkAccentMarks = useRef({} as HTMLInputElement);
 
     const classes = useStyles();
 
@@ -99,6 +101,34 @@ export const FillGapsConfigurator: React.FC<FillGapsConfiguratorProps> = (props:
                         <MenuItem value={FillMethod.Dragging}>Arrastrando</MenuItem>
                     </Select>
                 </FormControl>
+            </Grid>
+            <Grid item>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            inputRef={checkCapitalLetters}
+                            name='checkMultiselect'
+                            checked={formData.checkCapitalLetters}
+                            color='secondary'
+                            onChange={() => { handleConfigParameterChange('checkCapitalLetters', checkCapitalLetters.current.checked); }}
+                        />
+                    }
+                    label='Comprobar mayúsculas/minúsculas'
+                />
+            </Grid>
+            <Grid item>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            inputRef={checkAccentMarks}
+                            name='checkAccentMarks'
+                            checked={formData.checkAccentMarks}
+                            color='secondary'
+                            onChange={() => { handleConfigParameterChange('checkAccentMarks', checkAccentMarks.current.checked); }}
+                        />
+                    }
+                    label='Comprobar tildes'
+                />
             </Grid>
         </Grid>
     );

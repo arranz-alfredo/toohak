@@ -36,3 +36,45 @@ export const parseQueryString = (qs: string): any => {
     });
     return result;
 };
+
+export const checkEqual = (
+    stringA: string,
+    stringB: string,
+    checkCapitalLetters: boolean,
+    checkAccentMarks: boolean
+): boolean => {
+    let strA = stringA;
+    let strB = stringB;
+
+    if (!checkCapitalLetters) {
+        strA = strA.toLowerCase();
+        strB = strB.toLowerCase();
+    }
+
+    if (!checkAccentMarks) {
+        strA = strA
+            .replace(/Á/g, 'A')
+            .replace(/É/g, 'E')
+            .replace(/Í/g, 'I')
+            .replace(/Ó/g, 'O')
+            .replace(/Ú/g, 'U')
+            .replace(/á/g, 'a')
+            .replace(/é/g, 'e')
+            .replace(/í/g, 'i')
+            .replace(/ó/g, 'o')
+            .replace(/ú/g, 'u');
+        strB = strB
+            .replace(/Á/g, 'A')
+            .replace(/É/g, 'E')
+            .replace(/Í/g, 'I')
+            .replace(/Ó/g, 'O')
+            .replace(/Ú/g, 'U')
+            .replace(/á/g, 'a')
+            .replace(/é/g, 'e')
+            .replace(/í/g, 'i')
+            .replace(/ó/g, 'o')
+            .replace(/ú/g, 'u');
+    }
+
+    return strA === strB;
+};

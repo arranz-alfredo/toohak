@@ -12,7 +12,7 @@ import incorrect from '../../assets/sounds/incorrect.wav';
 import { FillMethod } from '../../enums/FillMethod';
 import { FillGapsSentence, FillGapsSentenceAnswer } from './FillGapsSentence';
 import { DragableItem } from '../common/DragableItem';
-import { joinSentence, splitSentence } from '../../utils/utilStrings';
+import { checkEqual, joinSentence, splitSentence } from '../../utils/utilStrings';
 import { DialogFillGapsCandidates } from './DialogFillGapsCandidates';
 import { ChallengeOptions } from '../../types/Challenge';
 import { Language } from '../../enums/Language';
@@ -278,11 +278,23 @@ export const FillGapsChallenger: React.FC<FillGapsChallengerProps> = (props: Fil
                             .find((anAnswer: FillGapsSentenceAnswer) => anAnswer.hiddenIdx === expressionIdx);
 
                         return hiddenAnswer != null && accExpressions && (
-                            joinSentence(words.slice(
-                                currentExpression.initPosition,
-                                currentExpression.initPosition + currentExpression.wordCount
-                            )) === hiddenAnswer?.value
-                            || currentExpression.alternatives.indexOf(hiddenAnswer.value) >= 0
+                            checkEqual(
+                                joinSentence(words.slice(
+                                    currentExpression.initPosition,
+                                    currentExpression.initPosition + currentExpression.wordCount
+                                )),
+                                hiddenAnswer.value,
+                                challenge.config.checkCapitalLetters,
+                                challenge.config.checkAccentMarks
+                            )
+                            || currentExpression.alternatives.some(
+                                (anAlternative: string) => checkEqual(
+                                    anAlternative,
+                                    hiddenAnswer.value,
+                                    challenge.config.checkCapitalLetters,
+                                    challenge.config.checkAccentMarks
+                                )
+                            )
                         );
                     },
                     true
@@ -407,6 +419,8 @@ export const FillGapsChallenger: React.FC<FillGapsChallengerProps> = (props: Fil
                                                         mode={mode}
                                                         sentence={aSentence}
                                                         fillMethod={challenge.config.fillMethod}
+                                                        checkCapitalLetters={challenge.config.checkCapitalLetters}
+                                                        checkAccentMarks={challenge.config.checkAccentMarks}
                                                         showResults={highlightResults}
                                                         fontSize={challenge.config.textFontSize}
                                                         onSentenceChange={(

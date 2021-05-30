@@ -3,7 +3,7 @@ import { Grid, Icon, IconButton, makeStyles, TextField, Typography } from '@mate
 import { ComponentMode } from '../../enums/ComponentMode';
 import { FillMethod } from '../../enums/FillMethod';
 import { FillGapsChallengeExpression, FillGapsChallengeSentence } from '../../types/FillGapsChallenge';
-import { joinSentence, splitSentence } from '../../utils/utilStrings';
+import { checkEqual, joinSentence, splitSentence } from '../../utils/utilStrings';
 import { colors } from '../../theme';
 import { DropGap } from './DropGap';
 
@@ -73,6 +73,8 @@ interface FillGapsSentenceProps {
     mode: ComponentMode,
     sentence: FillGapsChallengeSentence,
     fillMethod: FillMethod,
+    checkCapitalLetters: boolean,
+    checkAccentMarks: boolean,
     showResults: boolean,
     fontSize: number,
     onSentenceChange: (newSentence: FillGapsChallengeSentence) => void,
@@ -81,7 +83,17 @@ interface FillGapsSentenceProps {
 }
 
 export const FillGapsSentence: React.FC<FillGapsSentenceProps> = (props: FillGapsSentenceProps) => {
-    const {mode, sentence, fillMethod, showResults, fontSize, onSentenceChange, onSentenceRemove, onAnswersChange} = props;
+    const {mode,
+        sentence,
+        fillMethod,
+        checkCapitalLetters,
+        checkAccentMarks,
+        showResults,
+        fontSize,
+        onSentenceChange,
+        onSentenceRemove,
+        onAnswersChange
+    } = props;
 
     const [parts, setParts] = useState<SentencePart[]>(sentenceParts(sentence));
 
@@ -262,11 +274,14 @@ export const FillGapsSentence: React.FC<FillGapsSentenceProps> = (props: FillGap
     };
 
     const getPartStyle = (validValues: string[], value: string) => showResults ? (
-        validValues.indexOf(value) >= 0 ? {
-            color: '#4caf50'
-        } : {
-            color: '#f44336'
-        }
+        validValues.some(
+            (aValidValue: string) => checkEqual(
+                aValidValue,
+                value,
+                checkCapitalLetters,
+                checkAccentMarks
+            )
+        ) ? { color: '#4caf50' } : { color: '#f44336' }
     ) : {};
 
     return (

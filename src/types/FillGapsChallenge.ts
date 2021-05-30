@@ -3,7 +3,9 @@ import { Challenge, ChallengeConfig } from "./Challenge";
 
 export interface FillGapsChallengeConfig extends ChallengeConfig {
     textFontSize: number,
-    fillMethod: FillMethod
+    fillMethod: FillMethod,
+    checkCapitalLetters: boolean,
+    checkAccentMarks: boolean
 }
 
 export interface FillGapsChallengeExpression {
