@@ -13,6 +13,7 @@ import { SortChallenge, SortChallengeConfig } from '../types/SortChallenge';
 import { FillTableChallenge, FillTableChallengeConfig } from '../types/FillTableChallenge';
 import { FillGapsChallenge, FillGapsChallengeConfig, FillGapsChallengeSentence } from '../types/FillGapsChallenge';
 import { FillMethod } from '../enums/FillMethod';
+import { MatchChallenge, MatchChallengeConfig } from '../types/MatchChallenge';
 
 export const getChallengeTypeDescription = (type: ChallengeType, language: Language = Language.Es): string => {
     switch (type) {
@@ -79,7 +80,11 @@ const getDefaultChallengeConfig = (type: ChallengeType): ChallengeConfig => {
                 pictureLabel: false
             } as TrueOrFalseChallengeConfig;
         case ChallengeType.Match:
-            return defaultChallengeConfig;
+            return {
+                ...defaultChallengeConfig,
+                answerFontSize: 22,
+                pairsCount: 4
+            } as MatchChallengeConfig;
         case ChallengeType.FillGaps:
             return {
                 ...defaultChallengeConfig,
@@ -145,7 +150,15 @@ export const getDefaultChallenge = (type: ChallengeType): Challenge => {
                 answer: true
             } as TrueOrFalseChallenge;
         case ChallengeType.Match:
-            return defaultChallenge;
+            return {
+                ...defaultChallenge,
+                pairs: [
+                    { source: '', destination: '' },
+                    { source: '', destination: '' },
+                    { source: '', destination: '' },
+                    { source: '', destination: '' }
+                ]
+            } as MatchChallenge;
         case ChallengeType.FillGaps:
             return {
                 ...defaultChallenge,

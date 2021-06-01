@@ -4,6 +4,7 @@ import { Challenge, ChallengeConfig, ChallengePicture } from '../types/Challenge
 import { ClassifyChallenge, ClassifyChallengeGroup } from '../types/ClassifyChallenge';
 import { FillGapsChallenge, FillGapsChallengeSentence } from '../types/FillGapsChallenge';
 import { FillTableChallenge, FillTableChallengeCell } from '../types/FillTableChallenge';
+import { MatchChallenge, MatchChallengePair } from '../types/MatchChallenge';
 import { Project } from '../types/Project';
 import { SelectAnswerChallenge, SelectAnswerChallengeAnswer, SelectAnswerChallengeConfig } from '../types/SelectAnswerChallenge';
 import { SortChallenge } from '../types/SortChallenge';
@@ -101,8 +102,20 @@ export const isValidChallenge = (challenge: Challenge): Validation => {
             }
             break;
         }
-        case ChallengeType.Match:
+        case ChallengeType.Match: {
+            const customChallenge = challenge as MatchChallenge;
+            if(!customChallenge.pairs.reduce(
+                (acc: boolean, current: MatchChallengePair) => (
+                    acc
+                    && current.source != null && current.source !== ''
+                    && current.destination != null && current.destination !== ''
+                ),
+                true
+            )) {
+                errorMessage.push('Hay elementos sin texto');
+            }
             break;
+        }
         case ChallengeType.Sort: {
             const customChallenge = challenge as SortChallenge;
             if(!customChallenge.items.reduce(

@@ -8,7 +8,7 @@ export interface SelectAnswerChallengeConfig extends ChallengeConfig {
 }
 
 export interface SelectAnswerChallengeAnswer {
-    text: string
+    text: string,
     valid: boolean
 }
 

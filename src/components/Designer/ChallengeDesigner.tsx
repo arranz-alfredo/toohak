@@ -14,6 +14,8 @@ import { FillTableChallengeDesigner } from '../FillTableChallenge/FillTableChall
 import { FillTableChallenge } from '../../types/FillTableChallenge';
 import { FillGapsChallengeDesigner } from '../FillGapsChallenge/FillGapsChallengeDesigner';
 import { FillGapsChallenge } from '../../types/FillGapsChallenge';
+import { MatchChallengeDesigner } from '../MatchChallenge/MatchChallengeDesigner';
+import { MatchChallenge } from '../../types/MatchChallenge';
 
 const useStyles = makeStyles(() => ({
     fullHeight: {
@@ -61,6 +63,15 @@ export const ChallengeDesigner: React.FC<ChallengeDesignerProps> = (props: Chall
                     && (
                         <FillGapsChallengeDesigner
                             challenge={challenge as FillGapsChallenge}
+                            onChallengeChange={handleChallengeChange}
+                        />
+                    )
+                }
+                {
+                    challenge?.type === ChallengeType.Match
+                    && (
+                        <MatchChallengeDesigner
+                            challenge={challenge as MatchChallenge}
                             onChallengeChange={handleChallengeChange}
                         />
                     )

@@ -267,7 +267,9 @@ export const TestDesigner: React.FC<TestDesignerProps> = (props: TestDesignerPro
                                                         {getChallengeTypeDescription(ChallengeType.FillGaps)}
                                                     </Typography>
                                                 </MenuItem>
-                                                <MenuItem disabled onClick={handleCloseNewChallengeMenu}>
+                                                <MenuItem onClick={() => {
+                                                    handleNewChallengeOptionClick(ChallengeType.Match);
+                                                }}>
                                                     <ListItemIcon>{getChallengeTypeIcon(ChallengeType.Match, 'large')}</ListItemIcon>
                                                     <Typography variant='button'>
                                                         {getChallengeTypeDescription(ChallengeType.Match)}

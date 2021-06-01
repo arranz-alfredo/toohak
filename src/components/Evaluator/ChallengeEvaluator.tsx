@@ -13,6 +13,8 @@ import { FillTableChallenger } from '../FillTableChallenge/FillTableChallenger';
 import { FillTableChallenge } from '../../types/FillTableChallenge';
 import { FillGapsChallenger } from '../FillGapsChallenge/FillGapsChallenger';
 import { FillGapsChallenge } from '../../types/FillGapsChallenge';
+import { MatchChallenger } from '../MatchChallenge/MatchChallenger';
+import { MatchChallenge } from '../../types/MatchChallenge';
 
 const useStyles = makeStyles((theme) => ({
     fullHeight: {
@@ -77,6 +79,18 @@ export const ChallengeEvaluator: React.FC<ChallengeEvaluatorProps> = (props: Cha
                         <FillGapsChallenger
                             mode={ComponentMode.Play}
                             challenge={challenge as FillGapsChallenge}
+                            options={options}
+                            onSuccess={handlerSucessChallenge}
+                            onError={handlerErrorChallenge}
+                        />
+                    )
+                }
+                {
+                    challenge?.type === ChallengeType.Match
+                    && (
+                        <MatchChallenger
+                            mode={ComponentMode.Play}
+                            challenge={challenge as MatchChallenge}
                             options={options}
                             onSuccess={handlerSucessChallenge}
                             onError={handlerErrorChallenge}
