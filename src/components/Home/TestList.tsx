@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Box, Button, Dialog, DialogTitle, Divider, Grid, Icon, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles, Menu, MenuItem, Typography } from '@material-ui/core';
+import { Box, Button, Dialog, DialogTitle, Divider, Grid, Icon, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles, Menu, MenuItem, Snackbar, SnackbarContent, Typography } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
 import { Test, TestOptions } from '../../types/Test';
 import { colors } from '../../theme';
@@ -8,6 +8,7 @@ import { isValidTest } from '../../utils/utilValidationTypes';
 import { TestForm } from './TestForm';
 import { DialogConfirm } from '../common/DialogConfirm';
 import { DialogTestOptions } from './DialogTestOptions';
+import { JsonLoader } from '../common/JsonLoader';
 
 const useStyles = makeStyles((theme) => ({
     inline: {
@@ -29,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
     },
     dialogContainer: {
         padding: '20px'
+    },
+    messageControl: {
+        backgroundColor: colors.error,
+        color: colors.font.errorContrast
     }
 }));
 
@@ -39,7 +44,7 @@ interface PlayOptionsState {
 }
 interface TestListProps {
     project: Project,
-    onCreateTest: (projectId: string, test: Test) => void,
+    onCreateTest: (projectId: string, test: Test, openDesign: boolean) => void,
     onDeleteTest: (projectId: string, test: Test) => void
 }
 
@@ -53,6 +58,8 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
     const [openTestForm, setOpenTestForm] = useState<boolean>(false);
     const [openRemoveTestConfirm, setOpenRemoveTestConfirm] = useState<boolean>(false);
     const [playOptionsState, setPlayOptionsState] = useState<PlayOptionsState>();
+    const [openMessage, setOpenMessage] = useState<boolean>(false);
+    const [messageText, setMessageText] = useState<string>('');
 
     const classes = useStyles();
 
@@ -60,8 +67,28 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
         setOpenTestForm(true);
     };
 
+    const handleImportTest = (test: unknown) => {
+        const newTest = test as Test;
+        if (!isValidTest(newTest)) {
+            setMessageText('El proyecto es inválido');
+            setOpenMessage(true);
+        }
+        const exist = project.tests.find((aTest: Test) => aTest.id === newTest.id) != null;
+        if (!exist) {
+            onCreateTest(project.id, newTest, false);
+        } else {
+            setMessageText('El proyecto ya existe');
+            setOpenMessage(true);
+        }
+    };
+
+    const handleImportTestError = () => {
+        setMessageText('Se produjo un error en la importación');
+        setOpenMessage(true);
+    };
+
     const handleTestFormAccept = (newTest: Test) => {
-        onCreateTest(project.id, newTest);
+        onCreateTest(project.id, newTest, true);
         setSelectedTest(undefined);
         setOpenTestForm(false);
     };
@@ -83,6 +110,16 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
     const handleEditDataClick = () => {
         setAnchorElEdit(null);
         setOpenTestForm(true);
+    };
+
+    const handleExportTestClick = (test: Test) => {
+        const element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(test)));
+        element.setAttribute('download', test.name.replace(/ /g, '_'));
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
     };
 
     const handleRemoveTestClick = (test: Test) => {
@@ -122,6 +159,10 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
         setPlayOptionsState({
             openOptions: false
         });
+    };
+
+    const handleMessageClose = () => {
+        setOpenMessage(false);
     };
 
     return (
@@ -165,6 +206,29 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                 onConfirm={handleConfirmRemoveTest}
                 onRefuse={handleRefuseRemoveTest}
             />
+            <Snackbar
+                open={openMessage}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+                autoHideDuration={3000}
+                onClose={handleMessageClose}
+            >
+                <SnackbarContent
+                    message={
+                        <Grid container spacing={4}>
+                            <Grid item xs={1}>
+                                <Icon>error</Icon>
+                            </Grid>
+                            <Grid item xs={10}>
+                                <Typography>{messageText}</Typography>
+                            </Grid>
+                        </Grid>
+                    }
+                    className={classes.messageControl}
+                />
+            </Snackbar>
             <Grid container>
                 <Grid item xs={12}>
                     {
@@ -223,7 +287,7 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                                                         }
                                                     </Grid>
                                                     <Grid item>
-                                                        <IconButton title='Editar' onClick={(evt: React.MouseEvent<HTMLButtonElement>) => {
+                                                        <IconButton title='Editar cuestionario' onClick={(evt: React.MouseEvent<HTMLButtonElement>) => {
                                                             evt.stopPropagation();
                                                             handleEditClick(evt, aTest);
                                                         }}>
@@ -231,7 +295,15 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                                                         </IconButton>
                                                     </Grid>
                                                     <Grid item>
-                                                        <IconButton title='Eliminar' onClick={(evt) => {
+                                                        <IconButton title='Descargar cuestionario' onClick={(evt) => {
+                                                            evt.stopPropagation();
+                                                            handleExportTestClick(aTest);
+                                                        }}>
+                                                            <Icon>download</Icon>
+                                                        </IconButton>
+                                                    </Grid>
+                                                    <Grid item>
+                                                        <IconButton title='Eliminar cuestionario' onClick={(evt) => {
                                                             evt.stopPropagation();
                                                             handleRemoveTestClick(aTest);
                                                         }}>
@@ -248,14 +320,24 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                         </List>
                     }
                     <Grid item xs={12} className={classes.bottomContainer}>
-                        <Grid container justify='flex-end'>
-                            <Button
-                                variant='contained'
-                                color='primary'
-                                onClick={handleCreateTestClick}
-                            >
-                                Nuevo cuestionario
-                            </Button>
+                        <Grid container justify='flex-end' spacing={1}>
+                            <Grid item>
+                                <Button
+                                    variant='contained'
+                                    color='primary'
+                                    onClick={handleCreateTestClick}
+                                >
+                                    Nuevo cuestionario
+                                </Button>
+                            </Grid>
+                            <Grid item>
+                                <JsonLoader
+                                    label="Importar cuestionario"
+                                    onDataLoaded={handleImportTest}
+                                    onError={handleImportTestError}
+                                />
+                            </Grid>
+
                         </Grid>
                     </Grid>
                 </Grid>

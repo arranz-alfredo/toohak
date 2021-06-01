@@ -1,5 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { Button, makeStyles } from '@material-ui/core';
+import { v4 as uuidv4 } from 'uuid';
 import { colors } from '../../theme';
 
 const useStyles = makeStyles((theme) => ({
@@ -13,16 +14,19 @@ interface HTMLInputEvent extends Event {
 }
 
 interface JsonLoaderProps {
+    label: string,
     onDataLoaded: (data: unknown) => void,
     onError?: () => void
 }
 
 export const JsonLoader: React.FC<JsonLoaderProps> = (props: JsonLoaderProps) => {
-    const { onDataLoaded, onError } = props;
+    const { label, onDataLoaded, onError } = props;
 
     const inputImport = useRef({} as HTMLInputElement);
 
     const classes = useStyles();
+
+    const id = uuidv4();
 
     const handleInput = (event: unknown) => {
         try {
@@ -56,14 +60,14 @@ export const JsonLoader: React.FC<JsonLoaderProps> = (props: JsonLoaderProps) =>
                 ref={inputImport}
                 accept='text'
                 className={classes.uploadInput}
-                id='contained-button-file'
+                id={id}
                 multiple
                 type='file'
                 onInput={handleInput}
             />
             <Button style={{ color: colors.primary.dark }}>
-                <label htmlFor='contained-button-file'>
-                    Importar proyecto
+                <label htmlFor={id}>
+                    {label}
                 </label>
             </Button>
         </Fragment>

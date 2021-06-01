@@ -136,7 +136,7 @@ export const ProjectList: React.FC<ProjectListProps> = (props: ProjectListProps)
         setOpenRemoveProjectConfirm(false);
     };
 
-    const handleCreateTest = (projectId: string, test: Test) => {
+    const handleCreateTest = (projectId: string, test: Test, openDesign: boolean) => {
         const theProject = projects.find((aProject: Project) => aProject.id === projectId);
         const updating = theProject != null && theProject.tests.some((aTest: Test) => aTest.id === test.id);
 
@@ -157,7 +157,7 @@ export const ProjectList: React.FC<ProjectListProps> = (props: ProjectListProps)
             };
         });
         setProjects(updatedProjects);
-        if (!updating) {
+        if (!updating && openDesign) {
             history.push(`/designer/${projectId}/${test.id}`);
         }
     };
@@ -244,6 +244,7 @@ export const ProjectList: React.FC<ProjectListProps> = (props: ProjectListProps)
                         </Grid>
                         <Grid item>
                             <JsonLoader
+                                label="Importar proyecto"
                                 onDataLoaded={handleImportProject}
                                 onError={handleImportProjectError}
                             />
@@ -275,7 +276,7 @@ export const ProjectList: React.FC<ProjectListProps> = (props: ProjectListProps)
                                         </Grid>
                                         <Grid item>
                                             <IconButton
-                                                title='Descargar'
+                                                title='Descargar proyecto'
                                                 color='primary'
                                                 onClick={(evt) => {
                                                     evt.stopPropagation();
@@ -286,7 +287,7 @@ export const ProjectList: React.FC<ProjectListProps> = (props: ProjectListProps)
                                             </IconButton>
                                             {
                                                 <IconButton
-                                                    title='Editar'
+                                                    title='Editar proyecto'
                                                     color='primary'
                                                     onClick={(evt) => {
                                                         evt.stopPropagation();
@@ -298,7 +299,7 @@ export const ProjectList: React.FC<ProjectListProps> = (props: ProjectListProps)
                                             }
                                             {
                                                 <IconButton
-                                                    title='Eliminar'
+                                                    title='Eliminar proyecto'
                                                     onClick={(evt) => {
                                                         evt.stopPropagation();
                                                         handleRemoveProjectClick(aProject);
