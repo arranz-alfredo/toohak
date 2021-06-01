@@ -1,14 +1,11 @@
-import React, { Fragment } from 'react';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import React from 'react';
+import { AppBar, Toolbar } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 export const MainHeader: React.FC = () => (
-    <Fragment>
-        <AppBar position='static'>
-            <Toolbar>
-                <Typography variant='h5'>
-                    !toohaK
-                </Typography>
-            </Toolbar>
-        </AppBar>
-    </Fragment>
+    <AppBar position='static'>
+        <Toolbar>
+            <Link to="/" style={{color: '#ffffff', textDecoration: 'none', fontWeight: 'bold'}}>!toohaK</Link>
+        </Toolbar>
+    </AppBar>
 );
