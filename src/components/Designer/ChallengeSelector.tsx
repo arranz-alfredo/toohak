@@ -17,16 +17,23 @@ interface ChallengeSelectorProps {
     challenges: Challenge[],
     compactList?: boolean,
     selected?: Challenge,
+    onChallengeReorder?: (orderedChallenges: Challenge[]) => void,
     onSelect?: (challenge: Challenge) => void,
     onDelete?: (challenge: Challenge) => void
 }
 
 export const ChallengeSelector: React.FC<ChallengeSelectorProps> = (props: ChallengeSelectorProps) => {
-    const { challenges, compactList, selected, onSelect, onDelete } = props;
+    const { challenges, compactList, selected, onChallengeReorder, onSelect, onDelete } = props;
 
+    const [localChallenges, setLocalChallenges] = useState<Challenge[]>(challenges);
     const [selectedChallenge, setSelectedChallenge] = useState<Challenge | undefined>(selected || undefined);
 
     const classes = useStyles();
+
+    useEffect(() => {
+        console.log(challenges);
+        setLocalChallenges(challenges);
+    }, [challenges]);
 
     useEffect(() => {
         setSelectedChallenge(selected);
@@ -45,20 +52,35 @@ export const ChallengeSelector: React.FC<ChallengeSelectorProps> = (props: Chall
         }
     };
 
+    const handleChallengeMove = (dragIndex: number, hoverIndex: number) => {
+        if (onChallengeReorder) {
+            const filteredCards = challenges.filter(
+                (aChallenge: Challenge, idx: number) => idx !== dragIndex
+            );
+            const newChallenges = [
+                ...filteredCards.slice(0, hoverIndex),
+                challenges[dragIndex],
+                ...filteredCards.slice(hoverIndex)
+            ];
+            setLocalChallenges(newChallenges);
+            onChallengeReorder(newChallenges);
+        }
+    };
+
     return (
         <Grid container direction='column' alignItems='center' spacing={2} className={classes.root}>
             {
-                challenges.map((aChallenge: Challenge, idx: number) => (
-                    <Grid item key={idx} className={classes.fullWidth}>
-                        <ChallengeThumbnail
-                            challenge={aChallenge}
-                            position={idx + 1}
-                            selected={selectedChallenge?.id === aChallenge.id}
-                            compact={compactList}
-                            onClick={handleThumbnailClick}
-                            onDelete={handleThumbnailDelete}
-                        />
-                    </Grid>
+                localChallenges.map((aChallenge: Challenge, idx: number) => (
+                    <ChallengeThumbnail
+                        key={aChallenge.id}
+                        challenge={aChallenge}
+                        index={idx}
+                        selected={selectedChallenge?.id === aChallenge.id}
+                        compact={compactList}
+                        onChallengeMove={handleChallengeMove}
+                        onClick={handleThumbnailClick}
+                        onDelete={handleThumbnailDelete}
+                    />
                 ))
             }
         </Grid>

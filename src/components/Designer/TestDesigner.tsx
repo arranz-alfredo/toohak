@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { Grid, Icon, IconButton, ListItemIcon, makeStyles, Menu, MenuItem, Typography } from '@material-ui/core';
 import { v4 as uuidv4 } from 'uuid';
 import { useProjects } from '../../hooks/useProjects';
@@ -13,6 +13,8 @@ import { colors } from '../../theme';
 import { DialogConfirm } from '../common/DialogConfirm';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { Language } from '../../enums/Language';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const useStyles = makeStyles((theme) => ({
     fullHeight: {
@@ -92,6 +94,31 @@ export const TestDesigner: React.FC<TestDesignerProps> = (props: TestDesignerPro
             }
         }
     }, [projects, projectId, testId]);
+
+    const handleReorderChallenges = useCallback(
+        (reorderedChallenges: Challenge[]) => {
+            const updatedProjects = projects.map((aProject: Project) => {
+                if (aProject.id !== projectId) {
+                    return { ...aProject };
+                }
+                const updatedTests = aProject.tests.map((aTest: Test) => {
+                    if (aTest.id !== testId) {
+                        return { ...aTest };
+                    }
+                    return {
+                        ...aTest,
+                        challenges: reorderedChallenges
+                    };
+                });
+                return {
+                    ...aProject,
+                    tests: [...updatedTests]
+                };
+            });
+            setProjects(updatedProjects);
+        },
+        [projects]
+    );
 
     const handleSelectChallenge = (challenge: Challenge) => {
         setSelectedChallenge(challenge);
@@ -316,13 +343,16 @@ export const TestDesigner: React.FC<TestDesignerProps> = (props: TestDesignerPro
                             </Grid>
                         </Grid>
                         <Grid item className={classes.challengesContainer}>
-                            <ChallengeSelector
-                                challenges={test.challenges}
-                                compactList={compactList}
-                                selected={selectedChallenge}
-                                onSelect={handleSelectChallenge}
-                                onDelete={handleDeleteChallenge}
-                            />
+                            <DndProvider backend={HTML5Backend}>
+                                <ChallengeSelector
+                                    challenges={test.challenges}
+                                    compactList={compactList}
+                                    selected={selectedChallenge}
+                                    onChallengeReorder={handleReorderChallenges}
+                                    onSelect={handleSelectChallenge}
+                                    onDelete={handleDeleteChallenge}
+                                />
+                            </DndProvider>
                         </Grid>
                     </Grid>
                 </Grid>
