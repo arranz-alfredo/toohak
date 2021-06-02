@@ -143,9 +143,18 @@ export const TestDesigner: React.FC<TestDesignerProps> = (props: TestDesignerPro
                 if (aTest.id !== testId) {
                     return { ...aTest };
                 }
+                const selectedPosition = selectedChallenge != null ? (
+                    test.challenges.findIndex(
+                        (aChallenge: Challenge) => aChallenge.id === selectedChallenge?.id
+                    )
+                ) : 0;
                 return {
                     ...aTest,
-                    challenges: [...aTest.challenges, newChallenge]
+                    challenges: [
+                        ...aTest.challenges.slice(0, selectedPosition + 1),
+                        newChallenge,
+                        ...aTest.challenges.slice(selectedPosition + 1)
+                    ]
                 };
             });
             return {
