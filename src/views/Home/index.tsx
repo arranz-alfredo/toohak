@@ -11,7 +11,7 @@ export const Home: React.FC = () => {
             container
             justify="center"
         >
-            <Grid item xs={7}>
+            <Grid item xs={12} lg={10} xl={7}>
                 <ProjectList
                     projects={projects}
                     setProjects={setProjects}

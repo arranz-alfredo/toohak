@@ -101,8 +101,10 @@ export const Evaluator: React.FC = () => {
             justify="center"
             className={classes.fullHeight}
         >
-            <Grid item xs={2}></Grid>
-            <Grid item xs={8} className={classes.fullHeight}>
+            {
+                !testOptions.autoNext ? <Grid item xs={1} xl={2} /> : undefined
+            }
+            <Grid item xs={testOptions.autoNext ? 12 : 10} xl={8} className={classes.fullHeight}>
                 {
                     test != null && currentChallengeState.launching && currentChallengeState.idx >= 0 && (
                         <ChallengeLauncher
@@ -139,22 +141,26 @@ export const Evaluator: React.FC = () => {
                     )
                 }
             </Grid>
-            <Grid item xs={2} className={`${classes.fullHeight} ${classes.centerAll}`}>
-                {
-                    !testOptions.autoNext
-                    && currentChallengeState.idx === results.length - 1
-                    && (
-                        <Fab
-                            variant="extended"
-                            size="large"
-                            color="primary"
-                            onClick={next}
-                        >
-                            {test?.language === Language.En ? 'Next' : 'Siguiente'}&nbsp;<Icon>navigate_next</Icon>
-                        </Fab>
-                    )
-                }
-            </Grid>
+            {
+                !testOptions.autoNext ? (
+                    <Grid item xs={1} xl={2} className={`${classes.fullHeight} ${classes.centerAll}`}>
+                        {
+                            !testOptions.autoNext
+                            && currentChallengeState.idx === results.length - 1
+                            && (
+                                <Fab
+                                    variant="extended"
+                                    size="large"
+                                    color="primary"
+                                    onClick={next}
+                                >
+                                    {test?.language === Language.En ? 'Next' : 'Siguiente'}&nbsp;<Icon>navigate_next</Icon>
+                                </Fab>
+                            )
+                        }
+                    </Grid>
+                ) : undefined
+            }
         </Grid>
     );
 };
