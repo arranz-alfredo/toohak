@@ -27,7 +27,7 @@ export const DialogConfirm: React.FC<DialogConfirmProps> = (props: DialogConfirm
                     </Grid>
                 </Grid>
             </DialogContent>
-            <DialogActions>
+            <DialogActions >
                 <Button autoFocus onClick={onConfirm} color='primary' variant='contained'>
                     { acceptButtonText ? acceptButtonText : 'Aceptar' }
                 </Button>

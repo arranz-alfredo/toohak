@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { Box, Button, Dialog, DialogTitle, Divider, Grid, Icon, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles, Menu, MenuItem, Snackbar, SnackbarContent, Typography } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import { colors } from 'theme';
 import { Project, Test, TestOptions } from 'types';
 import { isValidTest } from 'utils';
@@ -50,7 +51,9 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
     const history = useHistory();
 
     const [selectedTest, setSelectedTest] = React.useState<Test | undefined>();
+    const [preimportedTest, setPreimportedTest] = React.useState<Test | undefined>();
     const [anchorElEdit, setAnchorElEdit] = React.useState<Element | null>(null);
+    const [openOverwriteText, setOpenOverwriteText] = React.useState<boolean>(false);
     const [openTestForm, setOpenTestForm] = useState<boolean>(false);
     const [openRemoveTestConfirm, setOpenRemoveTestConfirm] = useState<boolean>(false);
     const [playOptionsState, setPlayOptionsState] = useState<PlayOptionsState>();
@@ -66,16 +69,37 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
     const handleImportTest = (test: unknown) => {
         const newTest = test as Test;
         if (!isValidTest(newTest)) {
-            setMessageText('El proyecto es inválido');
+            setMessageText('El cuestionario es inválido');
             setOpenMessage(true);
         }
         const exist = project.tests.find((aTest: Test) => aTest.id === newTest.id) != null;
         if (!exist) {
             onCreateTest(project.id, newTest, false);
         } else {
-            setMessageText('El proyecto ya existe');
-            setOpenMessage(true);
+            setPreimportedTest(newTest);
+            setOpenOverwriteText(true);
         }
+    };
+
+    const handleConfirmOverwriteTest = () => {
+        if (preimportedTest) {
+            onCreateTest(project.id, preimportedTest, false);
+            setPreimportedTest(undefined);
+        }
+        setOpenOverwriteText(false);
+    };
+
+    const handleRefuseOverwriteTest = () => {
+        if (preimportedTest) {
+            const newTest = {
+                ...preimportedTest,
+                id: uuidv4(),
+                name: `Copia ${preimportedTest?.name}`
+            };
+            onCreateTest(project.id, newTest, false);
+            setPreimportedTest(undefined);
+        }
+        setOpenOverwriteText(false);
     };
 
     const handleImportTestError = () => {
@@ -181,6 +205,15 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                     </Typography>
                 </MenuItem>
             </Menu>
+            <DialogConfirm
+                open={openOverwriteText}
+                text="El cuestionario ya existe en este proyecto. ¿Qué deseas hacer?"
+                acceptButtonText="Sobreescribir cuestionario"
+                cancelButtonText="Crear nueva copia"
+                width="sm"
+                onConfirm={handleConfirmOverwriteTest}
+                onRefuse={handleRefuseOverwriteTest}
+            />
             <Dialog
                 open={openTestForm}
                 fullWidth
