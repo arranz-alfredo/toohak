@@ -1,3 +1,4 @@
+export * from './ChallengeConfigurator';
 export * from './ChallengeQuestion';
 export * from './Countdown';
 export * from './DialogConfirm';

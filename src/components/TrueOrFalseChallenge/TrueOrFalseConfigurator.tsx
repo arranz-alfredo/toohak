@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FormControlLabel, Grid, makeStyles, Switch, TextField, Typography } from '@material-ui/core';
-import { TrueOrFalseChallengeConfig } from 'types';
+import { ChallengeConfig, TrueOrFalseChallengeConfig } from 'types';
+import { ChallengeConfigurator } from 'components/Common';
 
 const useStyles = makeStyles({
     fullWidth: {
@@ -18,8 +19,6 @@ export const TrueOrFalseConfigurator: React.FC<TrueOrFalseConfiguratorProps> = (
 
     const [formData, setFormData] = useState<TrueOrFalseChallengeConfig>(config);
 
-    const inputTimeLimit = useRef({} as HTMLInputElement);
-    const inputQuestionFontSize = useRef({} as HTMLInputElement);
     const inputPictureCount = useRef({} as HTMLInputElement);
     const checkPictureLabel = useRef({} as HTMLInputElement);
 
@@ -40,33 +39,26 @@ export const TrueOrFalseConfigurator: React.FC<TrueOrFalseConfiguratorProps> = (
         }
     };
 
+    const handleBaseConfigChange = (newBaseConfig: ChallengeConfig) => {
+        const newConfig = {
+            ...formData,
+            ...newBaseConfig
+        };
+        setFormData(newConfig);
+        if (onConfigChange) {
+            onConfigChange(newConfig);
+        }
+    };
+
     return (
         <Grid container direction='column' spacing={2}>
             <Grid item>
                 <Typography variant='h5'>Configuración</Typography>
             </Grid>
             <Grid item>
-                <TextField
-                    inputRef={inputTimeLimit}
-                    type='number'
-                    label='Límite de tiempo (segundos)'
-                    inputProps={{ min: 10 }}
-                    value={formData.timeLimit}
-                    color='secondary'
-                    className={classes.fullWidth}
-                    onInput={() => { handleConfigParameterChange('timeLimit', parseInt(inputTimeLimit.current.value)); }}
-                />
-            </Grid>
-            <Grid item>
-                <TextField
-                    inputRef={inputQuestionFontSize}
-                    type='number'
-                    label='Tamaño de letra del título'
-                    inputProps={{ min: 1 }}
-                    value={formData.questionFontSize}
-                    color='secondary'
-                    className={classes.fullWidth}
-                    onInput={() => { handleConfigParameterChange('questionFontSize', parseInt(inputQuestionFontSize.current.value)); }}
+                <ChallengeConfigurator
+                    config={config}
+                    onConfigChange={handleBaseConfigChange}
                 />
             </Grid>
             <Grid item>
