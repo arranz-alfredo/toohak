@@ -1,6 +1,7 @@
 import React, { ChangeEvent, Fragment, useState } from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Dialog, DialogTitle, Divider, Grid, Icon, IconButton, makeStyles, Snackbar, SnackbarContent, Typography } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 import { Project, Test } from 'types';
 import { DialogConfirm, JsonLoader, ProjectForm, TestList } from 'components';
 import { isValidProject } from 'utils';
@@ -40,6 +41,8 @@ export const ProjectList: React.FC<ProjectListProps> = (props: ProjectListProps)
     const history = useHistory();
 
     const [expandedProject, setExpandedProject] = React.useState<string | false>(false);
+    const [preimportedProject, setPreimportedProject] = React.useState<Project | undefined>();
+    const [openOverwriteProject, setOpenOverwriteProject] = React.useState<boolean>(false);
     const [openProjectForm, setOpenProjectForm] = useState<boolean>(false);
     const [openRemoveProjectConfirm, setOpenRemoveProjectConfirm] = useState<boolean>(false);
     const [selectedProject, setSelectedProject] = useState<Project>();
@@ -106,14 +109,38 @@ export const ProjectList: React.FC<ProjectListProps> = (props: ProjectListProps)
         if (!exist) {
             setProjects([
                 ...projects,
-                {
-                    ...newProject
-                }
+                {...newProject}
             ]);
         } else {
-            setMessageText('El proyecto ya existe');
-            setOpenMessage(true);
+            setPreimportedProject(newProject);
+            setOpenOverwriteProject(true);
         }
+    };
+
+    const handleConfirmOverwriteProject = () => {
+        if (preimportedProject) {
+            setProjects(
+                projects.map((aProject: Project) => aProject.id === preimportedProject.id ? preimportedProject : aProject)
+            );
+            setPreimportedProject(undefined);
+        }
+        setOpenOverwriteProject(false);
+    };
+
+    const handleRefuseOverwriteProject = () => {
+        if (preimportedProject) {
+            const newProject = {
+                ...preimportedProject,
+                id: uuidv4(),
+                name: `Copia ${preimportedProject?.name}`
+            };
+            setProjects([
+                ...projects,
+                {...newProject}
+            ]);
+            setPreimportedProject(undefined);
+        }
+        setOpenOverwriteProject(false);
     };
 
     const handleImportProjectError = () => {
@@ -178,6 +205,15 @@ export const ProjectList: React.FC<ProjectListProps> = (props: ProjectListProps)
 
     return (
         <Fragment>
+            <DialogConfirm
+                open={openOverwriteProject}
+                text="El proyecto ya existe. ¿Qué deseas hacer?"
+                acceptButtonText="Sobreescribir proyecto"
+                cancelButtonText="Crear nueva copia"
+                width="sm"
+                onConfirm={handleConfirmOverwriteProject}
+                onRefuse={handleRefuseOverwriteProject}
+            />
             <Dialog
                 open={openProjectForm}
                 fullWidth

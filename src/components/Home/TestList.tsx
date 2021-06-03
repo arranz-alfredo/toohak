@@ -53,7 +53,7 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
     const [selectedTest, setSelectedTest] = React.useState<Test | undefined>();
     const [preimportedTest, setPreimportedTest] = React.useState<Test | undefined>();
     const [anchorElEdit, setAnchorElEdit] = React.useState<Element | null>(null);
-    const [openOverwriteText, setOpenOverwriteText] = React.useState<boolean>(false);
+    const [openOverwriteTest, setOpenOverwriteTest] = React.useState<boolean>(false);
     const [openTestForm, setOpenTestForm] = useState<boolean>(false);
     const [openRemoveTestConfirm, setOpenRemoveTestConfirm] = useState<boolean>(false);
     const [playOptionsState, setPlayOptionsState] = useState<PlayOptionsState>();
@@ -77,7 +77,7 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
             onCreateTest(project.id, newTest, false);
         } else {
             setPreimportedTest(newTest);
-            setOpenOverwriteText(true);
+            setOpenOverwriteTest(true);
         }
     };
 
@@ -86,7 +86,7 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
             onCreateTest(project.id, preimportedTest, false);
             setPreimportedTest(undefined);
         }
-        setOpenOverwriteText(false);
+        setOpenOverwriteTest(false);
     };
 
     const handleRefuseOverwriteTest = () => {
@@ -99,7 +99,7 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
             onCreateTest(project.id, newTest, false);
             setPreimportedTest(undefined);
         }
-        setOpenOverwriteText(false);
+        setOpenOverwriteTest(false);
     };
 
     const handleImportTestError = () => {
@@ -206,7 +206,7 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                 </MenuItem>
             </Menu>
             <DialogConfirm
-                open={openOverwriteText}
+                open={openOverwriteTest}
                 text="El cuestionario ya existe en este proyecto. ¿Qué deseas hacer?"
                 acceptButtonText="Sobreescribir cuestionario"
                 cancelButtonText="Crear nueva copia"
