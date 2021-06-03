@@ -1,27 +1,27 @@
 {
   "files": {
     "main.css": "/toohak/static/css/main.c04c75c9.chunk.css",
-    "main.js": "/toohak/static/js/main.b8e3749e.chunk.js",
-    "main.js.map": "/toohak/static/js/main.b8e3749e.chunk.js.map",
-    "runtime-main.js": "/toohak/static/js/runtime-main.da27ba97.js",
-    "runtime-main.js.map": "/toohak/static/js/runtime-main.da27ba97.js.map",
-    "static/js/2.dc852927.chunk.js": "/toohak/static/js/2.dc852927.chunk.js",
-    "static/js/2.dc852927.chunk.js.map": "/toohak/static/js/2.dc852927.chunk.js.map",
+    "main.js": "/toohak/static/js/main.9844e0bc.chunk.js",
+    "main.js.map": "/toohak/static/js/main.9844e0bc.chunk.js.map",
+    "runtime-main.js": "/toohak/static/js/runtime-main.237a81fc.js",
+    "runtime-main.js.map": "/toohak/static/js/runtime-main.237a81fc.js.map",
+    "static/js/2.5a86eb11.chunk.js": "/toohak/static/js/2.5a86eb11.chunk.js",
+    "static/js/2.5a86eb11.chunk.js.map": "/toohak/static/js/2.5a86eb11.chunk.js.map",
     "static/js/3.1e91581f.chunk.js": "/toohak/static/js/3.1e91581f.chunk.js",
     "static/js/3.1e91581f.chunk.js.map": "/toohak/static/js/3.1e91581f.chunk.js.map",
-    "static/js/4.798d05c3.chunk.js": "/toohak/static/js/4.798d05c3.chunk.js",
-    "static/js/4.798d05c3.chunk.js.map": "/toohak/static/js/4.798d05c3.chunk.js.map",
+    "static/js/4.98b2aa03.chunk.js": "/toohak/static/js/4.98b2aa03.chunk.js",
+    "static/js/4.98b2aa03.chunk.js.map": "/toohak/static/js/4.98b2aa03.chunk.js.map",
     "index.html": "/toohak/index.html",
     "static/css/main.c04c75c9.chunk.css.map": "/toohak/static/css/main.c04c75c9.chunk.css.map",
-    "static/js/2.dc852927.chunk.js.LICENSE.txt": "/toohak/static/js/2.dc852927.chunk.js.LICENSE.txt",
+    "static/js/2.5a86eb11.chunk.js.LICENSE.txt": "/toohak/static/js/2.5a86eb11.chunk.js.LICENSE.txt",
     "static/js/3.1e91581f.chunk.js.LICENSE.txt": "/toohak/static/js/3.1e91581f.chunk.js.LICENSE.txt",
     "static/media/correct.6415db46.wav": "/toohak/static/media/correct.6415db46.wav",
     "static/media/incorrect.70fff5c7.wav": "/toohak/static/media/incorrect.70fff5c7.wav"
   },
   "entrypoints": [
-    "static/js/runtime-main.da27ba97.js",
-    "static/js/2.dc852927.chunk.js",
+    "static/js/runtime-main.237a81fc.js",
+    "static/js/2.5a86eb11.chunk.js",
     "static/css/main.c04c75c9.chunk.css",
-    "static/js/main.b8e3749e.chunk.js"
+    "static/js/main.9844e0bc.chunk.js"
   ]
 }
