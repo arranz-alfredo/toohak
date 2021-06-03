@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Card, Grid, makeStyles } from '@material-ui/core';
 import useSound from 'use-sound';
-import { ChallengeQuestion } from '../common/ChallengeQuestion';
-import { SelectableOption } from '../common/SelectableOption';
+import { ChallengeQuestion } from '../Common/ChallengeQuestion';
+import { SelectableOption } from '../Common/SelectableOption';
 import { TrueOrFalseChallenge } from '../../types/TrueOrFalseChallenge';
-import { PictureGrid } from '../common/PictureGrid';
+import { PictureGrid } from '../Common/PictureGrid';
 import { ComponentMode } from '../../enums/ComponentMode';
-import { Countdown } from '../common/Countdown';
+import { Countdown } from '../Common/Countdown';
 
 import correct from '../../assets/sounds/correct.wav';
 import incorrect from '../../assets/sounds/incorrect.wav';

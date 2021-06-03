@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
-import { Challenge } from '../../types/Challenge';
-import { ChallengeThumbnail } from './ChallengeThumbnail';
+import { Challenge } from 'types';
+import { ChallengeThumbnail } from 'components';
 
 const useStyles = makeStyles({
     root: {

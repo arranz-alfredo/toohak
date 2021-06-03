@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
-import { ProjectContext } from '../context/ProjectContext';
-import { Project } from '../types/Project';
+import { ProjectContext } from 'context/ProjectContext';
+import { Project } from 'types';
 
 const LOCALSTORAGE_KEY = 'projects';
 

@@ -1,4 +1,4 @@
-import { Challenge, ChallengeConfig, ChallengePicture } from "./Challenge";
+import { Challenge, ChallengeConfig, ChallengePicture } from "types";
 
 export interface TrueOrFalseChallengeConfig extends ChallengeConfig {
     pictureCount: number,
@@ -7,6 +7,6 @@ export interface TrueOrFalseChallengeConfig extends ChallengeConfig {
 
 export interface TrueOrFalseChallenge extends Challenge {
     pictures: ChallengePicture[],
-    answer: boolean
+    answer: boolean,
     config: TrueOrFalseChallengeConfig
 }

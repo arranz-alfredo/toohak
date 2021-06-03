@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Card, Fab, Grid, Icon, makeStyles } from '@material-ui/core';
 import useSound from 'use-sound';
-import { ChallengeQuestion } from '../common/ChallengeQuestion';
-import { SortChallenge } from '../../types/SortChallenge';
-import { ComponentMode } from '../../enums/ComponentMode';
-import { Countdown } from '../common/Countdown';
-
 import correct from '../../assets/sounds/correct.wav';
 import incorrect from '../../assets/sounds/incorrect.wav';
+import { SortChallenge } from 'types';
+import { ComponentMode } from 'enums';
+import { ChallengeQuestion, Countdown } from 'components';
 
 const useStyles = makeStyles((theme) => ({
     root: {

@@ -1,11 +1,8 @@
 import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
-import { SelectAnswerChallenge, SelectAnswerChallengeAnswer, SelectAnswerChallengeConfig } from '../../types/SelectAnswerChallenge';
-import { SelectAnswerChallenger } from './SelectAnswerChallenger';
-import { SelectAnswerConfigurator } from './SelectAnswerConfigurator';
-import { ComponentMode } from '../../enums/ComponentMode';
-import { ChallengePicture } from '../../types/Challenge';
-import { PictureType } from '../../enums/PictureType';
+import { ChallengePicture, SelectAnswerChallenge, SelectAnswerChallengeAnswer, SelectAnswerChallengeConfig } from 'types';
+import { ComponentMode, PictureType } from 'enums';
+import { SelectAnswerChallenger, SelectAnswerConfigurator } from 'components';
 
 const useStyles = makeStyles({
     fullHeight: {

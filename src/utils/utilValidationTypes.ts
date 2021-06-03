@@ -1,14 +1,5 @@
-import { ChallengeType } from '../enums/ChallengeType';
-import { PictureType } from '../enums/PictureType';
-import { Challenge, ChallengeConfig, ChallengePicture } from '../types/Challenge';
-import { ClassifyChallenge, ClassifyChallengeGroup } from '../types/ClassifyChallenge';
-import { FillGapsChallenge, FillGapsChallengeSentence } from '../types/FillGapsChallenge';
-import { FillTableChallenge, FillTableChallengeCell } from '../types/FillTableChallenge';
-import { MatchChallenge, MatchChallengePair } from '../types/MatchChallenge';
-import { Project } from '../types/Project';
-import { SelectAnswerChallenge, SelectAnswerChallengeAnswer, SelectAnswerChallengeConfig } from '../types/SelectAnswerChallenge';
-import { SortChallenge } from '../types/SortChallenge';
-import { Test } from '../types/Test';
+import { ChallengeType, PictureType } from "enums";
+import { Challenge, ChallengeConfig, ChallengePicture, ClassifyChallenge, ClassifyChallengeGroup, FillGapsChallenge, FillGapsChallengeSentence, FillTableChallenge, FillTableChallengeCell, MatchChallenge, MatchChallengePair, Project, SelectAnswerChallenge, SelectAnswerChallengeAnswer, SelectAnswerChallengeConfig, SortChallenge, Test } from "types";
 
 export interface Validation {
     valid: boolean,

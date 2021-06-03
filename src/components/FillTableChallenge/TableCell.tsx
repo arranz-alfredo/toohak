@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Button, Grid, Icon, makeStyles, TextField } from '@material-ui/core';
-import { FillTableChallengeCell } from '../../types/FillTableChallenge';
-import { ComponentMode } from '../../enums/ComponentMode';
+import { FillTableChallengeCell } from 'types';
+import { ComponentMode } from 'enums';
 
 const useStyles = makeStyles((theme) => ({
     root: {

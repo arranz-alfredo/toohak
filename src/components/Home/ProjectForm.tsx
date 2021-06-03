@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Button, Grid, TextField } from '@material-ui/core';
 import { v4 as uuidv4 } from 'uuid';
-import { Project } from '../../types/Project';
+import { Project } from 'types';
 
 interface FormState {
     name: string,

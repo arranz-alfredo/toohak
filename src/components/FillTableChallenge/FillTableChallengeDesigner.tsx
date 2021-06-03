@@ -1,9 +1,8 @@
 import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
-import { FillTableChallenge, FillTableChallengeCell, FillTableChallengeConfig } from '../../types/FillTableChallenge';
-import { FillTableChallenger } from './FillTableChallenger';
-import { FillTableConfigurator } from './FillTableConfigurator';
-import { ComponentMode } from '../../enums/ComponentMode';
+import { FillTableChallenge, FillTableChallengeCell, FillTableChallengeConfig } from 'types';
+import { ComponentMode } from 'enums';
+import { FillTableChallenger, FillTableConfigurator } from 'components';
 
 const useStyles = makeStyles({
     fullHeight: {

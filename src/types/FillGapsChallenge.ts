@@ -1,5 +1,5 @@
-import { FillMethod } from "../enums/FillMethod";
-import { Challenge, ChallengeConfig } from "./Challenge";
+import { FillMethod } from "enums";
+import { Challenge, ChallengeConfig } from "types";
 
 export interface FillGapsChallengeConfig extends ChallengeConfig {
     textFontSize: number,

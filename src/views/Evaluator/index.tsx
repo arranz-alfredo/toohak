@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from "react-router";
 import { Fab, Grid, Icon, makeStyles } from '@material-ui/core';
-import { Test, TestOptions } from '../../types/Test';
-import { useProjects } from '../../hooks/useProjects';
-import { Project } from '../../types/Project';
-import { ChallengeEvaluator } from '../../components/Evaluator/ChallengeEvaluator';
-import { ChallengeLauncher } from '../../components/Evaluator/ChallengeLauncher';
-import { TestResult } from '../../components/Evaluator/TestResult';
-import { parseQueryString } from '../../utils/utilStrings';
-import { Language } from '../../enums/Language';
+import { useProjects } from 'hooks/useProjects';
+import { Project, Test, TestOptions } from 'types';
+import { Language } from 'enums';
+import { ChallengeEvaluator, ChallengeLauncher, TestResult } from 'components';
+import { parseQueryString } from 'utils';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     fullHeight: {
         height: '100%'
     },

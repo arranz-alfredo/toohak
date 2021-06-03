@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FormControl, FormControlLabel, Grid, InputLabel, makeStyles, MenuItem, Select, Switch, TextField, Typography } from '@material-ui/core';
-import { FillGapsChallengeConfig } from '../../types/FillGapsChallenge';
-import { FillMethod } from '../../enums/FillMethod';
+import { FillGapsChallengeConfig } from 'types';
+import { FillMethod } from 'enums';
 
 const useStyles = makeStyles({
     fullWidth: {

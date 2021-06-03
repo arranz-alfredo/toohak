@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Card, CardContent, Grid, TextField, Typography } from '@material-ui/core';
-import { ComponentMode } from '../../enums/ComponentMode';
 import { useDrop } from 'react-dnd';
-import { MatchItem } from '../../types/MatchChallenge';
+import { MatchItem } from 'types';
+import { ComponentMode } from 'enums';
 
 interface MatchDestinationProps {
     mode: ComponentMode,
@@ -37,7 +37,7 @@ export const MatchDestination: React.FC<MatchDestinationProps> = (props: MatchDe
         }
     };
 
-    const [{ isOver, canDrop }, drop] = useDrop({
+    const [/* { isOver, canDrop } */, drop] = useDrop({
         accept: 'dnd',
         drop: handleDrop,
         collect: (monitor: { isOver: () => boolean, canDrop: () => boolean }) => {

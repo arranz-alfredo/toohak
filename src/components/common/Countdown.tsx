@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, CircularProgress, Grid, Typography } from '@material-ui/core';
-import { ComponentMode } from '../../enums/ComponentMode';
+import { ComponentMode } from 'enums';
 
 interface CountdownProps {
     mode: ComponentMode,

@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import { Card, Fab, Grid, Icon, makeStyles } from '@material-ui/core';
 import useSound from 'use-sound';
-import { ChallengeQuestion } from '../common/ChallengeQuestion';
-import { FillTableChallenge, FillTableChallengeCell } from '../../types/FillTableChallenge';
-import { ComponentMode } from '../../enums/ComponentMode';
-import { Countdown } from '../common/Countdown';
-
 import correct from '../../assets/sounds/correct.wav';
 import incorrect from '../../assets/sounds/incorrect.wav';
-import { TableCell } from './TableCell';
-import { ChallengeOptions } from '../../types/Challenge';
-import { Language } from '../../enums/Language';
+import { ChallengeOptions, FillTableChallenge, FillTableChallengeCell } from 'types';
+import { ComponentMode, Language } from 'enums';
+import { ChallengeQuestion, Countdown, TableCell } from 'components';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -242,7 +237,8 @@ export const FillTableChallenger: React.FC<FillTableChallengerProps> = (props: F
                                                                                         !challenge.config.firstColumnFixed
                                                                                         || columnIdx !== 0
                                                                                     ) && (
-                                                                                        challenge.items[rowIdx][columnIdx].text === fillTableState[rowIdx][columnIdx].text
+                                                                                        challenge.items[rowIdx][columnIdx].text
+                                                                                        === fillTableState[rowIdx][columnIdx].text
                                                                                     )
                                                                                 }
                                                                                 onCellChange={(cell)=>{

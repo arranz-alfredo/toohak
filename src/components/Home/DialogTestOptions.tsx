@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Box, Button, Dialog, DialogTitle, FormControlLabel, Grid, makeStyles, Switch } from '@material-ui/core';
-import { TestOptions } from '../../types/Test';
+import { TestOptions } from 'types';
 
 const useStyles = makeStyles(() => ({
     dialogContainer: {

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Card, Chip, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
-import { ComponentMode } from '../../enums/ComponentMode';
 import { useDrop } from 'react-dnd';
-import { DragableItem } from '../common/DragableItem';
+import { ComponentMode } from 'enums';
+import { DragableItem } from 'components';
 
 const useStyles = makeStyles((theme) => ({
     root: {

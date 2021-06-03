@@ -3,19 +3,13 @@ import { Card, Fab, Grid, Icon, makeStyles } from '@material-ui/core';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import useSound from 'use-sound';
-import { ChallengeQuestion } from '../common/ChallengeQuestion';
-import { ClassifyChallenge, ClassifyChallengeGroup } from '../../types/ClassifyChallenge';
-import { ComponentMode } from '../../enums/ComponentMode';
-import { Countdown } from '../common/Countdown';
+import correct from 'assets/sounds/correct.wav';
+import incorrect from 'assets/sounds/incorrect.wav';
+import { ChallengeOptions, ClassifyChallenge, ClassifyChallengeGroup } from 'types';
+import { ComponentMode, Language } from 'enums';
+import { ChallengeQuestion, Countdown, DragableItem, DropGroup } from 'components';
 
-import correct from '../../assets/sounds/correct.wav';
-import incorrect from '../../assets/sounds/incorrect.wav';
-import { DropGroup } from './DropGroup';
-import { DragableItem } from '../common/DragableItem';
-import { ChallengeOptions } from '../../types/Challenge';
-import { Language } from '../../enums/Language';
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
         height: '100%',
         backgroundColor: '#f0f0f0'

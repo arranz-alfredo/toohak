@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
-import { useProjects } from '../../hooks/useProjects';
-import { ProjectList } from '../../components/Home/ProjectList';
+import { useProjects } from 'hooks/useProjects';
+import { ProjectList } from 'components';
 
 export const Home: React.FC = () => {
     const { projects, setProjects } = useProjects();

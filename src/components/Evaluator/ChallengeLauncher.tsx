@@ -1,8 +1,7 @@
-import { Divider, Grid, LinearProgress, makeStyles, Typography } from '@material-ui/core';
 import React, { useEffect } from 'react';
-import { ChallengeType } from '../../enums/ChallengeType';
-import { Language } from '../../enums/Language';
-import { getChallengeTypeDescription } from '../../utils/utilChallenges';
+import { Grid, LinearProgress, makeStyles, Typography } from '@material-ui/core';
+import { ChallengeType, Language } from 'enums';
+import { getChallengeTypeDescription } from 'utils';
 
 const useStyles = makeStyles((theme) => ({
     root: {

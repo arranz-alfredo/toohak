@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Dialog, DialogTitle, makeStyles } from '@material-ui/core';
-import { Project } from '../../types/Project';
-import { ProjectForm } from './ProjectForm';
+import { Project } from 'types';
+import { ProjectForm } from 'components';
 
 const useStyles = makeStyles(() => ({
     dialogContainer: {
@@ -11,8 +11,8 @@ const useStyles = makeStyles(() => ({
 
 interface DialogProjectFormProps {
     open: boolean,
-    project?: Project
-    onAccept: (project: Project) => void
+    project?: Project,
+    onAccept: (project: Project) => void,
     onCancel: () => void
 }
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
+    Card,
     CardActionArea,
     Checkbox,
     Grid,
@@ -9,9 +10,8 @@ import {
     Radio,
     TextField
 } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
-import { ComponentMode } from '../../enums/ComponentMode';
-import { colors } from '../../theme';
+import { ComponentMode } from 'enums';
+import { colors } from 'theme';
 
 const useStyles = makeStyles(() => ({
     option: {

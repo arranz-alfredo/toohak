@@ -1,21 +1,8 @@
 import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
-import { Challenge } from '../../types/Challenge';
-import { ChallengeType } from '../../enums/ChallengeType';
-import { SelectAnswerChallengeDesigner } from '../SelectAnswerChallenge/SelectAnswerChallengeDesigner';
-import { SelectAnswerChallenge } from '../../types/SelectAnswerChallenge';
-import { TrueOrFalseChallengeDesigner } from '../TrueOrFalseChallenge/TrueOrFalseChallengeDesigner';
-import { TrueOrFalseChallenge } from '../../types/TrueOrFalseChallenge';
-import { ClassifyChallengeDesigner } from '../ClassifyChallenge/ClassifyChallengeDesigner';
-import { ClassifyChallenge } from '../../types/ClassifyChallenge';
-import { SortChallenge } from '../../types/SortChallenge';
-import { SortChallengeDesigner } from '../SortChallenge/SortChallengeDesigner';
-import { FillTableChallengeDesigner } from '../FillTableChallenge/FillTableChallengeDesigner';
-import { FillTableChallenge } from '../../types/FillTableChallenge';
-import { FillGapsChallengeDesigner } from '../FillGapsChallenge/FillGapsChallengeDesigner';
-import { FillGapsChallenge } from '../../types/FillGapsChallenge';
-import { MatchChallengeDesigner } from '../MatchChallenge/MatchChallengeDesigner';
-import { MatchChallenge } from '../../types/MatchChallenge';
+import { ClassifyChallengeDesigner, FillGapsChallengeDesigner, FillTableChallengeDesigner, MatchChallengeDesigner, SelectAnswerChallengeDesigner, SortChallengeDesigner, TrueOrFalseChallengeDesigner } from 'components';
+import { Challenge, ClassifyChallenge, FillGapsChallenge, FillTableChallenge, MatchChallenge, SelectAnswerChallenge, SortChallenge, TrueOrFalseChallenge } from 'types';
+import { ChallengeType } from 'enums';
 
 const useStyles = makeStyles(() => ({
     fullHeight: {

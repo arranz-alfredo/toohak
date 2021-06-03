@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Grid, Icon, makeStyles, Typography } from '@material-ui/core';
-import { Test } from '../../types/Test';
-import { Language } from '../../enums/Language';
+import { Test } from 'types';
+import { Language } from 'enums';
 
 const useStyles = makeStyles((theme) => ({
     root: {

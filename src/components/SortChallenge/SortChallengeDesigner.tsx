@@ -1,9 +1,8 @@
 import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
-import { SortChallenge, SortChallengeConfig } from '../../types/SortChallenge';
-import { SortChallenger } from './SortChallenger';
-import { SortConfigurator } from './SortConfigurator';
-import { ComponentMode } from '../../enums/ComponentMode';
+import { SortChallenge, SortChallengeConfig } from 'types';
+import { ComponentMode } from 'enums';
+import { SortChallenger, SortConfigurator } from 'components';
 
 const useStyles = makeStyles({
     fullHeight: {

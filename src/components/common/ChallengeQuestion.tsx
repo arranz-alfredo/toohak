@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Card, makeStyles, TextField } from '@material-ui/core';
-import { ComponentMode } from '../../enums/ComponentMode';
+import { ComponentMode } from 'enums';
 
 const useStyles = makeStyles({
     root: {

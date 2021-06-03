@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Button, Dialog, DialogTitle, Grid, makeStyles, TextField } from '@material-ui/core';
-import { ChallengePicture } from '../../types/Challenge';
-import { PictureType } from '../../enums/PictureType';
+import { ChallengePicture } from 'types';
+import { PictureType } from 'enums';
 
 const useStyles = makeStyles(() => ({
     dialogContainer: {

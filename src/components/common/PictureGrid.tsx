@@ -1,9 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Fab, Grid, GridSize, Icon, makeStyles } from '@material-ui/core';
-import { ChallengePicture } from '../../types/Challenge';
-import { PictureType } from '../../enums/PictureType';
-import { ComponentMode } from '../../enums/ComponentMode';
-import { DialogPictureForm } from './DialogPictureSelector';
+import { ChallengePicture } from 'types';
+import { ComponentMode, PictureType } from 'enums';
+import { DialogPictureForm } from 'components';
 
 const useStyles = makeStyles((theme) => ({
     root: {

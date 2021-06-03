@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Grid, Icon, IconButton, makeStyles, TextField, Typography } from '@material-ui/core';
-import { ComponentMode } from '../../enums/ComponentMode';
-import { FillMethod } from '../../enums/FillMethod';
-import { FillGapsChallengeExpression, FillGapsChallengeSentence } from '../../types/FillGapsChallenge';
-import { checkEqual, joinSentence, splitSentence } from '../../utils/utilStrings';
-import { colors } from '../../theme';
-import { DropGap } from './DropGap';
+import { FillGapsChallengeExpression, FillGapsChallengeSentence } from 'types';
+import { ComponentMode, FillMethod } from 'enums';
+import { DropGap } from 'components';
+import { checkEqual, joinSentence, splitSentence } from 'utils';
+import { colors } from 'theme';
 
 const useStyles = makeStyles((theme) => ({
     word: {

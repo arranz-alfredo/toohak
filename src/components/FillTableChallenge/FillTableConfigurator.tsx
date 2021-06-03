@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FormControlLabel, Grid, makeStyles, Switch, TextField, Typography } from '@material-ui/core';
-import { FillTableChallengeConfig } from '../../types/FillTableChallenge';
+import { FillTableChallengeConfig } from 'types';
 
 const useStyles = makeStyles({
     fullWidth: {

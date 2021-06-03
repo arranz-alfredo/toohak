@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Card, CardContent, Grid, TextField, Typography } from '@material-ui/core';
-import { ComponentMode } from '../../enums/ComponentMode';
 import { useDrag } from 'react-dnd';
-import { MatchItem } from '../../types/MatchChallenge';
+import { MatchItem } from 'types';
+import { ComponentMode } from 'enums';
 
 interface MatchSourceProps {
     mode: ComponentMode,
@@ -30,7 +30,7 @@ export const MatchSource: React.FC<MatchSourceProps> = (props: MatchSourceProps)
         }
     };
 
-    const [{ opacity }, drag] = useDrag(
+    const [/* { opacity } */, drag] = useDrag(
         () => ({
             type: 'dnd',
             item: { ...item },

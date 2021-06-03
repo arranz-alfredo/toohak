@@ -1,4 +1,4 @@
-import { Challenge, ChallengeConfig, ChallengePicture } from "./Challenge";
+import { Challenge, ChallengeConfig, ChallengePicture } from "types";
 
 export interface SelectAnswerChallengeConfig extends ChallengeConfig {
     answerFontSize: number,

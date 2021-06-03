@@ -1,5 +1,5 @@
-import { Language } from "../enums/Language";
-import { Challenge } from "./Challenge";
+import { Language } from "enums";
+import { Challenge } from "types";
 
 export interface TestOptions {
     ignoreTimeLimit: boolean,

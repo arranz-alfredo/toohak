@@ -1,7 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { Button, makeStyles } from '@material-ui/core';
 import { v4 as uuidv4 } from 'uuid';
-import { colors } from '../../theme';
+import { colors } from 'theme';
 
 const useStyles = makeStyles((theme) => ({
     uploadInput: {

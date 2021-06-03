@@ -1,4 +1,4 @@
-import { Challenge, ChallengeConfig } from "./Challenge";
+import { Challenge, ChallengeConfig } from "types";
 
 export interface ClassifyChallengeConfig extends ChallengeConfig {
     itemsFontSize: number,

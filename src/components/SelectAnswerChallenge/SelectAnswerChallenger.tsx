@@ -1,19 +1,13 @@
 import React, { useState } from 'react';
 import { Card, Fab, Grid, Icon, makeStyles } from '@material-ui/core';
 import useSound from 'use-sound';
-import { ChallengeQuestion } from '../common/ChallengeQuestion';
-import { SelectableOption } from '../common/SelectableOption';
-import { SelectAnswerChallenge, SelectAnswerChallengeAnswer } from '../../types/SelectAnswerChallenge';
-import { PictureGrid } from '../common/PictureGrid';
-import { ComponentMode } from '../../enums/ComponentMode';
-import { Countdown } from '../common/Countdown';
-
 import correct from '../../assets/sounds/correct.wav';
 import incorrect from '../../assets/sounds/incorrect.wav';
-import { ChallengeOptions, ChallengePicture } from '../../types/Challenge';
-import { Language } from '../../enums/Language';
+import { ChallengeOptions, ChallengePicture, SelectAnswerChallenge, SelectAnswerChallengeAnswer } from 'types';
+import { ComponentMode, Language } from 'enums';
+import { ChallengeQuestion, Countdown, PictureGrid, SelectableOption } from 'components';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
         height: '100%',
         backgroundColor: '#f0f0f0'

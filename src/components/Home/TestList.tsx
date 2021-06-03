@@ -1,16 +1,12 @@
 import React, { Fragment, useState } from 'react';
 import { Box, Button, Dialog, DialogTitle, Divider, Grid, Icon, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles, Menu, MenuItem, Snackbar, SnackbarContent, Typography } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
-import { Test, TestOptions } from '../../types/Test';
-import { colors } from '../../theme';
-import { Project } from '../../types/Project';
-import { isValidTest } from '../../utils/utilValidationTypes';
-import { TestForm } from './TestForm';
-import { DialogConfirm } from '../common/DialogConfirm';
-import { DialogTestOptions } from './DialogTestOptions';
-import { JsonLoader } from '../common/JsonLoader';
+import { colors } from 'theme';
+import { Project, Test, TestOptions } from 'types';
+import { isValidTest } from 'utils';
+import { DialogConfirm, DialogTestOptions, JsonLoader, TestForm } from 'components';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     inline: {
         display: 'inline',
     },

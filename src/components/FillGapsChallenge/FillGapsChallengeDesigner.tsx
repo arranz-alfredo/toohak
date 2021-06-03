@@ -1,9 +1,8 @@
 import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
-import { FillGapsChallenge, FillGapsChallengeConfig } from '../../types/FillGapsChallenge';
-import { FillGapsChallenger } from './FillGapsChallenger';
-import { FillGapsConfigurator } from './FillGapsConfigurator';
-import { ComponentMode } from '../../enums/ComponentMode';
+import { FillGapsChallenge, FillGapsChallengeConfig } from 'types';
+import { ComponentMode } from 'enums';
+import { FillGapsChallenger, FillGapsConfigurator } from 'components';
 
 const useStyles = makeStyles({
     fullHeight: {

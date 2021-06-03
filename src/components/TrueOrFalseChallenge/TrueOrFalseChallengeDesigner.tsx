@@ -1,11 +1,8 @@
 import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
-import { TrueOrFalseChallenge, TrueOrFalseChallengeConfig } from '../../types/TrueOrFalseChallenge';
-import { TrueOrFalseChallenger } from './TrueOrFalseChallenger';
-import { TrueOrFalseConfigurator } from './TrueOrFalseConfigurator';
-import { ComponentMode } from '../../enums/ComponentMode';
-import { ChallengePicture } from '../../types/Challenge';
-import { PictureType } from '../../enums/PictureType';
+import { ChallengePicture, TrueOrFalseChallenge, TrueOrFalseChallengeConfig } from 'types';
+import { ComponentMode, PictureType } from 'enums';
+import { TrueOrFalseChallenger, TrueOrFalseConfigurator } from 'components';
 
 const useStyles = makeStyles({
     fullHeight: {

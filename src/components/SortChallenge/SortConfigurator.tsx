@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Grid, makeStyles, TextField, Typography } from '@material-ui/core';
-import { SortChallengeConfig } from '../../types/SortChallenge';
+import { SortChallengeConfig } from 'types';
 
 const useStyles = makeStyles({
     fullWidth: {

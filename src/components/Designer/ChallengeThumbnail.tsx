@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Card, CardActionArea, CardActions, CardContent, CardHeader, Chip, Grid, Icon, IconButton, makeStyles, Tooltip, Typography } from '@material-ui/core';
-import { Challenge } from '../../types/Challenge';
-import { getChallengeTypeDescription, getChallengeTypeIcon } from '../../utils/utilChallenges';
-import { isValidChallenge, Validation } from '../../utils/utilValidationTypes';
 import { DropTargetMonitor, useDrag, useDrop, XYCoord } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
-import { colors } from '../../theme';
+import { Challenge } from 'types';
+import { getChallengeTypeDescription, getChallengeTypeIcon, isValidChallenge, Validation } from 'utils';
+import { colors } from 'theme';
 
 const useStyles = makeStyles({
     fullWidth: {

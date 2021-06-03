@@ -1,4 +1,4 @@
-import { Challenge, ChallengeConfig } from "./Challenge";
+import { Challenge, ChallengeConfig } from "types";
 
 export interface MatchItem {
     text: string,

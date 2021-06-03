@@ -1,9 +1,8 @@
 import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
-import { ClassifyChallenge, ClassifyChallengeConfig, ClassifyChallengeGroup } from '../../types/ClassifyChallenge';
-import { ClassifyChallenger } from './ClassifyChallenger';
-import { ClassifyConfigurator } from './ClassifyConfigurator';
-import { ComponentMode } from '../../enums/ComponentMode';
+import { ClassifyChallenge, ClassifyChallengeConfig, ClassifyChallengeGroup } from 'types';
+import { ComponentMode } from 'enums';
+import { ClassifyChallenger, ClassifyConfigurator } from 'components';
 
 const useStyles = makeStyles({
     fullHeight: {

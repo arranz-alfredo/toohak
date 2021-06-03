@@ -77,6 +77,8 @@
         "react/require-default-props": "off",
         "semi": [2, "always"],
         "no-trailing-spaces": "error",
+        "eol-last": ["error", "always"],
+        // "no-unused-vars": ["warn", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
         "@typescript-eslint/member-delimiter-style": ["error", {
             "multiline": {
               "delimiter": "comma",

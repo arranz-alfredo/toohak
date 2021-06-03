@@ -2,22 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Card, Fab, Grid, Icon, makeStyles } from '@material-ui/core';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import Xarrow from 'react-xarrows/lib';
 import useSound from 'use-sound';
-import { ChallengeQuestion } from '../common/ChallengeQuestion';
-import { ComponentMode } from '../../enums/ComponentMode';
-import { Countdown } from '../common/Countdown';
 import correct from '../../assets/sounds/correct.wav';
 import incorrect from '../../assets/sounds/incorrect.wav';
-import { ChallengeOptions } from '../../types/Challenge';
-import { Language } from '../../enums/Language';
-import { MatchChallenge, MatchChallengePair, MatchItem } from '../../types/MatchChallenge';
-import { MatchSource } from './MatchSource';
-import { MatchElement } from '../../enums/MatchElement';
-import { MatchDestination } from './MatchDestination';
-import { colors } from '../../theme';
-import Xarrow from 'react-xarrows/lib';
+import { ChallengeOptions, MatchChallenge, MatchChallengePair, MatchItem } from 'types';
+import { ComponentMode, Language, MatchElement } from 'enums';
+import { ChallengeQuestion, Countdown, MatchDestination, MatchSource } from 'components';
+import { colors } from 'theme';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
         height: '100%',
         backgroundColor: '#f0f0f0'
@@ -281,14 +275,6 @@ export const MatchChallenger: React.FC<MatchChallengerProps> = (props: MatchChal
                                                 curveness={0}
                                             />
                                         ))
-                                        // challenge.pairs.map((aPair: MatchChallengePair, idx: number) => (
-                                        //     <Xarrow
-                                        //         key={`designArrow_${idx}`}
-                                        //         start={`an_s_${idx}`}
-                                        //         end={`an_d_${(idx)}`}
-                                        //         curveness={0}
-                                        //     />
-                                        // ))
                                     ) : (
                                         matchState.map((anAnswer: MatchAnswer, idx: number) => (
                                             <Xarrow

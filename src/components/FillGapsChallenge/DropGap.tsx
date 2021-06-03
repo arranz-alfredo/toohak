@@ -1,7 +1,7 @@
-import { CSSProperties } from '@material-ui/styles';
 import React from 'react';
+import { CSSProperties } from '@material-ui/styles';
 import { useDrop } from 'react-dnd';
-import { colors } from '../../theme';
+import { colors } from 'theme';
 
 interface DropGapProps {
     value: string,
@@ -17,7 +17,7 @@ export const DropGap: React.FC<DropGapProps> = (props: DropGapProps) => {
         onDrop(item.name);
     };
 
-    const [{ isOver, canDrop }, drop] = useDrop({
+    const [/* { isOver, canDrop } */, drop] = useDrop({
         accept: 'dnd',
         drop: handleDrop,
         collect: (monitor: { isOver: () => boolean, canDrop: () => boolean }) => {

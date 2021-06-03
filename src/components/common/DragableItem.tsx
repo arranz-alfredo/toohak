@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core';
 import React, { CSSProperties } from 'react';
+import { makeStyles } from '@material-ui/core';
 import { useDrag } from 'react-dnd';
 
 const useStyles = makeStyles((theme) => ({

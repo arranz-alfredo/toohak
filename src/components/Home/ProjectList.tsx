@@ -1,14 +1,10 @@
 import React, { ChangeEvent, Fragment, useState } from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Dialog, DialogTitle, Divider, Grid, Icon, IconButton, makeStyles, Snackbar, SnackbarContent, Typography } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
-import { Project } from '../../types/Project';
-import { colors } from '../../theme';
-import { TestList } from './TestList';
-import { DialogConfirm } from '../common/DialogConfirm';
-import { JsonLoader } from '../common/JsonLoader';
-import { isValidProject } from '../../utils/utilValidationTypes';
-import { ProjectForm } from './ProjectForm';
-import { Test } from '../../types/Test';
+import { Project, Test } from 'types';
+import { DialogConfirm, JsonLoader, ProjectForm, TestList } from 'components';
+import { isValidProject } from 'utils';
+import { colors } from 'theme';
 
 const useStyles = makeStyles((theme) => ({
     heading: {

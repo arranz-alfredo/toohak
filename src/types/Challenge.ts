@@ -1,6 +1,4 @@
-import { ChallengeType } from "../enums/ChallengeType";
-import { Language } from "../enums/Language";
-import { PictureType } from "../enums/PictureType";
+import { ChallengeType, Language, PictureType } from "enums";
 
 export interface ChallengeConfig {
     timeLimit: number,

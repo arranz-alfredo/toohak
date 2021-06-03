@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FormControlLabel, Grid, makeStyles, Switch, TextField, Typography } from '@material-ui/core';
-import { TrueOrFalseChallengeConfig } from '../../types/TrueOrFalseChallenge';
+import { TrueOrFalseChallengeConfig } from 'types';
 
 const useStyles = makeStyles({
     fullWidth: {

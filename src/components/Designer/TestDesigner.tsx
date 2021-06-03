@@ -1,20 +1,15 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { Grid, Icon, IconButton, ListItemIcon, makeStyles, Menu, MenuItem, Typography } from '@material-ui/core';
-import { v4 as uuidv4 } from 'uuid';
-import { useProjects } from '../../hooks/useProjects';
-import { Project } from '../../types/Project';
-import { Test } from '../../types/Test';
-import { ChallengeSelector } from './ChallengeSelector';
-import { ChallengeDesigner } from './ChallengeDesigner';
-import { Challenge } from '../../types/Challenge';
-import { ChallengeType } from '../../enums/ChallengeType';
-import { getChallengeTypeDescription, getChallengeTypeIcon, getDefaultChallenge } from '../../utils/utilChallenges';
-import { colors } from '../../theme';
-import { DialogConfirm } from '../common/DialogConfirm';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
-import { Language } from '../../enums/Language';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { v4 as uuidv4 } from 'uuid';
+import { useProjects } from 'hooks/useProjects';
+import { Challenge, Project, Test } from 'types';
+import { ChallengeType, Language } from 'enums';
+import { ChallengeDesigner, ChallengeSelector, DialogConfirm } from 'components';
+import { getChallengeTypeDescription, getChallengeTypeIcon, getDefaultChallenge } from 'utils';
+import { colors } from 'theme';
 
 const useStyles = makeStyles((theme) => ({
     fullHeight: {
@@ -51,6 +46,18 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1
     }
 }));
+
+const addMenuItems = [
+    { type: ChallengeType.SelectAnswer, disabled: false },
+    { type: ChallengeType.TrueOrFalse, disabled: false },
+    { type: ChallengeType.FillGaps, disabled: false },
+    { type: ChallengeType.Match, disabled: false },
+    { type: ChallengeType.Sort, disabled: true },
+    { type: ChallengeType.Classify, disabled: false },
+    { type: ChallengeType.FillTable, disabled: false },
+    { type: ChallengeType.TheOddOne, disabled: true },
+    { type: ChallengeType.Crossword, disabled: true }
+];
 
 interface TestDesignerProps {
     projectId: string,
@@ -239,6 +246,19 @@ export const TestDesigner: React.FC<TestDesignerProps> = (props: TestDesignerPro
         setCompactList(newListMode);
     };
 
+    const renderAddMenuItem = (challengeType: ChallengeType, disabled: boolean): React.ReactNode => {
+        return (
+            <MenuItem key={`item_${challengeType}`} disabled={disabled} onClick={() => {
+                handleNewChallengeOptionClick(challengeType);
+            }}>
+                <ListItemIcon>{getChallengeTypeIcon(challengeType, 'large')}</ListItemIcon>
+                <Typography variant='button'>
+                    {getChallengeTypeDescription(challengeType)}
+                </Typography>
+            </MenuItem>
+        );
+    };
+
     return (
         <Fragment>
             <DialogConfirm
@@ -279,72 +299,11 @@ export const TestDesigner: React.FC<TestDesignerProps> = (props: TestDesignerPro
                                                 open={Boolean(anchorEl)}
                                                 onClose={handleCloseNewChallengeMenu}
                                             >
-                                                <MenuItem onClick={() => {
-                                                    handleNewChallengeOptionClick(ChallengeType.SelectAnswer);
-                                                }}>
-                                                    <ListItemIcon>{getChallengeTypeIcon(ChallengeType.SelectAnswer, 'large')}</ListItemIcon>
-                                                    <Typography variant='button'>
-                                                        {getChallengeTypeDescription(ChallengeType.SelectAnswer)}
-                                                    </Typography>
-                                                </MenuItem>
-                                                <MenuItem onClick={() => {
-                                                    handleNewChallengeOptionClick(ChallengeType.TrueOrFalse);
-                                                }}>
-                                                    <ListItemIcon>{getChallengeTypeIcon(ChallengeType.TrueOrFalse, 'large')}</ListItemIcon>
-                                                    <Typography variant='button'>
-                                                        {getChallengeTypeDescription(ChallengeType.TrueOrFalse)}
-                                                    </Typography>
-                                                </MenuItem>
-                                                <MenuItem onClick={() => {
-                                                    handleNewChallengeOptionClick(ChallengeType.FillGaps);
-                                                }}>
-                                                    <ListItemIcon>{getChallengeTypeIcon(ChallengeType.FillGaps, 'large')}</ListItemIcon>
-                                                    <Typography variant='button'>
-                                                        {getChallengeTypeDescription(ChallengeType.FillGaps)}
-                                                    </Typography>
-                                                </MenuItem>
-                                                <MenuItem onClick={() => {
-                                                    handleNewChallengeOptionClick(ChallengeType.Match);
-                                                }}>
-                                                    <ListItemIcon>{getChallengeTypeIcon(ChallengeType.Match, 'large')}</ListItemIcon>
-                                                    <Typography variant='button'>
-                                                        {getChallengeTypeDescription(ChallengeType.Match)}
-                                                    </Typography>
-                                                </MenuItem>
-                                                <MenuItem disabled onClick={handleCloseNewChallengeMenu}>
-                                                    <ListItemIcon>{getChallengeTypeIcon(ChallengeType.Sort, 'large')}</ListItemIcon>
-                                                    <Typography variant='button'>
-                                                        {getChallengeTypeDescription(ChallengeType.Sort)}
-                                                    </Typography>
-                                                </MenuItem>
-                                                <MenuItem onClick={() => {
-                                                    handleNewChallengeOptionClick(ChallengeType.Classify);
-                                                }}>
-                                                    <ListItemIcon>{getChallengeTypeIcon(ChallengeType.Classify, 'large')}</ListItemIcon>
-                                                    <Typography variant='button'>
-                                                        {getChallengeTypeDescription(ChallengeType.Classify)}
-                                                    </Typography>
-                                                </MenuItem>
-                                                <MenuItem onClick={() => {
-                                                    handleNewChallengeOptionClick(ChallengeType.FillTable);
-                                                }}>
-                                                    <ListItemIcon>{getChallengeTypeIcon(ChallengeType.FillTable, 'large')}</ListItemIcon>
-                                                    <Typography variant='button'>
-                                                        {getChallengeTypeDescription(ChallengeType.FillTable)}
-                                                    </Typography>
-                                                </MenuItem>
-                                                <MenuItem disabled onClick={handleCloseNewChallengeMenu}>
-                                                    <ListItemIcon>{getChallengeTypeIcon(ChallengeType.TheOddOne, 'large')}</ListItemIcon>
-                                                    <Typography variant='button'>
-                                                        {getChallengeTypeDescription(ChallengeType.TheOddOne)}
-                                                    </Typography>
-                                                </MenuItem>
-                                                <MenuItem disabled onClick={handleCloseNewChallengeMenu}>
-                                                    <ListItemIcon>{getChallengeTypeIcon(ChallengeType.Crossword, 'large')}</ListItemIcon>
-                                                    <Typography variant='button'>
-                                                        {getChallengeTypeDescription(ChallengeType.Crossword)}
-                                                    </Typography>
-                                                </MenuItem>
+                                                {
+                                                    addMenuItems.map((anItem) => (
+                                                        renderAddMenuItem(anItem.type, anItem.disabled)
+                                                    ))
+                                                }
                                             </Menu>
                                         </Grid>
                                     </Grid>

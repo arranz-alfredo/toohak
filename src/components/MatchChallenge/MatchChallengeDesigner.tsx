@@ -1,9 +1,8 @@
 import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
-import { MatchChallenge, MatchChallengeConfig, MatchChallengePair } from '../../types/MatchChallenge';
-import { MatchChallenger } from './MatchChallenger';
-import { MatchConfigurator } from './MatchConfigurator';
-import { ComponentMode } from '../../enums/ComponentMode';
+import { MatchChallenge, MatchChallengeConfig, MatchChallengePair } from 'types';
+import { ComponentMode } from 'enums';
+import { MatchChallenger, MatchConfigurator } from 'components';
 
 const useStyles = makeStyles({
     fullHeight: {

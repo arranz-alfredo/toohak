@@ -1,19 +1,9 @@
 import React from 'react';
 import { Icon } from '@material-ui/core';
-import { v4 as uuidv4 } from 'uuid';
-import { ChallengeType } from "../enums/ChallengeType";
-import { Language } from "../enums/Language";
-import { Challenge, ChallengeConfig } from "../types/Challenge";
 import { CSSProperties } from '@material-ui/styles';
-import { PictureType } from '../enums/PictureType';
-import { SelectAnswerChallenge, SelectAnswerChallengeConfig } from '../types/SelectAnswerChallenge';
-import { TrueOrFalseChallenge, TrueOrFalseChallengeConfig } from '../types/TrueOrFalseChallenge';
-import { ClassifyChallenge, ClassifyChallengeConfig } from '../types/ClassifyChallenge';
-import { SortChallenge, SortChallengeConfig } from '../types/SortChallenge';
-import { FillTableChallenge, FillTableChallengeConfig } from '../types/FillTableChallenge';
-import { FillGapsChallenge, FillGapsChallengeConfig, FillGapsChallengeSentence } from '../types/FillGapsChallenge';
-import { FillMethod } from '../enums/FillMethod';
-import { MatchChallenge, MatchChallengeConfig } from '../types/MatchChallenge';
+import { v4 as uuidv4 } from 'uuid';
+import { ChallengeType, FillMethod, Language, PictureType } from 'enums';
+import { Challenge, ChallengeConfig, ClassifyChallenge, ClassifyChallengeConfig, FillGapsChallenge, FillGapsChallengeConfig, FillGapsChallengeSentence, FillTableChallenge, FillTableChallengeConfig, MatchChallenge, MatchChallengeConfig, SelectAnswerChallenge, SelectAnswerChallengeConfig, SortChallenge, SortChallengeConfig, TrueOrFalseChallenge, TrueOrFalseChallengeConfig } from 'types';
 
 export const getChallengeTypeDescription = (type: ChallengeType, language: Language = Language.Es): string => {
     switch (type) {

@@ -3,19 +3,12 @@ import { Card, Fab, Grid, Icon, IconButton, makeStyles, TextField } from '@mater
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import useSound from 'use-sound';
-import { ChallengeQuestion } from '../common/ChallengeQuestion';
-import { FillGapsChallenge, FillGapsChallengeExpression, FillGapsChallengeSentence } from '../../types/FillGapsChallenge';
-import { ComponentMode } from '../../enums/ComponentMode';
-import { Countdown } from '../common/Countdown';
 import correct from '../../assets/sounds/correct.wav';
 import incorrect from '../../assets/sounds/incorrect.wav';
-import { FillMethod } from '../../enums/FillMethod';
-import { FillGapsSentence, FillGapsSentenceAnswer } from './FillGapsSentence';
-import { DragableItem } from '../common/DragableItem';
-import { checkEqual, joinSentence, splitSentence } from '../../utils/utilStrings';
-import { DialogFillGapsCandidates } from './DialogFillGapsCandidates';
-import { ChallengeOptions } from '../../types/Challenge';
-import { Language } from '../../enums/Language';
+import { ChallengeOptions, FillGapsChallenge, FillGapsChallengeExpression, FillGapsChallengeSentence } from 'types';
+import { ComponentMode, FillMethod, Language } from 'enums';
+import { ChallengeQuestion, Countdown, DialogFillGapsCandidates, DragableItem, FillGapsSentence, FillGapsSentenceAnswer } from 'components';
+import { checkEqual, joinSentence, splitSentence } from 'utils';
 
 const useStyles = makeStyles((theme) => ({
     root: {

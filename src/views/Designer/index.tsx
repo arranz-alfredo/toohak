@@ -1,15 +1,15 @@
 import React from 'react';
 import { useParams } from "react-router";
 import { Grid, makeStyles } from '@material-ui/core';
-import { TestDesigner } from '../../components/Designer/TestDesigner';
+import { TestDesigner } from 'components';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     fullHeight: {
         height: '100%'
     }
 }));
 
-export const Designer = () => {
+export const Designer: React.FC = () => {
     const { projectId, testId } = useParams() as any;
 
     const classes = useStyles();

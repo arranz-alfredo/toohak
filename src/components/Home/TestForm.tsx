@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { Button, Grid, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import { v4 as uuidv4 } from 'uuid';
-import { Language } from '../../enums/Language';
-import { Test } from '../../types/Test';
+import { Test } from 'types';
+import { Language } from 'enums';
 
 interface TestState {
     name: string,

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Grid, makeStyles, TextField, Typography } from '@material-ui/core';
-import { ClassifyChallengeConfig } from '../../types/ClassifyChallenge';
+import { ClassifyChallengeConfig } from 'types';
 
 const useStyles = makeStyles({
     fullWidth: {
