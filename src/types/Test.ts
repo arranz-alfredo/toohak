@@ -3,7 +3,8 @@ import { Challenge } from "types";
 
 export interface TestOptions {
     ignoreTimeLimit: boolean,
-    autoNext: boolean
+    autoNext: boolean,
+    disorderedChallenges: boolean
 }
 export interface Test {
     id: string,

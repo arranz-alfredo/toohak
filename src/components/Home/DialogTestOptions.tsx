@@ -17,10 +17,15 @@ interface DialogTestOptionsProps {
 export const DialogTestOptions: React.FC<DialogTestOptionsProps> = (props: DialogTestOptionsProps) => {
     const {open, onAccept, onCancel} = props;
 
-    const [formState, setFormState] = useState<TestOptions>({ ignoreTimeLimit: false, autoNext: true });
+    const [formState, setFormState] = useState<TestOptions>({
+        ignoreTimeLimit: false,
+        autoNext: true,
+        disorderedChallenges: false
+    });
 
     const checkIgnoreTimeLimit = useRef({} as HTMLInputElement);
     const checkAutoNextChallenge = useRef({} as HTMLInputElement);
+    const checkDisorderedChallenges = useRef({} as HTMLInputElement);
 
     const classes = useStyles();
 
@@ -57,7 +62,7 @@ export const DialogTestOptions: React.FC<DialogTestOptionsProps> = (props: Dialo
                             control={
                                 <Switch
                                     inputRef={checkIgnoreTimeLimit}
-                                    name='checkMultiselect'
+                                    name='checkIgnoreTimeLimit'
                                     checked={formState.ignoreTimeLimit}
                                     color='secondary'
                                     onChange={() => { handleAttributeChange('ignoreTimeLimit', checkIgnoreTimeLimit.current.checked); }}
@@ -71,13 +76,27 @@ export const DialogTestOptions: React.FC<DialogTestOptionsProps> = (props: Dialo
                             control={
                                 <Switch
                                     inputRef={checkAutoNextChallenge}
-                                    name='checkMultiselect'
+                                    name='checkAutoNextChallenge'
                                     checked={formState.autoNext}
                                     color='secondary'
                                     onChange={() => { handleAttributeChange('autoNext', checkAutoNextChallenge.current.checked); }}
                                 />
                             }
                             label='Avanzar automáticamente a la siguiente pregunta'
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    inputRef={checkDisorderedChallenges}
+                                    name='checkDisorderedChallenges'
+                                    checked={formState.disorderedChallenges}
+                                    color='secondary'
+                                    onChange={() => { handleAttributeChange('disorderedChallenges', checkDisorderedChallenges.current.checked); }}
+                                />
+                            }
+                            label='Desordenar preguntas'
                         />
                     </Grid>
                     <Grid item xs={12}>

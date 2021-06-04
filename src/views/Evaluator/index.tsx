@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from "react-router";
 import { Fab, Grid, Icon, makeStyles } from '@material-ui/core';
 import { useProjects } from 'hooks/useProjects';
-import { Project, Test, TestOptions } from 'types';
+import { Challenge, Project, Test, TestOptions } from 'types';
 import { Language } from 'enums';
 import { ChallengeEvaluator, ChallengeLauncher, TestResult } from 'components';
 import { parseQueryString } from 'utils';
@@ -47,7 +47,19 @@ export const Evaluator: React.FC = () => {
             if (theProject != null) {
                 const theTest: Test | undefined = theProject.tests.find((aTest: Test) => aTest.id === testId);
                 if (theTest != null) {
-                    setTest(theTest);
+                    // eslint-disable-next-line no-debugger
+                    debugger;
+                    if (testOptions.disorderedChallenges) {
+                        const disorderedChallenges = theTest.challenges.map(
+                            (aChallenge: Challenge) => ({ ...aChallenge })
+                        ).sort((a, b) => 0.5 - Math.random());
+                        setTest({
+                            ...theTest,
+                            challenges: disorderedChallenges
+                        });
+                    } else {
+                        setTest(theTest);
+                    }
                     setCurrentChallengeState({idx: 0, launching: true});
                 }
             }

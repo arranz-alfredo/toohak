@@ -169,7 +169,11 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
     };
 
     const handleAcceptPlayOptions = (testOptions: TestOptions) => {
-        history.push(`/play/${playOptionsState?.projectId}/${playOptionsState?.testId}?ignoreTimeLimit=${testOptions.ignoreTimeLimit}&autoNext=${testOptions.autoNext}`, playOptionsState);
+        history.push(
+            `/play/${playOptionsState?.projectId}/${playOptionsState?.testId}?` +
+            `ignoreTimeLimit=${testOptions.ignoreTimeLimit}&` +
+            `autoNext=${testOptions.autoNext}&` +
+            `disorderedChallenges=${testOptions.disorderedChallenges}`, playOptionsState);
         setPlayOptionsState({
             openOptions: false
         });
