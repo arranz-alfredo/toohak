@@ -47,8 +47,6 @@ export const Evaluator: React.FC = () => {
             if (theProject != null) {
                 const theTest: Test | undefined = theProject.tests.find((aTest: Test) => aTest.id === testId);
                 if (theTest != null) {
-                    // eslint-disable-next-line no-debugger
-                    debugger;
                     if (testOptions.disorderedChallenges) {
                         const disorderedChallenges = theTest.challenges.map(
                             (aChallenge: Challenge) => ({ ...aChallenge })
