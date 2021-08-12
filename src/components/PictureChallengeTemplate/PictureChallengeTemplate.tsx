@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChallengeOptions, ChallengePicture, PictureChallenge } from 'types';
+import { Challenge, ChallengeOptions, ChallengePicture, PictureChallenge } from 'types';
 import { ComponentMode } from 'enums';
 import { BasicChallengeTemplate, PictureGrid } from 'components';
 
@@ -23,6 +23,15 @@ export const PictureChallengeTemplate: React.FC<PictureChallengeTemplateProps> =
         children
     } = props;
 
+    const handleChallengeChange = (newChallenge: Challenge) => {
+        if (onChallengeChange) {
+            onChallengeChange({
+                ...challenge,
+                ...(newChallenge as PictureChallenge)
+            });
+        }
+    };
+
     const handlePicturesChange = (newPictures: ChallengePicture[]) => {
         if (onChallengeChange) {
             onChallengeChange({
@@ -37,7 +46,7 @@ export const PictureChallengeTemplate: React.FC<PictureChallengeTemplateProps> =
             mode={mode}
             challenge={challenge}
             options={options}
-            onChallengeChange={onChallengeChange}
+            onChallengeChange={handleChallengeChange}
             stopTime={stopTime}
             onTimeUp={onTimeUp}
             showCheck={showCheck}

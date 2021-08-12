@@ -31,7 +31,6 @@ export const ChallengeSelector: React.FC<ChallengeSelectorProps> = (props: Chall
     const classes = useStyles();
 
     useEffect(() => {
-        console.log(challenges);
         setLocalChallenges(challenges);
     }, [challenges]);
 

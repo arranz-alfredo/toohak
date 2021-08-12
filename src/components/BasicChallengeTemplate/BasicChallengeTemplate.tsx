@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Fab, Grid, Icon, makeStyles } from '@material-ui/core';
-import { ChallengeOptions, PictureChallenge } from 'types';
+import { ChallengeOptions, Challenge } from 'types';
 import { ComponentMode, Language } from 'enums';
 import { ChallengeQuestion, Countdown } from 'components';
 
@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
         height: '50%'
     },
     centralFullContainer: {
-        height: '50%'
+        height: '80%'
     },
     bottomContainer: {
         height: '30%',
@@ -31,9 +31,9 @@ const useStyles = makeStyles(() => ({
 
 interface BasicChallengeTemplateProps {
     mode: ComponentMode,
-    challenge: PictureChallenge,
+    challenge: Challenge,
     options?: ChallengeOptions,
-    onChallengeChange?: (updatedChallenge: PictureChallenge) => void,
+    onChallengeChange?: (updatedChallenge: Challenge) => void,
     stopTime?: boolean,
     onTimeUp?: () => void,
     showCheck?: boolean,
@@ -125,9 +125,13 @@ export const BasicChallengeTemplate: React.FC<BasicChallengeTemplateProps> = (pr
                     </Grid>
                 </Grid>
             </div>
-            <div className={classes.bottomContainer}>
-                { bottomComponent }
-            </div>
+            {
+                bottomComponent && (
+                    <div className={classes.bottomContainer}>
+                        { bottomComponent }
+                    </div>
+                )
+            }
         </Card>
     );
 };
