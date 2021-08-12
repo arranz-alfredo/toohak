@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { /* Card, Fab, */ Grid, /* Icon, */ makeStyles } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Xarrow from 'react-xarrows/lib';
@@ -7,41 +7,14 @@ import useSound from 'use-sound';
 import correct from '../../assets/sounds/correct.wav';
 import incorrect from '../../assets/sounds/incorrect.wav';
 import { Challenge, ChallengeOptions, MatchChallenge, MatchChallengePair, MatchItem } from 'types';
-import { ComponentMode /*, Language */, MatchElement } from 'enums';
-import { BasicChallengeTemplate, /* ChallengeQuestion, Countdown, */ MatchDestination, MatchSource } from 'components';
+import { ComponentMode, MatchElement } from 'enums';
+import { BasicChallengeTemplate, MatchDestination, MatchSource } from 'components';
 import { colors } from 'theme';
 
 const useStyles = makeStyles(() => ({
-    // root: {
-    //     height: '100%',
-    //     backgroundColor: '#f0f0f0'
-    // },
     fullHeight: {
         height: '100%'
-    },
-    // fullWidth: {
-    //     width: '100%'
-    // },
-    // titleContainer: {
-    //     height: '20%'
-    // },
-    // answerContainer: {
-    //     height: '80%',
-    //     width: '100%'
-    // },
-    // centerAll: {
-    //     display: 'flex',
-    //     justifyContent: 'center',
-    //     alignItems: 'center'
-    // },
-    // optionsContainer: {
-    //     border: 'solid 1px gray',
-    //     backgroundColor: '#ffffff',
-    //     minHeight: '60px'
-    // },
-    // sentencesContainer: {
-    //     paddingLeft: '10px'
-    // }
+    }
 }));
 
 interface MatchAnswer {
@@ -287,141 +260,5 @@ export const MatchChallenger: React.FC<MatchChallengerProps> = (props: MatchChal
                 </Grid>
             }
         />
-        // <Card variant='outlined' className={classes.root}>
-        //     <div className={classes.titleContainer}>
-        //         <ChallengeQuestion
-        //             mode={mode}
-        //             question={challenge.question}
-        //             fontSize={challenge.config.questionFontSize}
-        //             onChange={handleTitleChange}
-        //         />
-        //     </div>
-        //     <div className={classes.answerContainer}>
-        //         <Grid container justify='center' className={classes.fullHeight}>
-        //             <Grid item xs={2} className={classes.fullHeight}>
-        //                 {
-        //                     options != null && !options.ignoreTimeLimit && (
-        //                         <Countdown
-        //                             mode={mode}
-        //                             time={challenge.config.timeLimit}
-        //                             stopTimer={stopTimer}
-        //                             onTimeUp={handlerTimeUp}
-        //                         />
-        //                     )
-        //                 }
-        //             </Grid>
-        //             <Grid item xs={8} className={classes.fullHeight} container>
-        //                 <DndProvider backend={HTML5Backend}>
-        //                     <Grid item xs={5} container direction="column" justify="space-around" alignItems="center">
-        //                         {
-        //                             sourceItems.map((aSource: string, sourceIdx: number) => (
-        //                                 <MatchSource
-        //                                     key={`source_${sourceIdx}`}
-        //                                     mode={mode}
-        //                                     item={{text: aSource, index: sourceIdx}}
-        //                                     fontSize={challenge.config.answerFontSize}
-        //                                     arrowNode={(
-        //                                         <div
-        //                                             id={`an_s_${sourceIdx}`}
-        //                                             style={{
-        //                                                 width: '20px',
-        //                                                 height: '20px',
-        //                                                 border: `solid 1px ${colors.primary.main}`,
-        //                                                 borderRadius: '20px'
-        //                                             }}
-        //                                         />
-        //                                     )}
-        //                                     onTextChange={
-        //                                         (newText: string) => handleTextChange(
-        //                                             newText,
-        //                                             MatchElement.Source,
-        //                                             sourceIdx
-        //                                         )
-        //                                     }
-        //                                 />
-        //                             ))
-        //                         }
-        //                     </Grid>
-        //                     <Grid item xs={2} />
-        //                     <Grid item xs={5} container direction="column" justify="space-around" alignItems="center">
-        //                         {
-        //                             destinationItems.map((aDestination: string, destinationIdx: number) => (
-        //                                 <MatchDestination
-        //                                     key={`destination_${destinationIdx}`}
-        //                                     mode={mode}
-        //                                     item={{text: aDestination, index: destinationIdx}}
-        //                                     fontSize={challenge.config.answerFontSize}
-        //                                     arrowNode={(
-        //                                         <div
-        //                                             id={`an_d_${destinationIdx}`}
-        //                                             style={{
-        //                                                 width: '20px',
-        //                                                 height: '20px',
-        //                                                 border: `solid 1px ${colors.primary.main}`,
-        //                                                 borderRadius: '20px'
-        //                                             }}
-        //                                         />
-        //                                     )}
-        //                                     onTextChange={
-        //                                         (newText: string) => handleTextChange(
-        //                                             newText,
-        //                                             MatchElement.Destination,
-        //                                             destinationIdx
-        //                                         )
-        //                                     }
-        //                                     onDrop={(source: MatchItem) => {
-        //                                         handleDrop(source, {text: aDestination, index: destinationIdx});
-        //                                     }}
-        //                                 />
-        //                             ))
-        //                         }
-        //                         {
-        //                             mode === ComponentMode.Design ? (
-        //                                 sourceItems.map((aSource: string, idx: number) => (
-        //                                     <Xarrow
-        //                                         key={`designArrow_${idx}`}
-        //                                         start={`an_s_${idx}`}
-        //                                         end={`an_d_${(idx)}`}
-        //                                         curveness={0}
-        //                                     />
-        //                                 ))
-        //                             ) : (
-        //                                 matchState.map((anAnswer: MatchAnswer, idx: number) => (
-        //                                     <Xarrow
-        //                                         key={`playArrow_${idx}`}
-        //                                         start={`an_s_${anAnswer.source.index}`}
-        //                                         end={`an_d_${(anAnswer.destination.index)}`}
-        //                                         curveness={0}
-        //                                         color={
-        //                                             highlightResults ? (
-        //                                                 challenge.pairs.findIndex((aPair: MatchChallengePair) => (
-        //                                                     aPair.source === anAnswer.source.text
-        //                                                     && aPair.destination === anAnswer.destination.text
-        //                                                 )) >= 0 ? '#4caf50' : '#f44336'
-        //                                             ) : undefined
-        //                                         }
-        //                                     />
-        //                                 ))
-        //                             )
-        //                         }
-        //                     </Grid>
-        //                 </DndProvider>
-        //             </Grid>
-        //             <Grid item xs={2} style={{ height: '100%' }} className={classes.centerAll}>
-        //                 {
-        //                     <Fab
-        //                         variant="extended"
-        //                         size="large"
-        //                         color="primary"
-        //                         disabled={mode === ComponentMode.Design || !completed()}
-        //                         onClick={() => { handleCheckClick(); }}
-        //                     >
-        //                         <Icon>check</Icon>&nbsp;{options?.language === Language.En ? 'Check' : 'Corregir'}
-        //                     </Fab>
-        //                 }
-        //             </Grid>
-        //         </Grid>
-        //     </div>
-        // </Card>
     );
 };
