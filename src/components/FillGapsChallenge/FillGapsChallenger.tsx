@@ -1,46 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Card, Fab, Grid, Icon, IconButton, makeStyles, TextField } from '@material-ui/core';
+import { Grid, Icon, IconButton, makeStyles, TextField } from '@material-ui/core';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import useSound from 'use-sound';
 import correct from '../../assets/sounds/correct.wav';
 import incorrect from '../../assets/sounds/incorrect.wav';
-import { ChallengeOptions, FillGapsChallenge, FillGapsChallengeExpression, FillGapsChallengeSentence } from 'types';
-import { ComponentMode, FillMethod, Language } from 'enums';
-import { ChallengeQuestion, Countdown, DialogFillGapsCandidates, DragableItem, FillGapsSentence, FillGapsSentenceAnswer } from 'components';
+import { Challenge, ChallengeOptions, FillGapsChallenge, FillGapsChallengeExpression, FillGapsChallengeSentence } from 'types';
+import { ComponentMode, FillMethod } from 'enums';
+import { BasicChallengeTemplate, DialogFillGapsCandidates, DragableItem, FillGapsSentence, FillGapsSentenceAnswer } from 'components';
 import { checkEqual, joinSentence, splitSentence } from 'utils';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        height: '100%',
-        backgroundColor: '#f0f0f0'
-    },
     fullHeight: {
         height: '100%'
     },
     fullWidth: {
         width: '100%'
     },
-    titleContainer: {
-        height: '20%'
-    },
-    answerContainer: {
-        height: '80%',
-        width: '100%'
-    },
-    centerAll: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     optionsContainer: {
         border: 'solid 1px gray',
         backgroundColor: '#ffffff',
         minHeight: '60px'
-    },
-    sentencesContainer: {
-        paddingLeft: '10px'
-    },
+    }
 }));
 
 const initialFillGapsState = (challenge: FillGapsChallenge): FillGapsSentenceAnswer[][] => {
@@ -103,11 +84,11 @@ export const FillGapsChallenger: React.FC<FillGapsChallengerProps> = (props: Fil
         setDragabbleItems(reorderItems(challenge.sentences, mode));
     }, [challenge.sentences]);
 
-    const handleTitleChange = (newTitle: string) => {
+    const handleChallengeChange = (newChallenge: Challenge) => {
         if (onChallengeChange) {
             onChallengeChange({
                 ...challenge,
-                question: newTitle
+                ...(newChallenge as FillGapsChallenge)
             });
         }
     };
@@ -300,174 +281,145 @@ export const FillGapsChallenger: React.FC<FillGapsChallengerProps> = (props: Fil
     };
 
     return (
-        <Card variant='outlined' className={classes.root}>
-            <div className={classes.titleContainer}>
-                <ChallengeQuestion
-                    mode={mode}
-                    question={challenge.question}
-                    fontSize={challenge.config.questionFontSize}
-                    onChange={handleTitleChange}
-                />
-            </div>
-            <div className={classes.answerContainer}>
-                <Grid container justify='center' className={classes.fullHeight}>
-                    <Grid item xs={2} className={classes.fullHeight}>
-                        {
-                            options != null && !options.ignoreTimeLimit && (
-                                <Countdown
-                                    mode={mode}
-                                    time={challenge.config.timeLimit}
-                                    stopTimer={stopTimer}
-                                    onTimeUp={handlerTimeUp}
-                                />
-                            )
-                        }
-                    </Grid>
-                    <Grid item xs={8} className={classes.fullHeight}>
-                        {
-                            selectedExpression && (
-                                <DialogFillGapsCandidates
-                                    open={openCandidatesDialog}
-                                    text={
-                                        expressionInSentence(
-                                            challenge.sentences[selectedExpression[0]].text,
-                                            challenge.sentences[selectedExpression[0]].hiddenExpressions[selectedExpression[1]]
-                                        )
-                                    }
-                                    candidates={
-                                        challenge.sentences[selectedExpression[0]]
-                                            .hiddenExpressions[selectedExpression[1]].alternatives
-                                    }
-                                    onAccept={handleCandidateAccept}
-                                    onCancel={() => { setOpenCandidatesDialog(false); }}
-                                />
-                            )
-                        }
-                        <DndProvider backend={HTML5Backend}>
-                            <Grid
-                                container
-                                spacing={2}
-                                direction="column"
-                                className={classes.fullHeight}
-                            >
-                                {
-                                    (
-                                        mode === ComponentMode.Design ||
-                                        challenge.config.fillMethod === FillMethod.Dragging
-                                    ) && (
-                                        <Grid
-                                            item
-                                            // xs={12}
-                                            className={classes.optionsContainer}
-                                        >
-                                            <Grid container spacing={2} justify="space-around" alignItems="center">
-                                                {
-                                                    draggableItems.map((anItem: Item) => !isDropped(anItem) && (
-                                                        <Grid item key={`gridItem_${anItem.sentenceIdx}_${anItem.hiddenExpression.initPosition}`}>
-                                                            <DragableItem
-                                                                name={expressionInSentence(
-                                                                    anItem.sentenceText,
-                                                                    anItem.hiddenExpression
-                                                                )}
-                                                                key={`dragable_${anItem.sentenceIdx}_${anItem.hiddenExpression.initPosition}`}
-                                                                style={{fontSize: challenge.config.textFontSize}}
-                                                                iconButton={
-                                                                    mode === ComponentMode.Design ? (
-                                                                        <IconButton
-                                                                            size="small"
-                                                                            onClick={() => {
-                                                                                handleAddCandidateClick(
-                                                                                    anItem.sentenceIdx,
-                                                                                    anItem.hiddenExpressionIdx
-                                                                                );
-                                                                            }}
-                                                                        >
-                                                                            <Icon>add_circle</Icon>
-                                                                        </IconButton>
-                                                                    ) : undefined
-                                                                }
-                                                            />
-                                                        </Grid>
-                                                    ))
-                                                }
-                                            </Grid>
-                                        </Grid>
+        <BasicChallengeTemplate
+            mode={mode}
+            challenge={challenge}
+            options={options}
+            onChallengeChange={handleChallengeChange}
+            stopTime={stopTimer}
+            onTimeUp={handlerTimeUp}
+            showCheck={true}
+            disabledCheck={mode === ComponentMode.Design || !completed()}
+            onCheckClick={handleCheckClick}
+            centralComponent={
+                <Grid item xs={12} className={classes.fullHeight}>
+                    {
+                        selectedExpression && (
+                            <DialogFillGapsCandidates
+                                open={openCandidatesDialog}
+                                text={
+                                    expressionInSentence(
+                                        challenge.sentences[selectedExpression[0]].text,
+                                        challenge.sentences[selectedExpression[0]].hiddenExpressions[selectedExpression[1]]
                                     )
                                 }
-                                <Grid
-                                    item
-                                    xs
-                                >
-                                    <Grid container direction="column" justify="space-around" className={`${classes.fullWidth} ${classes.fullHeight}`}>
-                                        {
-                                            challenge.sentences.map((
-                                                aSentence: FillGapsChallengeSentence,
-                                                sentenceIdx: number
-                                            ) => (
-                                                <Grid
-                                                    item
-                                                    key={`sentence_${sentenceIdx}`}
-                                                >
-                                                    <FillGapsSentence
-                                                        mode={mode}
-                                                        sentence={aSentence}
-                                                        fillMethod={challenge.config.fillMethod}
-                                                        checkCapitalLetters={challenge.config.checkCapitalLetters}
-                                                        checkAccentMarks={challenge.config.checkAccentMarks}
-                                                        showResults={highlightResults}
-                                                        fontSize={challenge.config.textFontSize}
-                                                        onSentenceChange={(
-                                                            updatedSentence: FillGapsChallengeSentence
-                                                        ) => handleSentenceChange(updatedSentence, sentenceIdx)}
-                                                        onSentenceRemove={() => { handleSentenceRemove(sentenceIdx); }}
-                                                        onAnswersChange={(answer: FillGapsSentenceAnswer[]) => {
-                                                            handleSentenceAnswer(sentenceIdx, answer);
-                                                        }}
-                                                    />
-                                                </Grid>
-                                            ))
-                                        }
+                                candidates={
+                                    challenge.sentences[selectedExpression[0]]
+                                        .hiddenExpressions[selectedExpression[1]].alternatives
+                                }
+                                onAccept={handleCandidateAccept}
+                                onCancel={() => { setOpenCandidatesDialog(false); }}
+                            />
+                        )
+                    }
+                    <DndProvider backend={HTML5Backend}>
+                        <Grid
+                            container
+                            spacing={2}
+                            direction="column"
+                            className={classes.fullHeight}
+                        >
+                            {
+                                (
+                                    mode === ComponentMode.Design ||
+                                    challenge.config.fillMethod === FillMethod.Dragging
+                                ) && (
+                                    <Grid
+                                        item
+                                        // xs={12}
+                                        className={classes.optionsContainer}
+                                    >
+                                        <Grid container spacing={2} justify="space-around" alignItems="center">
+                                            {
+                                                draggableItems.map((anItem: Item) => !isDropped(anItem) && (
+                                                    <Grid item key={`gridItem_${anItem.sentenceIdx}_${anItem.hiddenExpression.initPosition}`}>
+                                                        <DragableItem
+                                                            name={expressionInSentence(
+                                                                anItem.sentenceText,
+                                                                anItem.hiddenExpression
+                                                            )}
+                                                            key={`dragable_${anItem.sentenceIdx}_${anItem.hiddenExpression.initPosition}`}
+                                                            style={{ fontSize: challenge.config.textFontSize }}
+                                                            iconButton={
+                                                                mode === ComponentMode.Design ? (
+                                                                    <IconButton
+                                                                        size="small"
+                                                                        onClick={() => {
+                                                                            handleAddCandidateClick(
+                                                                                anItem.sentenceIdx,
+                                                                                anItem.hiddenExpressionIdx
+                                                                            );
+                                                                        }}
+                                                                    >
+                                                                        <Icon>add_circle</Icon>
+                                                                    </IconButton>
+                                                                ) : undefined
+                                                            }
+                                                        />
+                                                    </Grid>
+                                                ))
+                                            }
+                                        </Grid>
                                     </Grid>
+                                )
+                            }
+                            <Grid item xs>
+                                <Grid container direction="column" justify="space-around" className={`${classes.fullWidth} ${classes.fullHeight}`}>
+                                    {
+                                        challenge.sentences.map((
+                                            aSentence: FillGapsChallengeSentence,
+                                            sentenceIdx: number
+                                        ) => (
+                                            <Grid
+                                                item
+                                                key={`sentence_${sentenceIdx}`}
+                                            >
+                                                <FillGapsSentence
+                                                    mode={mode}
+                                                    sentence={aSentence}
+                                                    fillMethod={challenge.config.fillMethod}
+                                                    checkCapitalLetters={challenge.config.checkCapitalLetters}
+                                                    checkAccentMarks={challenge.config.checkAccentMarks}
+                                                    showResults={highlightResults}
+                                                    fontSize={challenge.config.textFontSize}
+                                                    onSentenceChange={(
+                                                        updatedSentence: FillGapsChallengeSentence
+                                                    ) => handleSentenceChange(updatedSentence, sentenceIdx)}
+                                                    onSentenceRemove={() => { handleSentenceRemove(sentenceIdx); }}
+                                                    onAnswersChange={(answer: FillGapsSentenceAnswer[]) => {
+                                                        handleSentenceAnswer(sentenceIdx, answer);
+                                                    }}
+                                                />
+                                            </Grid>
+                                        ))
+                                    }
                                 </Grid>
-                                {
-                                    mode === ComponentMode.Design && (
-                                        <Grid item>
-                                            <TextField
-                                                inputRef={inputSentence}
-                                                variant="outlined"
-                                                style={{width: '100%'}}
-                                                InputProps={
-                                                    {
-                                                        style: {
-                                                            fontSize: challenge.config.textFontSize,
-                                                            color: '#000000'
-                                                        }
+                            </Grid>
+                            {
+                                mode === ComponentMode.Design && (
+                                    <Grid item>
+                                        <TextField
+                                            inputRef={inputSentence}
+                                            variant="outlined"
+                                            style={{ width: '100%' }}
+                                            InputProps={
+                                                {
+                                                    style: {
+                                                        fontSize: challenge.config.textFontSize,
+                                                        color: '#000000'
                                                     }
                                                 }
-                                                label="Nueva frase"
-                                                onKeyPress={handleSentenceKeyPress}
-                                            />
-                                        </Grid>
-                                    )
-                                }
-                            </Grid>
-                        </DndProvider>
-                    </Grid>
-                    <Grid item xs={2} style={{ height: '100%' }} className={classes.centerAll}>
-                        {
-                            <Fab
-                                variant="extended"
-                                size="large"
-                                color="primary"
-                                disabled={mode === ComponentMode.Design || !completed()}
-                                onClick={() => { handleCheckClick(); }}
-                            >
-                                <Icon>check</Icon>&nbsp;{options?.language === Language.En ? 'Check' : 'Corregir'}
-                            </Fab>
-                        }
-                    </Grid>
+                                            }
+                                            label="Nueva frase"
+                                            onKeyPress={handleSentenceKeyPress}
+                                        />
+                                    </Grid>
+                                )
+                            }
+                        </Grid>
+                    </DndProvider>
                 </Grid>
-            </div>
-        </Card>
+            }
+        />
     );
 };

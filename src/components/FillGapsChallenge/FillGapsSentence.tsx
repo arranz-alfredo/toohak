@@ -9,6 +9,9 @@ import { colors } from 'theme';
 const useStyles = makeStyles((theme) => ({
     word: {
         padding: '2px',
+    },
+    selectableWord: {
+        padding: '2px',
         // backgroundColor: '#f0f0f0',
         '& :hover': {
             backgroundColor: theme.palette.primary.light,
@@ -294,7 +297,7 @@ export const FillGapsSentence: React.FC<FillGapsSentenceProps> = (props: FillGap
                     <Grid
                         item
                         key={`word_${idx}`}
-                        className={`${classes.word} ${selected(idx) ? classes.selected : ''}`}
+                        className={`${classes.selectableWord} ${selected(idx) ? classes.selected : ''}`}
                         onClick={() => { handleWordClick(idx); }}
                     >
                         <Typography style={{fontSize: `${fontSize ? fontSize: 50}px`}}>
@@ -315,17 +318,17 @@ export const FillGapsSentence: React.FC<FillGapsSentenceProps> = (props: FillGap
             {
                 mode === ComponentMode.Play && (
                     parts.map((aPart: SentencePart, idx: number) => (
-                        aPart.type === 'text' ? (
+                        aPart.type === 'text' ? (aPart.value.split(' ').map((aWord: string) => (
                             <Grid
                                 item
                                 key={`part_${idx}`}
                                 className={classes.word}
                             >
                                 <Typography style={{fontSize: `${fontSize ? fontSize: 50}px`}}>
-                                    {aPart.value}
+                                    {aWord}
                                 </Typography>
                             </Grid>
-                        ) : (
+                        ))) : (
                             <Grid
                                 item
                                 key={`part_${idx}`}
