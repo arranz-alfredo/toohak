@@ -1,4 +1,4 @@
-import { Challenge, ChallengeConfig, ChallengePicture } from "types";
+import { ChallengeConfig, PictureChallenge } from "types";
 
 export interface SelectAnswerChallengeConfig extends ChallengeConfig {
     answerFontSize: number,
@@ -12,8 +12,7 @@ export interface SelectAnswerChallengeAnswer {
     valid: boolean
 }
 
-export interface SelectAnswerChallenge extends Challenge {
-    pictures: ChallengePicture[],
+export interface SelectAnswerChallenge extends PictureChallenge {
     answers: SelectAnswerChallengeAnswer[],
     config: SelectAnswerChallengeConfig
 }

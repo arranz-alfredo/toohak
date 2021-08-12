@@ -15,6 +15,10 @@ export interface ChallengeOptions {
     ignoreTimeLimit: boolean
 }
 
+export interface PictureChallenge extends Challenge {
+    pictures: ChallengePicture[]
+}
+
 export interface Challenge {
     id: string,
     type: ChallengeType,

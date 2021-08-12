@@ -1,3 +1,4 @@
+export * from './BasicChallengeTemplate';
 export * from './ClassifyChallenge';
 export * from './Common';
 export * from './Designer';
@@ -6,6 +7,7 @@ export * from './FillGapsChallenge';
 export * from './FillTableChallenge';
 export * from './Home';
 export * from './MatchChallenge';
+export * from './PictureChallengeTemplate';
 export * from './SelectAnswerChallenge';
 export * from './SortChallenge';
 export * from './TrueOrFalseChallenge';
