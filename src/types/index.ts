@@ -7,4 +7,5 @@ export * from "./Project";
 export * from "./SelectAnswerChallenge";
 export * from "./SortChallenge";
 export * from "./Test";
+export * from "./TheOddOneChallenge";
 export * from "./TrueOrFalseChallenge";

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
-import { Challenge, ChallengeOptions, ClassifyChallenge, FillGapsChallenge, FillTableChallenge, MatchChallenge, SelectAnswerChallenge, TrueOrFalseChallenge } from 'types';
+import { Challenge, ChallengeOptions, ClassifyChallenge, FillGapsChallenge, FillTableChallenge, MatchChallenge, SelectAnswerChallenge, TheOddOneChallenge, TrueOrFalseChallenge } from 'types';
 import { ChallengeType, ComponentMode } from 'enums';
-import { ClassifyChallenger, FillGapsChallenger, FillTableChallenger, MatchChallenger, SelectAnswerChallenger, TrueOrFalseChallenger } from 'components';
+import { ClassifyChallenger, FillGapsChallenger, FillTableChallenger, MatchChallenger, SelectAnswerChallenger, TheOddOneChallenger, TrueOrFalseChallenger } from 'components';
 
 const useStyles = makeStyles((theme) => ({
     fullHeight: {
@@ -103,6 +103,18 @@ export const ChallengeEvaluator: React.FC<ChallengeEvaluatorProps> = (props: Cha
                         <FillTableChallenger
                             mode={ComponentMode.Play}
                             challenge={challenge as FillTableChallenge}
+                            options={options}
+                            onSuccess={handlerSucessChallenge}
+                            onError={handlerErrorChallenge}
+                        />
+                    )
+                }
+                {
+                    challenge?.type === ChallengeType.TheOddOne
+                    && (
+                        <TheOddOneChallenger
+                            mode={ComponentMode.Play}
+                            challenge={challenge as TheOddOneChallenge}
                             options={options}
                             onSuccess={handlerSucessChallenge}
                             onError={handlerErrorChallenge}

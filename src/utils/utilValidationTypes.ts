@@ -1,5 +1,5 @@
 import { ChallengeType, PictureType } from "enums";
-import { Challenge, ChallengeConfig, ChallengePicture, ClassifyChallenge, ClassifyChallengeGroup, FillGapsChallenge, FillGapsChallengeSentence, FillTableChallenge, FillTableChallengeCell, MatchChallenge, MatchChallengePair, Project, SelectAnswerChallenge, SelectAnswerChallengeAnswer, SelectAnswerChallengeConfig, SortChallenge, Test } from "types";
+import { Challenge, ChallengeConfig, ChallengePicture, ClassifyChallenge, ClassifyChallengeGroup, FillGapsChallenge, FillGapsChallengeSentence, FillTableChallenge, FillTableChallengeCell, MatchChallenge, MatchChallengePair, Project, SelectAnswerChallenge, SelectAnswerChallengeAnswer, SelectAnswerChallengeConfig, SortChallenge, Test, TheOddOneChallenge, TheOddOneChallengeSerie } from "types";
 
 export interface Validation {
     valid: boolean,
@@ -153,6 +153,23 @@ export const isValidChallenge = (challenge: Challenge): Validation => {
                 errorMessage.push('Todas las celdas deben estar rellenas');
             }
             break;
+        }
+        case ChallengeType.TheOddOne: {
+            const customChallenge = challenge as TheOddOneChallenge;
+            if(!customChallenge.series.reduce(
+                (accSerie: boolean, currentSerie: TheOddOneChallengeSerie) => accSerie && currentSerie.elements.reduce(
+                    (accElement: boolean, currentElement) => accElement && currentElement != null && currentElement !== '',
+                    true
+                ),
+                true
+            )) {
+                errorMessage.push('Todos los elementos deben estar rellenos');
+            }
+            if(customChallenge.series.some(
+                (aSerie: TheOddOneChallengeSerie) => aSerie.theOddOneIndex === -1
+            )) {
+                errorMessage.push('Todas las series deben tener un elemento que sobra marcado');
+            }
             break;
         }
         case ChallengeType.Crossword:

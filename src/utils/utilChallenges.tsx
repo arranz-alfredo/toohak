@@ -3,7 +3,7 @@ import { Icon } from '@material-ui/core';
 import { CSSProperties } from '@material-ui/styles';
 import { v4 as uuidv4 } from 'uuid';
 import { ChallengeType, FillMethod, Language, PictureType } from 'enums';
-import { Challenge, ChallengeConfig, ClassifyChallenge, ClassifyChallengeConfig, FillGapsChallenge, FillGapsChallengeConfig, FillGapsChallengeSentence, FillTableChallenge, FillTableChallengeConfig, MatchChallenge, MatchChallengeConfig, SelectAnswerChallenge, SelectAnswerChallengeConfig, SortChallenge, SortChallengeConfig, TrueOrFalseChallenge, TrueOrFalseChallengeConfig } from 'types';
+import { Challenge, ChallengeConfig, ClassifyChallenge, ClassifyChallengeConfig, FillGapsChallenge, FillGapsChallengeConfig, FillGapsChallengeSentence, FillTableChallenge, FillTableChallengeConfig, MatchChallenge, MatchChallengeConfig, SelectAnswerChallenge, SelectAnswerChallengeConfig, SortChallenge, SortChallengeConfig, TheOddOneChallenge, TheOddOneChallengeConfig, TrueOrFalseChallenge, TrueOrFalseChallengeConfig } from 'types';
 
 export const getChallengeTypeDescription = (type: ChallengeType, language: Language = Language.Es): string => {
     switch (type) {
@@ -22,7 +22,7 @@ export const getChallengeTypeDescription = (type: ChallengeType, language: Langu
         case ChallengeType.FillTable:
             return language === Language.Es ? "Completa la tabla" : "Complete the table";
         case ChallengeType.TheOddOne:
-            return language === Language.Es ? "Busca el que sobra" : "Find the odd one";
+            return language === Language.Es ? "Encuentra el que sobra" : "Find the odd one";
         case ChallengeType.Crossword:
             return language === Language.Es ? "Crucigrama" : "Crossword";
         default:
@@ -102,6 +102,13 @@ const getDefaultChallengeConfig = (type: ChallengeType): ChallengeConfig => {
                 firstRowFixed: false,
                 firstColumnFixed: false
             } as FillTableChallengeConfig;
+        case ChallengeType.TheOddOne:
+            return {
+                ...defaultChallengeConfig,
+                answerFontSize: 15,
+                seriesCount: 3,
+                seriesLength: 4
+            } as TheOddOneChallengeConfig;
         default:
             return defaultChallengeConfig;
     }
@@ -177,6 +184,15 @@ export const getDefaultChallenge = (type: ChallengeType): Challenge => {
                     [{ text: '', hidden: false },{ text: '', hidden: false },{ text: '', hidden: false }]
                 ]
             } as FillTableChallenge;
+        case ChallengeType.TheOddOne:
+            return {
+                ...defaultChallenge,
+                series: [
+                    { elements: ['', '', '', ''], theOddOneIndex: -1 },
+                    { elements: ['', '', '', ''], theOddOneIndex: -1 },
+                    { elements: ['', '', '', ''], theOddOneIndex: -1 }
+                ]
+            } as TheOddOneChallenge;
         default:
             return defaultChallenge;
     }

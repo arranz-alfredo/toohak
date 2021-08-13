@@ -10,4 +10,5 @@ export * from './MatchChallenge';
 export * from './PictureChallengeTemplate';
 export * from './SelectAnswerChallenge';
 export * from './SortChallenge';
+export * from './TheOddOneChallenge';
 export * from './TrueOrFalseChallenge';

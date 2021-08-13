@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
-import { ClassifyChallengeDesigner, FillGapsChallengeDesigner, FillTableChallengeDesigner, MatchChallengeDesigner, SelectAnswerChallengeDesigner, SortChallengeDesigner, TrueOrFalseChallengeDesigner } from 'components';
-import { Challenge, ClassifyChallenge, FillGapsChallenge, FillTableChallenge, MatchChallenge, SelectAnswerChallenge, SortChallenge, TrueOrFalseChallenge } from 'types';
+import { ClassifyChallengeDesigner, FillGapsChallengeDesigner, FillTableChallengeDesigner, MatchChallengeDesigner, SelectAnswerChallengeDesigner, SortChallengeDesigner, TheOddOneChallengeDesigner, TrueOrFalseChallengeDesigner } from 'components';
+import { Challenge, ClassifyChallenge, FillGapsChallenge, FillTableChallenge, MatchChallenge, SelectAnswerChallenge, SortChallenge, TheOddOneChallenge, TrueOrFalseChallenge } from 'types';
 import { ChallengeType } from 'enums';
 
 const useStyles = makeStyles(() => ({
@@ -86,6 +86,15 @@ export const ChallengeDesigner: React.FC<ChallengeDesignerProps> = (props: Chall
                     && (
                         <FillTableChallengeDesigner
                             challenge={challenge as FillTableChallenge}
+                            onChallengeChange={handleChallengeChange}
+                        />
+                    )
+                }
+                {
+                    challenge?.type === ChallengeType.TheOddOne
+                    && (
+                        <TheOddOneChallengeDesigner
+                            challenge={challenge as TheOddOneChallenge}
                             onChallengeChange={handleChallengeChange}
                         />
                     )

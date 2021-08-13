@@ -55,7 +55,7 @@ const addMenuItems = [
     { type: ChallengeType.Sort, disabled: true },
     { type: ChallengeType.Classify, disabled: false },
     { type: ChallengeType.FillTable, disabled: false },
-    { type: ChallengeType.TheOddOne, disabled: true },
+    { type: ChallengeType.TheOddOne, disabled: false },
     { type: ChallengeType.Crossword, disabled: true }
 ];
 
