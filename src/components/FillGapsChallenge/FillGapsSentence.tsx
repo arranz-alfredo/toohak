@@ -105,8 +105,6 @@ export const FillGapsSentence: React.FC<FillGapsSentenceProps> = (props: FillGap
         let updatedHiddenExpressions: FillGapsChallengeExpression[] = [];
 
         if (sentence.hiddenExpressions.length === 0) {
-            //Primera expresion
-            console.log('');
             updatedHiddenExpressions.push({
                 initPosition: wordIdx,
                 wordCount: 1,
@@ -118,7 +116,6 @@ export const FillGapsSentence: React.FC<FillGapsSentenceProps> = (props: FillGap
             let completeArrayFrom = -1;
             if (idx === 0 && wordIdx < anExp.initPosition - 1) {
                 //Antes de la primera expresion y no contigua
-                // console.log('Antes de la primera expresion y no contigua');
                 updatedHiddenExpressions = [
                     { initPosition: wordIdx, wordCount: 1, alternatives:[] },
                     ...sentence.hiddenExpressions
@@ -126,20 +123,16 @@ export const FillGapsSentence: React.FC<FillGapsSentenceProps> = (props: FillGap
                 return true;
             } else if (wordIdx === anExp.initPosition - 1) {
                 //Contigua a la expresion por delante
-                // console.log('Contigua a la expresion por delante');
                 updatedHiddenExpressions.push(
                     { initPosition: wordIdx, wordCount: anExp.wordCount + 1, alternatives: [...anExp.alternatives] }
                 );
                 completeArrayFrom = idx;
             } else if (wordIdx === anExp.initPosition) {
                 //Sobre la primera palabra de la expresion
-                // console.log('Sobre la primera palabra de la expresion');
                 if (anExp.wordCount === 1) {
                     //Si la expresion solo tiene una palabra
-                    // console.log('Si la expresion solo tiene una palabra');
                 } else {
                     //Si la expresion tiene más de una palabra
-                    // console.log('Si la expresion tiene más de una palabra');
                     updatedHiddenExpressions.push(
                         { initPosition: wordIdx + 1, wordCount: anExp.wordCount - 1, alternatives: [...anExp.alternatives] }
                     );
@@ -147,7 +140,6 @@ export const FillGapsSentence: React.FC<FillGapsSentenceProps> = (props: FillGap
                 completeArrayFrom = idx;
             } else if (wordIdx > anExp.initPosition && wordIdx < anExp.initPosition + anExp.wordCount - 1) {
                 //Sobre una palabra interior de la expresion
-                // console.log('Sobre una palabra interior de la expresion');
                 updatedHiddenExpressions = [
                     ...updatedHiddenExpressions,
                     {
@@ -164,13 +156,10 @@ export const FillGapsSentence: React.FC<FillGapsSentenceProps> = (props: FillGap
                 completeArrayFrom = idx;
             } else if (wordIdx === anExp.initPosition + anExp.wordCount - 1) {
                 //Sobre la ultima palabra de la expresion
-                // console.log('Sobre la ultima palabra de la expresion');
                 if (anExp.wordCount === 1) {
                     //Si la expresion solo tiene una palabra
-                    // console.log('Si la expresion solo tiene una palabra');
                 } else {
                     //Si la expresion tiene más de una palabra
-                    // console.log('Si la expresion tiene más de una palabra');
                     updatedHiddenExpressions.push(
                         {
                             initPosition: anExp.initPosition,
@@ -184,7 +173,6 @@ export const FillGapsSentence: React.FC<FillGapsSentenceProps> = (props: FillGap
                 && wordIdx > anExp.initPosition + anExp.wordCount
                 && wordIdx < sentence.hiddenExpressions[idx + 1].initPosition - 1) {
                 //Entre dos expresiones de manera no contigua
-                // console.log('Entre dos expresiones de manera no contigua');
                 updatedHiddenExpressions = [
                     ...updatedHiddenExpressions,
                     {...anExp},
@@ -195,7 +183,6 @@ export const FillGapsSentence: React.FC<FillGapsSentenceProps> = (props: FillGap
                 && wordIdx === anExp.initPosition + anExp.wordCount
                 && wordIdx === sentence.hiddenExpressions[idx + 1].initPosition - 1) {
                 //Entre dos expresiones de manera contigua a ambas
-                // console.log('Entre dos expresiones de manera contigua a ambas');
                 updatedHiddenExpressions.push({
                     initPosition: anExp.initPosition,
                     wordCount: anExp.wordCount + sentence.hiddenExpressions[idx + 1].wordCount + 1,
@@ -204,7 +191,6 @@ export const FillGapsSentence: React.FC<FillGapsSentenceProps> = (props: FillGap
                 completeArrayFrom = idx + 1;
             } else if (wordIdx === anExp.initPosition + anExp.wordCount) {
                 //Contigua a la expresion por detras
-                // console.log('Contigua a la expresion por detras');
                 updatedHiddenExpressions.push({
                     initPosition: anExp.initPosition,
                     wordCount: anExp.wordCount + 1,
@@ -213,7 +199,6 @@ export const FillGapsSentence: React.FC<FillGapsSentenceProps> = (props: FillGap
                 completeArrayFrom = idx;
             } else if (idx === sentence.hiddenExpressions.length - 1) {
                 //Despues de la ultima expresion y de manera no contigua
-                // console.log('Despues de la ultima expresion y de manera no contigua');
                 updatedHiddenExpressions = [
                     ...updatedHiddenExpressions,
                     {...anExp},

@@ -211,7 +211,6 @@ export const FillGapsChallenger: React.FC<FillGapsChallengerProps> = (props: Fil
     };
 
     const handleSentenceAnswer = (sentenceIdx: number, answer: FillGapsSentenceAnswer[]) => {
-        console.log(answer);
         const updatedState = fillGapsState.map((aFillGapsState: FillGapsSentenceAnswer[], idx: number) => (
             idx === sentenceIdx ? [...answer] : [...aFillGapsState]
         ));
