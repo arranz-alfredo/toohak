@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon } from '@material-ui/core';
 import { CSSProperties } from '@material-ui/styles';
 import { v4 as uuidv4 } from 'uuid';
-import { ChallengeType, FillMethod, Language, PictureType } from 'enums';
+import { ChallengeType, ElementDirection, FillMethod, Language, PictureType } from 'enums';
 import { Challenge, ChallengeConfig, ClassifyChallenge, ClassifyChallengeConfig, FillGapsChallenge, FillGapsChallengeConfig, FillGapsChallengeSentence, FillTableChallenge, FillTableChallengeConfig, MatchChallenge, MatchChallengeConfig, SelectAnswerChallenge, SelectAnswerChallengeConfig, SortChallenge, SortChallengeConfig, TheOddOneChallenge, TheOddOneChallengeConfig, TrueOrFalseChallenge, TrueOrFalseChallengeConfig } from 'types';
 
 export const getChallengeTypeDescription = (type: ChallengeType, language: Language = Language.Es): string => {
@@ -85,7 +85,8 @@ const getDefaultChallengeConfig = (type: ChallengeType): ChallengeConfig => {
             return {
                 ...defaultChallengeConfig,
                 itemsFontSize: 18,
-                itemCount: 5
+                itemCount: 5,
+                elementsDirection: ElementDirection.Horizontal
             } as SortChallengeConfig;
         case ChallengeType.Classify:
             return {

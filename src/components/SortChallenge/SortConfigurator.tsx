@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Grid, makeStyles, TextField, Typography } from '@material-ui/core';
+import { FormControl, Grid, InputLabel, makeStyles, MenuItem, Select, TextField, Typography } from '@material-ui/core';
 import { ChallengeConfig, SortChallengeConfig } from 'types';
 import { ChallengeConfigurator } from 'components';
+import { ElementDirection } from 'enums';
 
 const useStyles = makeStyles({
     fullWidth: {
@@ -21,6 +22,7 @@ export const SortConfigurator: React.FC<SortConfiguratorProps> = (props: SortCon
 
     const inputItemsFontSize = useRef({} as HTMLInputElement);
     const inputItemCount = useRef({} as HTMLInputElement);
+    const inputElementsDirection = useRef({} as HTMLSelectElement);
 
     const classes = useStyles();
 
@@ -28,7 +30,7 @@ export const SortConfigurator: React.FC<SortConfiguratorProps> = (props: SortCon
         setFormData(config);
     }, [config]);
 
-    const handleConfigParameterChange = (parameter: string, value: number | boolean) => {
+    const handleConfigParameterChange = (parameter: string, value: number | boolean | string) => {
         const newConfig = {
             ...formData,
             [parameter]: value
@@ -84,6 +86,24 @@ export const SortConfigurator: React.FC<SortConfiguratorProps> = (props: SortCon
                     className={classes.fullWidth}
                     onInput={() => { handleConfigParameterChange('groupCount', parseInt(inputItemCount.current.value)); }}
                 />
+            </Grid>
+            <Grid item>
+                <FormControl className={classes.fullWidth}>
+                    <InputLabel>Orientación de elementos</InputLabel>
+                    <Select
+                        inputRef={inputElementsDirection}
+                        label="Orientación de elementos"
+                        value={formData.elementsDirection}
+                        color='secondary'
+                        className={classes.fullWidth}
+                        onChange={(evt: React.ChangeEvent<{name?: string | undefined, value: unknown}>) => {
+                            handleConfigParameterChange('elementsDirection', evt.target.value as string);
+                        }}
+                    >
+                        <MenuItem value={ElementDirection.Horizontal}>Horizontal</MenuItem>
+                        <MenuItem value={ElementDirection.Vertical}>Vertical</MenuItem>
+                    </Select>
+                </FormControl>
             </Grid>
         </Grid>
     );

@@ -52,7 +52,7 @@ const addMenuItems = [
     { type: ChallengeType.TrueOrFalse, disabled: false },
     { type: ChallengeType.FillGaps, disabled: false },
     { type: ChallengeType.Match, disabled: false },
-    { type: ChallengeType.Sort, disabled: true },
+    { type: ChallengeType.Sort, disabled: false },
     { type: ChallengeType.Classify, disabled: false },
     { type: ChallengeType.FillTable, disabled: false },
     { type: ChallengeType.TheOddOne, disabled: false },

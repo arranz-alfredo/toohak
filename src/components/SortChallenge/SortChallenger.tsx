@@ -3,54 +3,33 @@ import { Card, Fab, Grid, Icon, makeStyles } from '@material-ui/core';
 import useSound from 'use-sound';
 import correct from '../../assets/sounds/correct.wav';
 import incorrect from '../../assets/sounds/incorrect.wav';
-import { SortChallenge } from 'types';
-import { ComponentMode } from 'enums';
-import { ChallengeQuestion, Countdown } from 'components';
+import { Challenge, ChallengeOptions, SortChallenge } from 'types';
+import { ComponentMode, ElementDirection } from 'enums';
+import { BasicChallengeTemplate, ChallengeQuestion, Countdown } from 'components';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        height: '100%',
-        backgroundColor: '#f0f0f0'
-    },
     fullHeight: {
         height: '100%'
-    },
-    titleContainer: {
-        height: '20%'
-    },
-    pictureContainer: {
-        height: '80%'
-    },
-    centerAll: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    optionsContainer: {
-        height: '20%',
-        border: 'solid 1px'
     },
     item: {
         padding: '5px 10px',
         backgroundColor: theme.palette.secondary.main,
         color: theme.palette.primary.contrastText,
         borderRadius: '20px'
-    },
-    groupsContainer: {
-        height: '80%'
-    },
+    }
 }));
 
 interface SortChallengerProps {
     mode: ComponentMode,
     challenge: SortChallenge,
+    options?: ChallengeOptions,
     onChallengeChange?: (updatedChallenge: SortChallenge) => void,
     onSuccess?: () => void,
     onError?: () => void
 }
 
 export const SortChallenger: React.FC<SortChallengerProps> = (props: SortChallengerProps) => {
-    const { mode, challenge, onChallengeChange, onSuccess, onError } = props;
+    const { mode, challenge, options, onChallengeChange, onSuccess, onError } = props;
 
     const [stopTimer, setStopTimer] = useState<boolean>(false);
     const [selectedAnswers /* , setSelectedAnswers */] = useState<number[]>([]);
@@ -61,11 +40,11 @@ export const SortChallenger: React.FC<SortChallengerProps> = (props: SortChallen
 
     const classes = useStyles();
 
-    const handleTitleChange = (newTitle: string) => {
+    const handleChallengeChange = (newChallenge: Challenge) => {
         if (onChallengeChange) {
             onChallengeChange({
                 ...challenge,
-                question: newTitle
+                ...(newChallenge as SortChallenge)
             });
         }
     };
@@ -115,42 +94,33 @@ export const SortChallenger: React.FC<SortChallengerProps> = (props: SortChallen
     };
 
     return (
-        <Card variant='outlined' className={classes.root}>
-            <div className={classes.titleContainer}>
-                <ChallengeQuestion
-                    mode={mode}
-                    question={challenge.question}
-                    fontSize={challenge.config.questionFontSize}
-                    onChange={handleTitleChange}
-                />
-            </div>
-            <div className={classes.pictureContainer}>
-                <Grid container justify='center' className={classes.fullHeight}>
-                    <Grid item xs={2} className={classes.fullHeight}>
-                        <Countdown
-                            mode={mode}
-                            time={challenge.config.timeLimit}
-                            stopTimer={stopTimer}
-                            onTimeUp={handlerTimeUp}
-                        />
-                    </Grid>
-                    <Grid item xs={8} className={classes.fullHeight}>
-                    </Grid>
-                    <Grid item xs={2} style={{ height: '100%' }} className={classes.centerAll}>
-                        {
-                            <Fab
-                                variant="extended"
-                                size="large"
-                                color="primary"
-                                disabled={mode === ComponentMode.Design || selectedAnswers.length === 0}
-                                onClick={() => { handleCheckClick(); }}
-                            >
-                                <Icon>check</Icon>&nbsp;Corregir
-                            </Fab>
-                        }
-                    </Grid>
+        <BasicChallengeTemplate
+            mode={mode}
+            challenge={challenge}
+            options={options}
+            onChallengeChange={handleChallengeChange}
+            stopTime={stopTimer}
+            onTimeUp={handlerTimeUp}
+            showCheck={true}
+            disabledCheck={mode === ComponentMode.Design}
+            onCheckClick={handleCheckClick}
+            centralComponent={
+                <Grid
+                    container
+                    direction={challenge.config.elementsDirection === ElementDirection.Horizontal ? 'row' : 'column'}
+                    justify="space-evenly"
+                    alignItems="center"
+                    className={classes.fullHeight}
+                >
+                    {
+                        challenge.items.map((anItem: string) => (
+                            <Grid item className={classes.item}>
+                                {'anItem'}
+                            </Grid>
+                        ))
+                    }
                 </Grid>
-            </div>
-        </Card>
+            }
+        />
     );
 };
