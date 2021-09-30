@@ -97,11 +97,11 @@ export const BasicChallengeTemplate: React.FC<BasicChallengeTemplateProps> = (pr
                 <Grid container justify='center' style={{ height: '100%' }}>
                     <Grid item xs={2} style={{ height: '100%' }}>
                         {
-                            options != null && !options.ignoreTimeLimit && (
+                            (mode === ComponentMode.Design || (options != null && !options.ignoreTimeLimit)) && (
                                 <Countdown
                                     mode={mode}
                                     time={challenge.config.timeLimit}
-                                    stopTimer={stopTimer}
+                                    stopTimer={mode === ComponentMode.Design || stopTimer}
                                     onTimeUp={handlerTimeUp}
                                 />
                             )
