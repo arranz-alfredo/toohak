@@ -13,7 +13,10 @@ const useStyles = makeStyles((theme) => ({
     },
     secondaryHeading: {
         fontSize: theme.typography.pxToRem(15),
-        color: colors.secondary.main
+        color: colors.secondary.main,
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
     },
     gridContainer: {
         padding: '0px 10px'
@@ -261,25 +264,27 @@ export const ProjectList: React.FC<ProjectListProps> = (props: ProjectListProps)
             <Grid container>
                 <Grid item xs={12}>
                     <Grid container direction='row' justify='center' alignItems='center' spacing={2} className={classes.gridContainer}>
-                        <Grid item className={classes.gridItems}>
+                        <Grid item xs={6}>
                             <Typography variant='h6'>
                                 Proyectos
                             </Typography>
                         </Grid>
-                        <Grid item>
-                            <Button
-                                style={{ color: colors.primary.dark }}
-                                onClick={handleNewProjectClick}
-                            >
-                                Nuevo proyecto
-                            </Button>
-                        </Grid>
-                        <Grid item>
-                            <JsonLoader
-                                label="Importar proyecto"
-                                onDataLoaded={handleImportProject}
-                                onError={handleImportProjectError}
-                            />
+                        <Grid item xs={6} container justify='flex-end'>
+                            <Grid item xs={6} sm={4} container justify='flex-end'>
+                                <Button
+                                    style={{ color: colors.primary.dark }}
+                                    onClick={handleNewProjectClick}
+                                >
+                                    Nuevo proyecto
+                                </Button>
+                            </Grid>
+                            <Grid item xs={6} sm={4} container justify='flex-end'>
+                                <JsonLoader
+                                    label="Importar proyecto"
+                                    onDataLoaded={handleImportProject}
+                                    onError={handleImportProjectError}
+                                />
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -301,12 +306,12 @@ export const ProjectList: React.FC<ProjectListProps> = (props: ProjectListProps)
                                         <Grid item xs={3}>
                                             <Typography className={classes.heading}>{aProject.name}</Typography>
                                         </Grid>
-                                        <Grid item xs={7}>
+                                        <Grid item xs={3}>
                                             <Typography className={classes.secondaryHeading}>
                                                 {`${aProject.tests.length} cuestionario${aProject.tests.length !== 1 ? 's' : ''}`}
                                             </Typography>
                                         </Grid>
-                                        <Grid item>
+                                        <Grid item xs={6} container justify='flex-end'>
                                             <IconButton
                                                 title='Descargar proyecto'
                                                 color='primary'

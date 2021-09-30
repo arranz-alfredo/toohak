@@ -7,9 +7,15 @@ import { Project, Test, TestOptions } from 'types';
 import { isValidTest } from 'utils';
 import { DialogConfirm, DialogTestOptions, JsonLoader, TestForm } from 'components';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     inline: {
         display: 'inline',
+    },
+    fullWidth: {
+        width: '100%',
+        [theme.breakpoints.down('xs')]: {
+            width: '50px'
+        }
     },
     listItemSecondaryAction: {
         visibility: 'hidden'
@@ -281,7 +287,7 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                                             classes={{ container: classes.listItem }}
                                         >
                                             <Grid container>
-                                                <Grid item xs={6}>
+                                                <Grid item xs={12} sm={6}>
                                                     <ListItemText
                                                         primary={
                                                             aTest.name
@@ -298,15 +304,15 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                                                         }
                                                     />
                                                 </Grid>
-                                                <Grid item xs={2}>
+                                                <Grid item xs={12} sm={2}>
                                                     <ListItemText
                                                         secondary={`${aTest.challenges.length} pregunta${aTest.challenges.length !== 1 ? 's' : ''}`}
                                                     />
                                                 </Grid>
                                             </Grid>
                                             <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
-                                                <Grid container>
-                                                    <Grid item>
+                                                <Grid container className={classes.fullWidth}>
+                                                    <Grid item xs={6} sm={3}>
                                                         {
                                                             isValidTest(aTest) ? (
                                                                 <IconButton title='Jugar!' onClick={() => { handlePlayClick(project.id, aTest.id); }}>
@@ -319,7 +325,7 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                                                             )
                                                         }
                                                     </Grid>
-                                                    <Grid item>
+                                                    <Grid item xs={6} sm={3}>
                                                         <IconButton title='Editar cuestionario' onClick={(evt: React.MouseEvent<HTMLButtonElement>) => {
                                                             evt.stopPropagation();
                                                             handleEditClick(evt, aTest);
@@ -327,7 +333,7 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                                                             <Icon color='primary'>edit</Icon>
                                                         </IconButton>
                                                     </Grid>
-                                                    <Grid item>
+                                                    <Grid item xs={6} sm={3}>
                                                         <IconButton title='Descargar cuestionario' onClick={(evt) => {
                                                             evt.stopPropagation();
                                                             handleExportTestClick(aTest);
@@ -335,7 +341,7 @@ export const TestList: React.FC<TestListProps> = (props: TestListProps) => {
                                                             <Icon>download</Icon>
                                                         </IconButton>
                                                     </Grid>
-                                                    <Grid item>
+                                                    <Grid item xs={6} sm={3}>
                                                         <IconButton title='Eliminar cuestionario' onClick={(evt) => {
                                                             evt.stopPropagation();
                                                             handleRemoveTestClick(aTest);
