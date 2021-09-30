@@ -50,6 +50,7 @@ export const BasicChallengeTemplate: React.FC<BasicChallengeTemplateProps> = (pr
         centralComponent, bottomComponent
     } = props;
 
+    const [answered, setAnswered] = useState<boolean>(false);
     const [stopTimer, setStopTimer] = useState<boolean>(false);
 
     const classes = useStyles();
@@ -76,6 +77,7 @@ export const BasicChallengeTemplate: React.FC<BasicChallengeTemplateProps> = (pr
     };
 
     const handleCheckClick = () => {
+        setAnswered(true);
         if (onCheckClick) {
             onCheckClick();
         }
@@ -115,7 +117,7 @@ export const BasicChallengeTemplate: React.FC<BasicChallengeTemplateProps> = (pr
                                     variant="extended"
                                     size="large"
                                     color="primary"
-                                    disabled={disabledCheck}
+                                    disabled={answered || disabledCheck}
                                     onClick={() => { handleCheckClick(); }}
                                 >
                                     <Icon>check</Icon>&nbsp;{options?.language === Language.En ? 'Check' : 'Corregir'}
