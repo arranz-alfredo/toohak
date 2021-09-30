@@ -1,9 +1,19 @@
 import React, { useEffect } from 'react';
-import { AppBar, Toolbar } from '@material-ui/core';
+import { AppBar, makeStyles, Toolbar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import ReactGA from 'react-ga';
 
+const useStyles = makeStyles(() => ({
+    fullHeight: {
+        height: '100%'
+    },
+    noMinHeight: {
+        minHeight: '0px'
+    }
+}));
+
 export const MainHeader: React.FC = () => {
+    const classes = useStyles();
 
     useEffect(() => {
         if (process.env.NODE_ENV === 'production') {
@@ -13,8 +23,8 @@ export const MainHeader: React.FC = () => {
     }, []);
 
     return (
-        <AppBar position='static'>
-            <Toolbar>
+        <AppBar position='static' className={classes.fullHeight}>
+            <Toolbar className={`${classes.fullHeight} ${classes.noMinHeight}`}>
                 <Link to="/" style={{color: '#ffffff', textDecoration: 'none', fontWeight: 'bold'}}>!toohaK</Link>
             </Toolbar>
         </AppBar>

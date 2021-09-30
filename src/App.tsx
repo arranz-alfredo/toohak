@@ -12,7 +12,9 @@ import { Home } from "./views/Home";
 import { Designer } from "./views/Designer";
 import { Evaluator } from "./views/Evaluator";
 
-const useStyles = makeStyles(() => ({
+const LIMIT = 'sm';
+
+const useStyles = makeStyles((theme) => ({
     mainContainer: {
         width: '100%',
         height: '100%',
@@ -21,11 +23,17 @@ const useStyles = makeStyles(() => ({
     },
     headerContainer: {
         width: '100%',
-        height: '75px'
+        height: '75px',
+        [theme.breakpoints.down(LIMIT)]: {
+            height: '30px'
+        }
     },
     content: {
-        margin: '30px',
-        height: 'calc(100% - 135px)'
+        flex: '1 100%',
+        padding: '30px',
+        [theme.breakpoints.down(LIMIT)]: {
+            padding: '5px'
+        }
     }
 }));
 
