@@ -3,12 +3,14 @@ import { AppBar, makeStyles, Toolbar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import ReactGA from 'react-ga';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     fullHeight: {
         height: '100%'
     },
     noMinHeight: {
-        minHeight: '0px'
+        [theme.breakpoints.down('sm')]: {
+            minHeight: '30px'
+        }
     }
 }));
 

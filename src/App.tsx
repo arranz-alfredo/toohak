@@ -18,21 +18,21 @@ const useStyles = makeStyles((theme) => ({
     mainContainer: {
         width: '100%',
         height: '100%',
-        display: 'flex',
-        flexDirection: 'column'
+        overflow: 'hidden'
     },
     headerContainer: {
         width: '100%',
-        height: '75px',
+        height: '65px',
         [theme.breakpoints.down(LIMIT)]: {
             height: '30px'
         }
     },
     content: {
-        flex: '1 100%',
-        padding: '30px',
+        height: 'calc(100% - 105px)',
+        padding: '20px 10px',
         [theme.breakpoints.down(LIMIT)]: {
-            padding: '5px'
+            height: 'calc(100% - 35px)',
+            paddingTop: '5px'
         }
     }
 }));

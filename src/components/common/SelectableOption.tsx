@@ -10,6 +10,7 @@ import {
     Radio,
     TextField
 } from '@material-ui/core';
+import { isMobile, isTablet } from 'react-device-detect';
 import { ComponentMode } from 'enums';
 import { colors } from 'theme';
 
@@ -187,11 +188,15 @@ export const SelectableOption: React.FC<SelectableOptionProps> = (props: Selecta
                         onClick={handlerOptionClick}
                     >
                         <Grid container className={classes.optionInput} spacing={2} alignItems="center">
+                            {
+                                (!isMobile || isTablet) && (
+                                    <Grid item>
+                                        <Icon className={classes.optionIcon}>{icon}</Icon>
+                                    </Grid>
+                                )
+                            }
                             <Grid item>
-                                <Icon className={classes.optionIcon}>{icon}</Icon>
-                            </Grid>
-                            <Grid item>
-                                <label style={{color: '#ffffff', fontSize: `${fontSize || 22}px`, justifySelf: 'left'}}>
+                                <label style={{color: '#ffffff', fontSize: `${fontSize != null ? (fontSize / (isMobile && !isTablet ? 2 : 1)) : 22}px`, justifySelf: 'left'}}>
                                     {optionState.text}
                                 </label>
                             </Grid>

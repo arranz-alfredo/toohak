@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Card, makeStyles, TextField } from '@material-ui/core';
+import { isMobile, isTablet } from 'react-device-detect';
 import { ComponentMode } from 'enums';
+
 
 const useStyles = makeStyles({
     root: {
@@ -58,7 +60,7 @@ export const ChallengeQuestion: React.FC<ChallengeQuestionProps> = (props: Chall
                     inputProps = {{
                         style: {
                             textAlign: 'center',
-                            fontSize: `${fontSize != null ? fontSize : 28}px`,
+                            fontSize: `${fontSize != null ? (fontSize / ((isMobile && !isTablet) ? 2 : 1)) : 28}px`,
                             lineHeight: '32px'
                         }
                     }}
